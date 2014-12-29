@@ -1,0 +1,3645 @@
+;TODO: 
+;Imperial age unique techs
+;other siege
+
+;--------------------------------------
+; Define FactId Constants
+;--------------------------------------
+(defconst game-time 0)
+(defconst population-cap 1)
+(defconst population-headroom 2)
+(defconst housing-headroom 3)
+(defconst idle-farm-count 4)
+(defconst food-amount 5)
+(defconst wood-amount 6)
+(defconst stone-amount 7)
+(defconst gold-amount 8)
+(defconst escrow-amount 9)
+(defconst commodity-buying-price 10)
+(defconst commodity-selling-price 11)
+(defconst dropsite-min-distance 12)
+(defconst soldier-count 13)
+(defconst attack-soldier-count 14)
+(defconst defend-soldier-count 15)
+(defconst warboat-count 16)
+(defconst attack-warboat-count 17)
+(defconst defend-warboat-count 18)
+(defconst current-age 19)		;any
+(defconst current-score 20)		;any
+(defconst civilization 21)		;any
+(defconst player-number 22)		;any
+(defconst player-in-game 23)	;any
+(defconst unit-count 24)		;any
+(defconst unit-type-count 25)	;any
+(defconst unit-type-count-total 26)
+(defconst building-count 27)		;any
+(defconst building-type-count 28)	;any
+(defconst building-type-count-total 29)
+(defconst population 30)		;any
+(defconst military-population 31)	;any
+(defconst civilian-population 32)	;any
+(defconst random-number 33)
+(defconst resource-amount 34)	;any
+(defconst player-distance 35)		;any
+(defconst allied-goal 36)		;any
+(defconst allied-sn 37)		;any
+(defconst resource-percent 38)	;any
+(defconst enemy-buildings-in-town 39)
+(defconst enemy-units-in-town 40)
+(defconst enemy-villagers-in-town 41)
+(defconst players-in-game 42)
+(defconst defender-count 43)
+(defconst building-type-in-town 44)
+(defconst unit-type-in-town 45)
+(defconst villager-type-in-town 46)
+(defconst gaia-type-count 47)
+(defconst gaia-type-count-total 48)
+
+;--------------------------------------
+; Define ObjectId Constants
+;--------------------------------------
+(defconst town-center-foundation 621)
+(defconst villager-class 904)
+(defconst building-class 903)
+(defconst ocean-fish-class 905)
+(defconst shore-fish-class 933)
+(defconst farm-class 949)
+(defconst tower-class 952)
+(defconst wall-class 927)
+(defconst gate-class 939)
+(defconst king-class 959)
+(defconst livestock-class 958)
+(defconst infantry-class 906)
+(defconst archery-class 900)
+(defconst archery-cannon-class 944)
+(defconst cavalry-class 912)
+(defconst cavalry-archer-class 936)
+(defconst cavalry-cannon-class 923)
+(defconst monastery-class 918)
+(defconst siege-weapon-class 913)
+(defconst scorpion-class 955)
+(defconst packed-trebuchet-class 951)
+(defconst unpacked-trebuchet-class 954)
+(defconst petard-class 935)
+(defconst warship-class 922)
+(defconst all-units-class -1)
+
+;--------------------------------------
+; Define ResearchState Constants
+;--------------------------------------
+(defconst research-unavailable 0)
+(defconst research-available 1)
+(defconst research-pending 2)
+(defconst research-complete 3)
+
+;--------------------------------------
+; Define TimerState Constants
+;--------------------------------------
+(defconst timer-disabled 0)
+(defconst timer-triggered 1)
+(defconst timer-running 2)
+
+;--------------------------------------
+; Define GroupType Constants
+;--------------------------------------
+(defconst group-type-land-attack 100)
+(defconst group-type-land-explore 101)
+(defconst group-type-land-trade 109)
+(defconst group-type-water-attack 102)
+(defconst group-type-water-explore 103)
+(defconst group-type-water-trade 106)
+(defconst group-type-transport-ship 104)
+(defconst group-type-fishing-ship 105)
+(defconst group-type-forward-builder 107)
+(defconst group-type-monk 108)
+
+;--------------------------------------
+; Define IdleType Constants
+;--------------------------------------
+(defconst idle-type-villager 0)
+(defconst idle-type-trade-cart 1)
+(defconst idle-type-fishing-ship 2)
+(defconst idle-type-trade-cog 3)
+
+;--------------------------------------
+; Define AttackStance Constants
+;--------------------------------------
+(defconst aggressive 0)
+(defconst defensive 1)
+(defconst stand-ground 2)
+(defconst no-attack 3)
+
+;--------------------------------------
+; Define ResourceAmount Constants
+;--------------------------------------
+(defconst amount-food 0)
+(defconst amount-wood 1)
+(defconst amount-stone 2)
+(defconst amount-gold 3)
+(defconst amount-population-cap 4)
+(defconst amount-religion 5)
+(defconst amount-current-age 6)
+(defconst amount-relics 7)
+(defconst amount-trade-bonus 8)
+(defconst amount-trade-goods 9)
+(defconst amount-trade-production 10)
+(defconst amount-population 11)
+(defconst amount-decay 12)
+(defconst amount-discovery 13)
+(defconst amount-ruins 14)
+(defconst amount-meat 15)
+(defconst amount-berries 16)
+(defconst amount-fish 17)
+(defconst amount-kills 20)
+(defconst amount-research-count 21)
+(defconst amount-exploration 22)
+(defconst amount-convert-priest 27)
+(defconst amount-convert-building 28)
+(defconst amount-building-limit 30)
+(defconst amount-food-limit 31)
+(defconst amount-unit-limit 32)
+(defconst amount-maintenance 33)
+(defconst amount-faith 34)
+(defconst amount-faith-recharge-rate 35)
+(defconst amount-farm-food 36)
+(defconst amount-civilian-population 37)
+(defconst amount-all-techs-achieved 39)
+(defconst amount-military-population 40)
+(defconst amount-conversions 41)
+(defconst amount-wonder 42)
+(defconst amount-razings 43)
+(defconst amount-kill-ratio 44)
+(defconst amount-player-killed 45)
+(defconst amount-tribute-inefficiency 46)
+(defconst amount-gold-bonus 47)
+(defconst amount-town-center-unavailable 48)
+(defconst amount-gold-counter 49)
+(defconst amount-writing 50)
+(defconst amount-monasteries 52)
+(defconst amount-tribute 53)
+(defconst amount-hold-ruins 54)
+(defconst amount-hold-relics 55)
+(defconst amount-ore 56)
+(defconst amount-captured-unit 57)
+(defconst amount-trade-good-quality 59)
+(defconst amount-trade-market-level 60)
+(defconst amount-formations 61)
+(defconst amount-building-housing-rate 62)
+(defconst amount-gather-tax-rate 63)
+(defconst amount-gather-accumulator 64)
+(defconst amount-salvage-decay-rate 65)
+(defconst amount-allow-formations 66)
+(defconst amount-can-convert 67)
+(defconst amount-player1-kills 69)
+(defconst amount-player2-kills 70)
+(defconst amount-player3-kills 71)
+(defconst amount-player4-kills 72)
+(defconst amount-player5-kills 73)
+(defconst amount-player6-kills 74)
+(defconst amount-player7-kills 75)
+(defconst amount-player8-kills 76)
+(defconst amount-convert-resistance 77)
+(defconst amount-trade-vig-rate 78)
+(defconst amount-stone-bonus 79)
+(defconst amount-queued-count 80)
+(defconst amount-training-count 81)
+(defconst amount-raider 82)
+(defconst amount-boarding-recharge-rate 83)
+(defconst amount-starting-villagers 84)
+(defconst amount-research-cost-mod 85)
+(defconst amount-research-time-mod 86)
+(defconst amount-convert-boats 87)
+(defconst amount-fish-trap-food 88)
+(defconst amount-heal-rate-modifier 89)
+(defconst amount-heal-range 90)
+(defconst amount-starting-food 91)
+(defconst amount-starting-wood 92)
+(defconst amount-starting-stone 93)
+(defconst amount-starting-gold 94)
+(defconst amount-raider-ability 95)
+(defconst amount-berserker-heal-timer 96)
+(defconst amount-dominant-sheep-control 97)
+(defconst amount-object-cost-summation 98)
+(defconst amount-research-cost-summation 99)
+(defconst amount-relic-income-summation 100)
+(defconst amount-trade-income-summation 101)
+(defconst amount-player1-tribute 102)
+(defconst amount-player2-tribute 103)
+(defconst amount-player3-tribute 104)
+(defconst amount-player4-tribute 105)
+(defconst amount-player5-tribute 106)
+(defconst amount-player6-tribute 107)
+(defconst amount-player7-tribute 108)
+(defconst amount-player8-tribute 109)
+(defconst amount-player1-kill-value 110)
+(defconst amount-player2-kill-value 111)
+(defconst amount-player3-kill-value 112)
+(defconst amount-player4-kill-value 113)
+(defconst amount-player5-kill-value 114)
+(defconst amount-player6-kill-value 115)
+(defconst amount-player7-kill-value 116)
+(defconst amount-player8-kill-value 117)
+(defconst amount-player1-razings 118)
+(defconst amount-player2-razings 119)
+(defconst amount-player3-razings 120)
+(defconst amount-player4-razings 121)
+(defconst amount-player5-razings 122)
+(defconst amount-player6-razings 123)
+(defconst amount-player7-razings 124)
+(defconst amount-player8-razings 125)
+(defconst amount-player1-razing-value 126)
+(defconst amount-player2-razing-value 127)
+(defconst amount-player3-razing-value 128)
+(defconst amount-player4-razing-value 129)
+(defconst amount-player5-razing-value 130)
+(defconst amount-player6-razing-value 131)
+(defconst amount-player7-razing-value 132)
+(defconst amount-player8-razing-value 133)
+(defconst amount-castle 134)
+(defconst amount-kills-by-player1 136)
+(defconst amount-kills-by-player2 137)
+(defconst amount-kills-by-player3 138)
+(defconst amount-kills-by-player4 139)
+(defconst amount-kills-by-player5 140)
+(defconst amount-kills-by-player6 141)
+(defconst amount-kills-by-player7 142)
+(defconst amount-kills-by-player8 143)
+(defconst amount-razings-by-player1 144)
+(defconst amount-razings-by-player2 145)
+(defconst amount-razings-by-player3 146)
+(defconst amount-razings-by-player4 147)
+(defconst amount-razings-by-player5 148)
+(defconst amount-razings-by-player6 149)
+(defconst amount-razings-by-player7 150)
+(defconst amount-razings-by-player8 151)
+(defconst amount-value-killed-by-others 152)
+(defconst amount-value-razed-by-others 153)
+(defconst amount-killed-by-others 154)
+(defconst amount-razed-by-others 155)
+(defconst amount-tribute-from-player1 156)
+(defconst amount-tribute-from-player2 157)
+(defconst amount-tribute-from-player3 158)
+(defconst amount-tribute-from-player4 159)
+(defconst amount-tribute-from-player5 160)
+(defconst amount-tribute-from-player6 161)
+(defconst amount-tribute-from-player7 162)
+(defconst amount-tribute-from-player8 163)
+(defconst amount-value-current-units 164)
+(defconst amount-value-current-buildings 165)
+(defconst amount-food-total 166)
+(defconst amount-wood-total 167)
+(defconst amount-stone-total 168)
+(defconst amount-gold-total 169)
+(defconst amount-total-value-of-kills 170)
+(defconst amount-total-tribute-received 171)
+(defconst amount-total-value-of-razings 172)
+(defconst amount-total-castles-built 173)
+(defconst amount-total-wonders-built 174)
+(defconst amount-tribute-score 175)
+(defconst amount-convert-min-adj 176)
+(defconst amount-convert-max-adj 177)
+(defconst amount-convert-resist-min-adj 178)
+(defconst amount-convert-resist-max-adj 179)
+(defconst amount-convert-building-min 180)
+(defconst amount-convert-building-max 181)
+(defconst amount-convert-building-chance 182)
+(defconst amount-spies 183)
+(defconst amount-value-wonders-castles 184)
+(defconst amount-food-score 185)
+(defconst amount-wood-score 186)
+(defconst amount-stone-score 187)
+(defconst amount-gold-score 188)
+(defconst amount-wood-bonus 189)
+(defconst amount-food-bonus 190)
+(defconst amount-relic-rate 191)
+(defconst amount-heresy 192)
+(defconst amount-theocracy 193)	; research completed 1 = yes
+(defconst amount-crenellations 194)
+(defconst amount-construction-rate-mod 195)
+(defconst amount-hun-wonder-bonus 196)
+(defconst amount-spies-discount 197)
+
+;--------------------------------------
+; Unused ResourceAmount Constants
+;--------------------------------------
+;(defconst amount-houses 51)
+;(defconst amount-hit-points-killed 68)
+;(defconst amount-hit-points-razings 135)
+
+;--------------------------------------
+; Define ProjectileType Constants
+;--------------------------------------
+(defconst projectile-town-center 0)
+(defconst projectile-castle 1)
+(defconst projectile-watch-tower 2)
+(defconst projectile-bombard-tower 3)
+(defconst projectile-ship 4)
+(defconst projectile-siege 5)
+(defconst projectile-fortification 6)
+(defconst projectile-any 7)
+
+;--------------------------------------
+; Define EscrowState Constants
+;--------------------------------------
+(defconst with-escrow 0)
+(defconst without-escrow 1)
+
+;--------------------------------------
+; Define PlacementType Constants
+;--------------------------------------
+(defconst place-normal 0)
+(defconst place-forward 1)
+(defconst place-control 2)
+
+;--------------------------------------
+; Define PriorityType Constants
+;--------------------------------------
+(defconst priority-offense 0)
+(defconst priority-defense 1)
+
+;--------------------------------------
+; Define FindPlayerMethod Constants
+;--------------------------------------
+(defconst find-attacker 0)
+(defconst find-random 1)
+(defconst find-closest 2)
+(defconst find-ordered 3)
+
+;--------------------------------------
+; Define ScoutMethod Constants
+;--------------------------------------
+(defconst scout-center 0)
+(defconst scout-opposite 1)
+(defconst scout-corner 2)
+(defconst scout-enemy 3)
+(defconst scout-border 4)
+
+;--------------------------------------
+; Define PlayerStance Constants
+;--------------------------------------
+;(defconst ally 0)
+;(defconst neutral 1)
+;(defconst enemy 3)
+;(defconst any 2)
+
+;--------------------------------------
+; Define DropsiteMinDistance Constants
+;--------------------------------------
+;(defconst hunting 4)
+;(defconst boar-hunting 5)
+;(defconst deer-hunting 6)
+;(defconst live-boar 7)
+
+;--------------------------------------
+; Define Counting Constants
+;--------------------------------------
+;(defconst monk-set 970)
+;(defconst trebuchet-set 971)
+;(defconst huskarl-set 972)
+;(defconst villager-shepherd 973)
+;(defconst villager-forager 974)
+;(defconst villager-farmer 975)
+;(defconst villager-hunter 976)
+;(defconst villager-fisherman 977)
+;(defconst villager-food 978)
+;(defconst villager-wood 979)
+;(defconst villager-stone 980)
+;(defconst villager-gold 981)
+;(defconst villager-builder 982)
+;(defconst villager-repairer 983)
+;(defconst villager-base 984)
+
+;--------------------------------------
+; Define Extended Strategic Numbers
+;--------------------------------------
+;(defconst sn-enable-new-building-system 242)
+;(defconst sn-percent-building-cancellation 243)
+;(defconst sn-enable-boar-hunting 244)
+;(defconst sn-minimum-number-hunters 245)
+;(defconst sn-object-repair-level 246)
+;(defconst sn-enable-patrol-attack 247)
+;(defconst sn-dropsite-separation-distance 248)
+;(defconst sn-target-player-number 249)
+;(defconst sn-safe-town-size 250)
+;(defconst sn-focus-player-number 251)
+;(defconst sn-minimum-boar-lure-group-size 252)
+;(defconst sn-preferred-mill-placement 253)
+;(defconst sn-enable-offensive-priority 254)
+;(defconst sn-building-targeting-mode 255)
+;(defconst sn-home-exploration-time 256)
+;(defconst sn-number-civilian-militia 257)
+;(defconst sn-allow-civilian-offense 258)
+;(defconst sn-preferred-trade-distance 259)
+(defconst sn-lumber-camp-max-distance 260)
+(defconst sn-mining-camp-max-distance 261)
+;(defconst sn-wall-targeting-mode 262)
+;(defconst sn-livestock-to-town-center 263)
+;(defconst sn-enable-training-queue 264)
+;(defconst sn-ignore-tower-elevation 1)
+;(defconst sn-town-center-placement 266)
+;(defconst sn-disable-tower-priority 267)
+;(defconst sn-placement-zone-size 268)
+;(defconst sn-placement-fail-delta 269)
+;(defconst sn-placement-to-center 270)
+;(defconst sn-disable-attack-groups 271)
+;(defconst sn-allow-adjacent-dropsites 272)
+;(defconst sn-defer-dropsite-update 273)
+;(defconst sn-maximum-garrison-fill 274)
+;(defconst sn-number-garrison-units 275)
+;(defconst sn-filter-under-attack 276)
+;(defconst sn-disable-defend-groups 277)
+;(defconst sn-dock-placement-mode 278)
+;(defconst sn-dock-proximity-factor 279)
+;(defconst sn-dock-avoidance-factor 280)
+;(defconst sn-dock-training-filter 281)
+;(defconst sn-free-siege-targeting 282)
+;(defconst sn-warship-targeting-mode 283)
+
+
+; defensive priority settings
+
+;-1: default
+;05: outpost
+;10: farm, fish-trap
+;20: blacksmith, university
+;30: lumber-camp
+;40: mill
+;50: mining-camp
+;100: market
+;250: house
+;500: barracks, archery-range, stable, monastery, siege workshop, dock
+;500: gate (not v1.0c, but set since the gate fix)
+;1000: town-center (109, standing), town-center (621, foundation)
+;2000: watch-tower
+;3000: guard-tower
+;4000: keep
+;5000: bombard-tower
+;10000: castle
+;20000: wonder
+
+
+;offensive priority settings
+;-1: default
+;00: 903 (buildings), 927 (wall/palisade), 939 (gates), 949 (farm/fish trap), 951 (trebs), 952 (towers), 954 (trebs unpacked)
+;01: 906 (infantery), 912 (cavalry, not scout-line), 924, 935 (petard), 945, 947 (scouts), 950, 956, 957
+;02: 928, 946
+;03: 900 (ranged units), 923 (conquistador), 926, 936 (cavalry archers), 944 (gunpowder units)
+;04: 6, 7 (skirmishers)
+;05: 35 (ram), 422 (capped ram), 548 (siege rams)
+;06: 913 (sieges), 955 (scorpions)
+;07: 904 (villagers), 919 (trades), 958 (domestic animals), 959 (kings)
+;08: 917, 918 (monks), 943 (relic monks)
+;09: 922 (warboats), 953
+;10: 920 (transports)
+;11: 902 (trade cog), 921 (fishing-ships)
+
+
+; ===== AOFE Constants =====
+
+; ===== New sec (Castle-Age usually) UTs for old civs =====
+
+(defconst ri-atlatl 460) ; Aztecs
+		;skirmisers more damgage/range
+(defconst ri-royalty 461) ; Britons (went to Imp Age, Yeomen went to Castle Age)
+		;foot archers longer range
+(defconst ri-greak-fire 464) ; Byzantines
+		;fire-ships longer range
+(defconst ri-stronghold 482) ; Celts
+		;castles/towers fire faster
+(defconst ri-great-wall 462) ; Chinese
+		;walls stronger
+
+(defconst ri-chivalry 493) ; Franks
+		;stables faster
+(defconst ri-perfusion 457) ; Goths, for those who didn't know the ID
+		;husk at rax
+(defconst ri-renegades 483) ; Huns
+		;tarkan at stab
+(defconst ri-andean-sling 516) ; Incas
+		;no skirm/sling min range
+(defconst ri-sultans 506) ; Indians
+		;gold income faster
+(defconst ri-silk-road 499) ; Italians
+		;uu more armour
+(defconst ri-yasama 485) ; Japanese
+		;towers more arrows	
+(defconst ri-panokseon 486) ; Koreans
+		;turtle ships faster
+
+(defconst ri-mercenaries 514) ; Magyars
+		;uu cost no gold
+(defconst ri-tlatoani 515) ; Mayans
+		;archers stronger vs buildings
+(defconst ri-falconry 487) ; Mongols
+		;no pop loss when house destroyed
+(defconst ri-persepolis 488) ; Persians
+		;castles strong vs rams
+(defconst ri-madrasah 490) ; Saracens
+		;killed monks return some gold
+(defconst ri-orthodoxy 512) ; Slavs
+		;monks more armour
+(defconst ri-inquisition 492) ; Spanish
+		;monks convert faster
+
+(defconst ri-ironclad 489) ; Teutons
+		;siege more armour
+(defconst ri-sipahi 491) ; Turks
+		;cav archers more hp
+(defconst ri-chieftains 463) ; Vikings
+		;zerks damage cavalry
+
+
+; ===== Techs for new civs =====
+
+(defconst ri-couriers 517)
+(defconst ri-elite-kamayuk 509)
+
+(defconst ri-shatagni 507)
+(defconst ri-imperial-camel 521)
+(defconst ri-elite-elephant-archer 481)
+
+(defconst ri-pavise 494)
+(defconst ri-elite-genoese-crossbow 468)
+
+(defconst ri-recurve-bow 515)
+(defconst ri-elite-magyar-huszar 472)
+
+(defconst ri-druzhina 513)
+(defconst ri-elite-boyar 504)
+
+
+; ===== New techs for multiple civs =====
+
+(defconst ri-eagle-warrior 384)
+(defconst ri-gillnets 65)
+(defconst ri-hunting-dogs 581)
+
+
+; ===== New Units =====
+
+(defconst stable-tarkan 886)
+(defconst stable-elite-tarkan 887)
+(defconst boyar 876)
+(defconst elite-boyar 878)
+(defconst kamayuk 879)
+
+(defconst elite-kamayuk 881)
+(defconst elephant-archer 873)
+(defconst elite-elephant-archer 875)
+(defconst imperial-camel 897)
+(defconst magyar-huszar 869)
+
+(defconst elite-magyar-huszar 871)
+(defconst genoese-crossbowman 866)
+(defconst elite-genoese-crossbowman 868)
+(defconst condottiero 882)
+(defconst slinger 185)
+
+(defconst palisade-gate 64) ; ??? Might be 64,78,81,88,91,95 or other
+
+
+
+; ===== Scenario only techs and units =====
+
+(defconst ri-revetments 525)
+
+(defconst siege-tower 885)
+(defconst upgraded-palisade-wall 119)
+(defconst sea-tower 785)
+(defconst sea-Wall 788)
+
+
+
+; ===== Scenario only techs and units =====
+
+(defconst ri-revetments 525)
+
+(defconst siege-tower 885)
+(defconst upgraded-palisade-wall 119)
+(defconst sea-tower 785)
+(defconst sea-Wall 788)
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Constants
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Map Sizes
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+#load-if-defined TINY-MAP
+(defconst num-fish 40)
+#end-if
+#load-if-defined SMALL-MAP
+(defconst num-fish 60)
+#end-if
+#load-if-defined MEDIUM-MAP
+(defconst num-fish 80)
+#end-if
+#load-if-defined NORMAL-MAP
+(defconst num-fish 120)
+#end-if
+#load-if-defined LARGE-MAP
+(defconst num-fish 140)
+#end-if
+#load-if-defined GIANT-MAP
+(defconst num-fish 160)
+#end-if
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Goals
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defconst g-food-train-ok 1)
+(defconst g-wood-train-ok 2)
+(defconst g-retreat-target 7)
+(defconst g-sea-superiority 3)
+(defconst g-military-superiority 4)
+(defconst g-attacking 6)
+(defconst g-retreat-target 7)
+(defconst g-building 8)
+(defconst g-map-type 9)
+	(defconst land 1)
+	(defconst mixed 2)
+	(defconst water 3)
+
+(defconst g-feudal-pri-unit 10)
+(defconst g-feudal-sec-unit 11)
+(defconst g-feudal-ter-unit 12)
+(defconst g-castle-pri-unit 13)
+(defconst g-castle-sec-unit 14)
+(defconst g-castle-ter-unit 15)
+(defconst g-pri-unit 16)
+(defconst g-sec-unit 17)
+(defconst g-ter-unit 18)
+(defconst g-pri-building 19)
+(defconst g-sec-building 20)
+(defconst g-ter-building 21)
+
+(defconst g-town-size 25)
+(defconst g-town-size-min 26)
+
+(defconst g-uu-pri-type 28)
+(defconst g-uu-sec-type 29)
+
+(defconst g-1pop 30)
+(defconst g-2pop 31)
+(defconst g-5pop 32)
+(defconst g-10pop 33)
+(defconst g-15pop 34)
+(defconst g-20pop 35)
+(defconst g-30pop 36)
+(defconst g-40pop 37)
+(defconst g-50pop 38)
+(defconst g-60pop 39)
+(defconst g-70pop 40)
+(defconst g-80pop 41)
+(defconst g-90pop 42)
+(defconst g-100pop 43)
+
+(defconst g-threat-time 100)
+(defconst g-threat-player 101)
+(defconst g-threat-source 102)
+(defconst g-threat-target 103)
+
+(defconst g-percent-desired-food-gatherer 111)
+(defconst g-percent-desired-wood-gatherer 112)
+(defconst g-percent-desired-gold-gatherer 113)
+(defconst g-percent-desired-stone-gatherer 114)
+
+(defconst g-tempmaths1 150)
+(defconst g-tempmaths2 151)
+(defconst g-tempmaths3 152)
+
+(defconst g-cost-food 211)
+(defconst g-cost-wood 212)
+(defconst g-cost-stone 213)
+(defconst g-cost-gold 214)
+(defconst g-delta-food 221)
+(defconst g-delta-wood 222)
+(defconst g-delta-stone 223)
+(defconst g-delta-gold 224)
+(defconst g-escrow-food 231)
+(defconst g-escrow-wood 232)
+(defconst g-escrow-stone 233)
+(defconst g-escrow-gold 234)
+
+(defconst g-escrow-on 300);set to with-escrow or without-escrow
+	(defrule(not(goal g-escrow-on with-escrow))=>(set-goal g-escrow-on with-escrow))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Timers
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defconst t-defensive-retreat 1)
+(defconst t-lumber 2)
+(defconst t-mining 3)
+(defconst t-new-targ 4)
+(defconst t-boars 5)
+(defconst t-retreat 6)
+(defconst t-new-mining-camp 7)
+(defconst t-new-lumber-camp 8)
+(defconst t-chat-food 9)
+(defconst t-chat-wood 10)
+(defconst t-chat-gold 11)
+(defconst t-chat-stone 12)
+(defconst t-reset-town-size 13)
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Unit/research-ids
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defconst villager-idle-female 293)
+(defconst villager-miner-dead-male 229)
+(defconst villager-miner-dead-female 221)
+(defconst villager-lumber-dead-male 228)
+(defconst villager-lumber-dead-female 219)
+(defconst villager-builder-dead-male 213)
+(defconst villager-builder-dead-female 225)
+
+(defconst unpack-treb 42)
+(defconst livestock-line 958)
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Strategy selection
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule
+(or(civ-selected aztec)
+(or(civ-selected celtic)
+(or(civ-selected frankish)
+   (civ-selected gothic))))
+=>
+(set-goal g-uu-pri-type militiaman-line)
+(disable-self))
+(defrule
+(or(civ-selected japanese)
+(or(civ-selected teutonic)
+(or(civ-selected incan)
+   (civ-selected viking))))
+=>
+(set-goal g-uu-pri-type militiaman-line)
+(disable-self))
+(defrule
+(or(civ-selected briton)
+(or(civ-selected chinese)
+(or(civ-selected indian)
+   (civ-selected italian))))
+=>
+(set-goal g-uu-pri-type archer-line)
+(disable-self))
+(defrule
+(or(civ-selected mayan)
+(or(civ-selected korean)
+(or(civ-selected mongol)
+(or(civ-selected spanish)
+   (civ-selected turkish)))))
+=>
+(set-goal g-uu-pri-type archer-line)
+(disable-self))
+(defrule
+(or(civ-selected byzantine)
+(or(civ-selected saracen)
+(or(civ-selected hun)
+(or(civ-selected magyar)
+(or(civ-selected persian)
+   (civ-selected slavic))))))
+=>
+(set-goal g-uu-pri-type knight-line)
+(disable-self))
+
+
+(defrule(true)=>(up-modify-goal g-uu-sec-type g:= g-uu-pri-type)
+(disable-self))
+(defrule
+(or(civ-selected incan)
+   (civ-selected viking))
+=>
+(set-goal g-uu-sec-type spearman-line)
+(disable-self))
+(defrule
+(civ-selected saracen)
+=>
+(set-goal g-uu-sec-type camel-line)
+(disable-self))
+(defrule
+(civ-selected gothic)
+=>
+(set-goal g-uu-sec-type skirmisher-line)
+(disable-self))
+(defrule
+(or(civ-selected indian)
+(or(civ-selected korean)
+(or(civ-selected mongol)
+   (civ-selected spanish))))
+=>
+(set-goal g-uu-sec-type cavalry-archer-line)
+(disable-self))
+(defrule
+(civ-selected magyar)
+=>
+(set-goal g-uu-sec-type scout-cavalry-line)
+(disable-self))
+
+(defrule(true)
+=>
+(set-goal g-feudal-pri-unit scout-cavalry-line)
+(set-goal g-feudal-sec-unit archer-line)
+(set-goal g-feudal-ter-unit militiaman-line)
+
+(set-goal g-castle-pri-unit knight-line)
+(set-goal g-castle-sec-unit archer-line)
+(set-goal g-castle-ter-unit militiaman-line)
+(disable-self))
+(defrule(civ-selected teutonic)
+=>(set-goal g-castle-ter-unit militiaman-line)
+(disable-self))
+(defrule(civ-selected indian)
+=>(set-goal g-castle-pri-unit militiaman-line)
+(disable-self))
+(defrule(civ-selected incan)(building-type-count castle > 0)
+=>(set-goal g-castle-sec-unit slinger)
+(disable-self))
+(defrule(or(civ-selected saracen)(civ-selected indian))
+(up-research-status c: ri-heavy-camel > research-unavailable)
+=>(set-goal g-castle-pri-unit camel-line)
+(disable-self))
+(defrule(or(civ-selected aztec)(or(civ-selected mayan)(civ-selected incan)))
+=>(set-goal g-feudal-pri-unit militiaman-line)
+(set-goal g-castle-pri-unit eagle-warrior-line)
+(disable-self))
+(defrule(or(civ-selected mongol)(or(civ-selected hun)(or(civ-selected spanish)(civ-selected magyar))))
+=>(set-goal g-castle-sec-unit cavalry-archer-line)
+(disable-self))
+
+(defrule(current-age == imperial-age)
+(up-research-status c: ri-arbalest == research-unavailable)
+(up-research-status c: ri-heavy-cavalry-archer > research-unavailable)
+=>(set-goal g-castle-sec-unit cavalry-archer-line)
+(disable-self))
+(defrule(research-completed ri-chemistry)
+(up-research-status c: ri-arbalest == research-unavailable)
+(unit-available hand-cannoneer)
+(not(or(civ-selected mongol)(or(civ-selected hun)(civ-selected magyar))))
+=>(set-goal g-castle-sec-unit hand-cannoneer)
+(disable-self))
+(defrule(current-age == imperial-age)
+(up-research-status c: ri-champion == research-unavailable)
+(up-research-status c: ri-two-handed-swordsman != research-pending)
+=>(up-modify-goal g-castle-ter-unit g:= g-castle-pri-unit)
+(disable-self))
+
+(defrule(up-research-status c: feudal-age > research-available)=>
+(up-modify-goal g-pri-unit g:= g-feudal-pri-unit)
+(up-modify-goal g-sec-unit g:= g-feudal-sec-unit)
+(up-modify-goal g-ter-unit g:= g-feudal-ter-unit)
+(set-difficulty-parameter ability-to-maintain-distance 50))
+(defrule(current-age > feudal-age)=>
+(up-modify-goal g-pri-unit g:= g-castle-pri-unit)
+(up-modify-goal g-sec-unit g:= g-castle-sec-unit)
+(up-modify-goal g-ter-unit g:= g-castle-ter-unit)
+(set-difficulty-parameter ability-to-maintain-distance 50))
+
+;early feudal trash
+(defrule(up-research-status c: feudal-age > research-available)
+(or(and(civilian-population < 35)
+       (players-military-population every-enemy < 4))
+   (and(up-gaia-type-count c: gold < 1)
+       (gold-amount < 100)))
+=>
+(up-modify-goal g-pri-unit c:= spearman-line)
+(up-modify-goal g-sec-unit c:= skirmisher-line)
+(up-modify-goal g-ter-unit c:= scout-cavalry-line))
+;switching all cav to swords
+(defrule(true)=>
+	(up-get-player-fact target-player unit-type-count spearman-line g-tempmaths1)
+	(up-get-player-fact my-player-number unit-type-count militiaman-line g-tempmaths2)
+	(up-modify-goal g-tempmaths1 g:%/ g-tempmaths2));ie 'superiority' of their spears over my swords
+(defrule
+	(up-compare-goal g-tempmaths1 > 90)
+	(players-unit-type-count target-player spearman-line > 4)
+	(not(goal g-pri-unit eagle-warrior-line))
+	(or(current-age < imperial-age)
+	(or(research-available ri-champion)
+	   (or(research-available ri-two-handed-swordsman)
+	      (not(research-completed ri-two-handed-swordsman)))))
+=>
+	(up-modify-goal g-pri-unit c:= militiaman-line)
+)
+
+;switching some cav/light cav to spearman (or camels)
+(defrule(true)=>
+	(up-get-player-fact target-player unit-type-count knight-line g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count scout-cavalry-line g-tempmaths2)
+	(up-modify-goal g-tempmaths1 g:+ g-tempmaths2)
+	(up-get-player-fact my-player-number unit-type-count spearman-line g-tempmaths2)
+	(up-get-player-fact my-player-number unit-type-count camel-line g-tempmaths3)
+	(up-modify-goal g-tempmaths2 g:+ g-tempmaths3)
+	(up-modify-goal g-tempmaths1 g:%/ g-tempmaths2));ie 'superiority' of their cav over my spears+camels
+(defrule
+	(or(up-research-status c: ri-pikeman > research-unavailable)
+	   (current-age < castle-age))
+	(up-compare-goal g-tempmaths1 > 80)
+	(or(players-unit-type-count target-player knight-line > 2)
+	   (players-unit-type-count target-player scout-cavalry-line > 2))
+=>
+	(up-modify-goal g-pri-unit c:= spearman-line)
+)
+(defrule
+	(up-research-status c: ri-pikeman < research-available)
+	(current-age > feudal-age)
+	(up-compare-goal g-tempmaths1 > 80)
+	(or(players-unit-type-count target-player knight-line > 2)
+	   (players-unit-type-count target-player scout-cavalry-line > 2))
+=>
+	(up-modify-goal g-pri-unit c:= camel-line)
+)
+
+;switching all archers to skirm
+(defrule(true)=>
+	(up-get-player-fact target-player unit-type-count archer-line g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count cavalry-archer-line g-tempmaths2)
+	(up-modify-goal g-tempmaths1 g:+ g-tempmaths2)
+	(up-get-player-fact my-player-number unit-type-count skirmisher-line g-tempmaths2)
+	(up-modify-goal g-tempmaths1 g:%/ g-tempmaths2));ie 'superiority' of their archers over my skirm
+(defrule
+	(or(up-research-status c: ri-elite-skirmisher > research-available)
+	   (current-age < castle-age))
+	(up-compare-goal g-tempmaths1 > 150)
+	(or(players-unit-type-count target-player archer-line > 2)
+	   (players-unit-type-count target-player cavalry-archer-line > 2))
+=>
+	(up-modify-goal g-sec-unit c:= skirmisher-line)
+)
+
+;sea maps
+(defrule(wall-completed-percentage 2 == 100)=>
+(up-modify-goal g-pri-unit c:= galley-line)
+(up-modify-goal g-sec-unit c:= villager)
+(up-modify-goal g-ter-unit c:= galley-line)
+(set-difficulty-parameter ability-to-maintain-distance 100))
+(defrule(wall-completed-percentage 2 == 100)(up-compare-goal g-sea-superiority < 80)
+(or(current-age == castle-age)(up-research-status c: ri-fast-fire-ship > research-unavailable))=>
+(up-modify-goal g-pri-unit c:= fire-ship-line)
+(up-modify-goal g-sec-unit c:= villager)
+(up-modify-goal g-ter-unit c:= fire-ship-line))
+(defrule(wall-completed-percentage 2 == 100)(up-compare-goal g-sea-superiority < 80)
+(unit-available cannon-galleon-line)=>
+(up-modify-goal g-pri-unit c:= galley-line)
+(up-modify-goal g-sec-unit c:= villager)
+(up-modify-goal g-ter-unit c:= cannon-galleon-line))
+;mixed
+(defrule(wall-completed-percentage 2 != 100)(building-type-count-total dock > 0)
+(or(up-compare-goal g-sea-superiority < 150)(warboat-count < 5))=>
+(up-modify-goal g-ter-unit c:= galley-line)
+(set-difficulty-parameter ability-to-maintain-distance 100))
+;mixed
+(defrule(wall-completed-percentage 2 != 100)(building-type-count-total dock > 0)
+(up-compare-goal g-sea-superiority < 50)(unit-available fire-ship-line)=>
+(up-modify-goal g-sec-unit c:= fire-ship-line)
+(set-difficulty-parameter ability-to-maintain-distance 100))
+
+(defrule(true)=>
+(set-goal g-pri-building house)
+(set-goal g-sec-building house)
+(set-goal g-ter-building house))
+(defrule
+	(or(goal g-pri-unit militiaman-line)
+	(or(goal g-pri-unit spearman-line)
+	   (goal g-pri-unit eagle-warrior-line)))
+=>(set-goal g-pri-building barracks))
+(defrule
+	(or(goal g-sec-unit militiaman-line)
+	(or(goal g-sec-unit spearman-line)
+	   (goal g-sec-unit eagle-warrior-line)))
+=>(set-goal g-sec-building barracks))
+(defrule
+	(or(goal g-ter-unit militiaman-line)
+	(or(goal g-ter-unit spearman-line)
+	   (goal g-ter-unit eagle-warrior-line)))
+=>(set-goal g-ter-building barracks))
+
+(defrule
+	(or(goal g-pri-unit scout-cavalry-line)
+	(or(goal g-pri-unit knight-line)
+	   (goal g-pri-unit camel-line)))
+=>(set-goal g-pri-building stable))
+(defrule
+	(or(goal g-sec-unit scout-cavalry-line)
+	(or(goal g-sec-unit knight-line)
+	   (goal g-sec-unit camel-line)))
+=>(set-goal g-sec-building stable))
+(defrule
+	(or(goal g-ter-unit scout-cavalry-line)
+	(or(goal g-ter-unit knight-line)
+	   (goal g-ter-unit camel-line)))
+=>(set-goal g-ter-building stable))
+
+(defrule
+	(or(goal g-pri-unit archer-line)
+	(or(goal g-pri-unit skirmisher-line)
+	(or(goal g-pri-unit cavalry-archer-line)
+	(or(goal g-pri-unit hand-cannoneer)
+	   (goal g-pri-unit slinger)))))
+=>(set-goal g-pri-building archery-range))
+(defrule
+	(or(goal g-sec-unit archer-line)
+	(or(goal g-sec-unit skirmisher-line)
+	(or(goal g-sec-unit cavalry-archer-line)
+	(or(goal g-sec-unit hand-cannoneer)
+	   (goal g-sec-unit slinger)))))
+=>(set-goal g-sec-building archery-range))
+(defrule
+	(or(goal g-ter-unit archer-line)
+	(or(goal g-ter-unit skirmisher-line)
+	(or(goal g-ter-unit cavalry-archer-line)
+	(or(goal g-ter-unit hand-cannoneer)
+	   (goal g-ter-unit slinger)))))
+=>(set-goal g-ter-building archery-range))
+
+(defrule
+	(or(goal g-pri-unit galley-line)
+	   (goal g-pri-unit fire-ship-line))
+=>(set-goal g-pri-building dock))
+(defrule
+	(or(goal g-pri-unit galley-line)
+	   (goal g-pri-unit fire-ship-line))
+=>(set-goal g-sec-building dock))
+(defrule
+	(or(goal g-pri-unit galley-line)
+	   (goal g-pri-unit fire-ship-line))
+=>(set-goal g-ter-building dock))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Escrow management
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defconst units-for-upgrade 2)
+
+(defrule(true) =>
+(set-escrow-percentage food 0)(set-escrow-percentage wood 0)
+(set-escrow-percentage gold 0)(set-escrow-percentage stone 0)
+(set-goal g-escrow-food 0)(set-goal g-escrow-wood 0)
+(set-goal g-escrow-gold 0)(set-goal g-escrow-stone 0))
+
+(defrule(military-population < 15)(up-compare-goal g-military-superiority < 100)=>
+(release-escrow food)(release-escrow gold)(release-escrow wood))
+
+(defrule(food-amount > 50)(not(can-afford-unit villager))(up-pending-objects c: villager < 1)
+=>(up-modify-escrow food c:- 50))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Building
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule(current-age >= castle-age)(stone-amount < 650)=>
+(up-modify-goal g-escrow-stone c:+ 4))
+(defrule(current-age >= castle-age)(stone-amount < 650)(building-type-count-total castle < 1)=>
+(up-modify-goal g-escrow-stone c:+ 5))
+
+(defrule(current-age >= castle-age)(wood-amount < 275)(building-type-count-total town-center < 2)
+=>(up-modify-goal g-escrow-wood c:+ 1))
+(defrule(current-age >= castle-age)(stone-amount < 100)(building-type-count-total town-center < 2)
+=>(up-modify-goal g-escrow-stone c:+ 1))
+	
+(defrule(current-age >= castle-age)(wood-amount < 200)(building-type-count-total siege-workshop < 1)
+=>(up-modify-goal g-escrow-wood c:+ 1))
+
+(defrule(current-age >= castle-age)(wood-amount < 175)(up-object-type-count-total g: g-pri-building < 1)
+=>(up-modify-goal g-escrow-wood c:+ 3))
+(defrule(current-age >= castle-age)(wood-amount < 175)(up-object-type-count-total g: g-sec-building < 1)
+=>(up-modify-goal g-escrow-wood c:+ 3))
+(defrule(current-age >= castle-age)(wood-amount < 175)(up-object-type-count-total g: g-ter-building < 1)
+=>(up-modify-goal g-escrow-wood c:+ 3))
+
+(defrule(building-type-count-total town-center < 1)(building-type-count-total lumber-camp > 0)
+(wood-amount < 275)(stone-amount < 100)
+=>(up-modify-escrow wood c:+ 275)(up-modify-escrow stone c:+ 100)
+(up-modify-goal g-escrow-wood c:+ 10)(up-modify-goal g-escrow-stone c:+ 10))
+
+(defrule(wood-amount < 100)
+(or(and(dropsite-min-distance wood > 4)
+       (strategic-number sn-wood-gatherer-percentage > 0))
+(or(and(dropsite-min-distance gold > 4)
+       (strategic-number sn-gold-gatherer-percentage > 0))
+   (and(dropsite-min-distance stone > 4)
+       (strategic-number sn-stone-gatherer-percentage > 0))))
+=>(up-modify-escrow wood c:+ 100)(up-modify-goal g-escrow-wood c:+ 10))
+
+(defrule(current-age >= castle-age)(wood-amount < 200)(building-type-count-total university < 1)
+=>(up-modify-goal g-escrow-wood c:+ 1))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Research
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;feudal
+;ri-wheel-barrow
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count villager > units-for-upgrade)(up-research-status c: ri-wheel-barrow == research-available)=>
+(up-add-research-cost c: ri-wheel-barrow c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-wood < 0)=>(up-modify-goal g-escrow-wood c:+ 1))
+
+;ri-bloodlines
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(or(unit-type-count knight-line > units-for-upgrade)(unit-type-count scout-cavalry-line > units-for-upgrade))(up-research-status c: ri-bloodlines == research-available)=>
+(up-add-research-cost c: ri-bloodlines c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-man-at-arms
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count militiaman-line > units-for-upgrade)(up-research-status c: ri-man-at-arms == research-available)=>
+(up-add-research-cost c: ri-man-at-arms c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;castle-age
+(defrule(true)=>
+(up-setup-cost-data 1 g-cost-food)
+(up-add-research-cost c: castle-age c: 1)
+(up-get-cost-delta g-delta-food))
+(defrule
+(up-research-status c: castle-age == research-available)(up-compare-goal g-delta-food < 0)
+(up-compare-goal g-military-superiority > 100)
+(strategic-number sn-target-player-number > 0)
+(military-population > 15)
+=>(up-modify-goal g-escrow-food c:+ 2))
+(defrule
+(up-research-status c: castle-age == research-available)(up-compare-goal g-delta-food < 0)
+(up-compare-goal g-military-superiority > 250)
+(strategic-number sn-target-player-number > 0)
+(military-population > 25)
+=>(up-modify-goal g-escrow-food c:+ 5))
+(defrule
+(up-research-status c: castle-age == research-available)(up-compare-goal g-delta-gold < 0)
+(up-compare-goal g-military-superiority > 100)
+(strategic-number sn-target-player-number > 0)
+(military-population > 15)
+=>(up-modify-goal g-escrow-gold c:+ 2))
+(defrule
+(up-research-status c: castle-age == research-available)(up-compare-goal g-delta-gold < 0)
+(up-compare-goal g-military-superiority > 250)
+(strategic-number sn-target-player-number > 0)
+(military-population > 25)
+=>(up-modify-goal g-escrow-gold c:+ 5))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;castle
+;ri-crossbow
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count archer-line > units-for-upgrade)(up-research-status c: ri-crossbow == research-available)=>
+(up-add-research-cost c: ri-crossbow c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-elite-skirmisher
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count skirmisher-line > units-for-upgrade)(up-research-status c: ri-elite-skirmisher == research-available)=>
+(up-add-research-cost c: ri-elite-skirmisher c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-wood < 0)=>(up-modify-goal g-escrow-wood c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-thumb-ring
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count archery-class > units-for-upgrade)(up-research-status c: ri-thumb-ring == research-available)=>
+(up-add-research-cost c: ri-thumb-ring c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-long-swordsman
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count militiaman-line > units-for-upgrade)(up-research-status c: ri-long-swordsman == research-available)=>
+(up-add-research-cost c: ri-long-swordsman c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-pikeman
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count spearman-line > units-for-upgrade)(up-research-status c: ri-pikeman == research-available)=>
+(up-add-research-cost c: ri-pikeman c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-eagle-warrior
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count eagle-warrior-line > units-for-upgrade)(up-research-status c: ri-eagle-warrior == research-available)=>
+(up-add-research-cost c: ri-eagle-warrior c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-light-cavalry
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count scout-cavalry-line > units-for-upgrade)(up-research-status c: ri-light-cavalry == research-available)=>
+(up-add-research-cost c: ri-light-cavalry c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-war-galley
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count galley-line > units-for-upgrade)(up-research-status c: ri-war-galley == research-available)=>
+(up-add-research-cost c: ri-war-galley c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-ballistics
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(warboat-count > 10)(up-research-status c: ri-ballistics == research-available)=>
+(up-add-research-cost c: ri-ballistics c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-wood < 0)=>(up-modify-goal g-escrow-wood c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;Unique techs
+;============
+;ri-atlatl skirmisher-line > units-for-upgrade
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count skirmisher-line > units-for-upgrade)(up-research-status c: ri-atlatl == research-available)=>
+(up-add-research-cost c: ri-atlatl c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-royalty archery-class > units-for-upgrade
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count archery-class > units-for-upgrade)(up-research-status c: ri-royalty == research-available)=>
+(up-add-research-cost c: ri-royalty c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-greak-fire fire-ship-line > units-for-upgrade
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count fire-ship-line > units-for-upgrade)(up-research-status c: ri-greak-fire == research-available)=>
+(up-add-research-cost c: ri-greak-fire c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-stronghold no escrow, any time
+;ri-great-wall nah
+;ri-chivalry cavalry-class > units-for-upgrade
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count cavalry-class > units-for-upgrade)(up-research-status c: ri-chivalry == research-available)=>
+(up-add-research-cost c: ri-chivalry c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-perfusion nah
+;ri-renegades nah
+;ri-andean-sling archery-class > units-for-upgrade
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count archery-class > units-for-upgrade)(up-research-status c: ri-andean-sling == research-available)=>
+(up-add-research-cost c: ri-andean-sling c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-sultans escrow on, any time
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(up-research-status c: ri-sultans == research-available)=>
+(up-add-research-cost c: ri-sultans c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-yasama any time, escrow on
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(up-research-status c: ri-yasama == research-available)=>
+(up-add-research-cost c: ri-yasama c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-panokseon nah
+;ri-mercenaries my-unique-unit > units-for-upgrade
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count my-unique-unit > units-for-upgrade)(up-research-status c: ri-mercenaries == research-available)=>
+(up-add-research-cost c: ri-mercenaries c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-tlatoani archery-class > units-for-upgrade
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count archery-class > units-for-upgrade)(up-research-status c: ri-tlatoani == research-available)=>
+(up-add-research-cost c: ri-tlatoani c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-falconry nah
+;ri-persepolis any time, no escrow
+;ri-madrasah any time, no escrow
+;ri-orthodoxy any time, no escrow
+;ri-inquisition any time, no escrow
+;ri-ironclad any time, no escrow
+;ri-sipahi cavalry-archer-line > units-for-upgrade
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count cavalry-archer-line > units-for-upgrade)(up-research-status c: ri-sipahi == research-available)=>
+(up-add-research-cost c: ri-sipahi c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-chieftains my-unique-unit > units-for-upgrade
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count my-unique-unit > units-for-upgrade)(up-research-status c: ri-chieftains == research-available)=>
+(up-add-research-cost c: ri-chieftains c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+
+;imperial-age
+(defrule(true)=>
+(up-setup-cost-data 1 g-cost-food)
+(up-add-research-cost c: imperial-age c: 1)
+(up-get-cost-delta g-delta-food))
+(defrule
+(up-research-status c: imperial-age == research-available)(up-compare-goal g-delta-food < 0)
+(up-compare-goal g-military-superiority > 100)
+(strategic-number sn-target-player-number > 0)
+(military-population > 15)
+=>(up-modify-goal g-escrow-food c:+ 2))
+(defrule
+(up-research-status c: imperial-age == research-available)(up-compare-goal g-delta-food < 0)
+(up-compare-goal g-military-superiority > 250)
+(strategic-number sn-target-player-number > 0)
+(military-population > 25)
+=>(up-modify-goal g-escrow-food c:+ 5))
+(defrule
+(up-research-status c: imperial-age == research-available)(up-compare-goal g-delta-gold < 0)
+(up-compare-goal g-military-superiority > 100)
+(strategic-number sn-target-player-number > 0)
+(military-population > 15)
+=>(up-modify-goal g-escrow-gold c:+ 2))
+(defrule
+(up-research-status c: imperial-age == research-available)(up-compare-goal g-delta-gold < 0)
+(up-compare-goal g-military-superiority > 250)
+(strategic-number sn-target-player-number > 0)
+(military-population > 25)
+=>(up-modify-goal g-escrow-gold c:+ 5))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;imperial
+;my-unique-unit-upgrade
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count my-unique-unit > units-for-upgrade)(up-research-status c: my-unique-unit-upgrade == research-available)=>
+(up-add-research-cost c: my-unique-unit-upgrade c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-wood < 0)=>(up-modify-goal g-escrow-wood c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-conscription
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(building-type-count castle > 0)(up-research-status c: ri-conscription == research-available)=>
+(up-add-research-cost c: ri-conscription c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-crossbow
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count archer-line > units-for-upgrade)(up-research-status c: ri-crossbow == research-available)=>
+(up-add-research-cost c: ri-crossbow c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-elite-skirmisher
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count skirmisher-line > units-for-upgrade)(up-research-status c: ri-elite-skirmisher == research-available)=>
+(up-add-research-cost c: ri-elite-skirmisher c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-wood < 0)=>(up-modify-goal g-escrow-wood c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-heavy-cavalry-archer
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count cavalry-archer-line > units-for-upgrade)(up-research-status c: ri-heavy-cavalry-archer == research-available)=>
+(up-add-research-cost c: ri-heavy-cavalry-archer c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-two-handed-swordsman
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count militiaman-line > units-for-upgrade)(up-research-status c: ri-two-handed-swordsman == research-available)=>
+(up-add-research-cost c: ri-two-handed-swordsman c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-champion
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count militiaman-line > units-for-upgrade)(up-research-status c: ri-champion == research-available)=>
+(up-add-research-cost c: ri-champion c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-halberdier
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count spearman-line > units-for-upgrade)(up-research-status c: ri-halberdier == research-available)=>
+(up-add-research-cost c: ri-halberdier c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-elite-eagle-warrior
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count eagle-warrior-line > units-for-upgrade)(up-research-status c: ri-elite-eagle-warrior == research-available)=>
+(up-add-research-cost c: ri-elite-eagle-warrior c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-hussar
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count scout-cavalry-line > units-for-upgrade)(up-research-status c: ri-hussar == research-available)=>
+(up-add-research-cost c: ri-hussar c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-cavalier
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count knight-line > units-for-upgrade)(up-research-status c: ri-cavalier == research-available)=>
+(up-add-research-cost c: ri-cavalier c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-paladin
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count knight-line > units-for-upgrade)(up-research-status c: ri-paladin == research-available)=>
+(up-add-research-cost c: ri-paladin c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-heavy-camel
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count camel-line > units-for-upgrade)(up-research-status c: ri-heavy-camel == research-available)=>
+(up-add-research-cost c: ri-heavy-camel c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-capped-ram
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count battering-ram-line > units-for-upgrade)(up-research-status c: ri-capped-ram == research-available)=>
+(up-add-research-cost c: ri-capped-ram c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+;ri-siege-ram
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count battering-ram-line > units-for-upgrade)(up-research-status c: ri-siege-ram == research-available)=>
+(up-add-research-cost c: ri-siege-ram c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+
+;ri-galleon
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count galley-line > units-for-upgrade)(up-research-status c: ri-galleon == research-available)=>
+(up-add-research-cost c: ri-galleon c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-fast-fire-ship
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(unit-type-count fire-ship-line > units-for-upgrade)(up-research-status c: ri-fast-fire-ship == research-available)=>
+(up-add-research-cost c: ri-fast-fire-ship c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+;ri-shipwright
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(warboat-count > 10)(up-research-status c: ri-shipwright == research-available)=>
+(up-add-research-cost c: ri-shipwright c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;ri-chemistry
+(defrule(true)=>(up-setup-cost-data 1 g-cost-food)(up-get-cost-delta g-delta-food))
+(defrule(warboat-count > 10)(up-research-status c: ri-chemistry == research-available)=>
+(up-add-research-cost c: ri-chemistry c: 1)(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food < 0)=>(up-modify-goal g-escrow-food c:+ 1))
+(defrule(up-compare-goal g-delta-gold < 0)=>(up-modify-goal g-escrow-gold c:+ 1))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule(goal g-escrow-food 1)=>(set-escrow-percentage food 10))
+(defrule(goal g-escrow-food 2)=>(set-escrow-percentage food 20))
+(defrule(goal g-escrow-food 3)=>(set-escrow-percentage food 30))
+(defrule(goal g-escrow-food 4)=>(set-escrow-percentage food 40))
+(defrule(goal g-escrow-food 5)=>(set-escrow-percentage food 50))
+(defrule(goal g-escrow-food 6)=>(set-escrow-percentage food 60))
+(defrule(goal g-escrow-food 7)=>(set-escrow-percentage food 70))
+(defrule(goal g-escrow-food 8)=>(set-escrow-percentage food 80))
+(defrule(up-compare-goal g-escrow-food > 8)=>(set-escrow-percentage food 90))
+
+(defrule(goal g-escrow-wood 1)=>(set-escrow-percentage wood 10))
+(defrule(goal g-escrow-wood 2)=>(set-escrow-percentage wood 20))
+(defrule(goal g-escrow-wood 3)=>(set-escrow-percentage wood 30))
+(defrule(goal g-escrow-wood 4)=>(set-escrow-percentage wood 40))
+(defrule(goal g-escrow-wood 5)=>(set-escrow-percentage wood 50))
+(defrule(goal g-escrow-wood 6)=>(set-escrow-percentage wood 60))
+(defrule(goal g-escrow-wood 7)=>(set-escrow-percentage wood 70))
+(defrule(goal g-escrow-wood 8)=>(set-escrow-percentage wood 80))
+(defrule(up-compare-goal g-escrow-wood > 8)=>(set-escrow-percentage wood 90))
+
+(defrule(goal g-escrow-gold 1)=>(set-escrow-percentage gold 10))
+(defrule(goal g-escrow-gold 2)=>(set-escrow-percentage gold 20))
+(defrule(goal g-escrow-gold 3)=>(set-escrow-percentage gold 30))
+(defrule(goal g-escrow-gold 4)=>(set-escrow-percentage gold 40))
+(defrule(goal g-escrow-gold 5)=>(set-escrow-percentage gold 50))
+(defrule(goal g-escrow-gold 6)=>(set-escrow-percentage gold 60))
+(defrule(goal g-escrow-gold 7)=>(set-escrow-percentage gold 70))
+(defrule(goal g-escrow-gold 8)=>(set-escrow-percentage gold 80))
+(defrule(up-compare-goal g-escrow-gold > 8)=>(set-escrow-percentage gold 90))
+
+(defrule(goal g-escrow-stone 1)=>(set-escrow-percentage stone 10))
+(defrule(goal g-escrow-stone 2)=>(set-escrow-percentage stone 20))
+(defrule(goal g-escrow-stone 3)=>(set-escrow-percentage stone 30))
+(defrule(goal g-escrow-stone 4)=>(set-escrow-percentage stone 40))
+(defrule(goal g-escrow-stone 5)=>(set-escrow-percentage stone 50))
+(defrule(goal g-escrow-stone 6)=>(set-escrow-percentage stone 60))
+(defrule(goal g-escrow-stone 7)=>(set-escrow-percentage stone 70))
+(defrule(goal g-escrow-stone 8)=>(set-escrow-percentage stone 80))
+(defrule(up-compare-goal g-escrow-stone > 8)=>(set-escrow-percentage stone 90))
+
+
+(defrule(taunt-detected my-player-number 51)=>
+(chat-local-to-self "ESCROW PERCENTAGES")
+(up-chat-data-to-self "FOOD %d" g: g-escrow-food)
+(up-chat-data-to-self "WOOD %d" g: g-escrow-wood)
+(up-chat-data-to-self "GOLD %d" g: g-escrow-gold)
+(up-chat-data-to-self "STONE %d" g: g-escrow-stone)
+(chat-local-to-self "ESCROW AMOUNTS")
+(up-get-fact escrow-amount food g-tempmaths1)
+(up-chat-data-to-self "FOOD %d" g: g-tempmaths1)
+(up-get-fact escrow-amount wood g-tempmaths1)
+(up-chat-data-to-self "WOOD %d" g: g-tempmaths1)
+(up-get-fact escrow-amount gold g-tempmaths1)
+(up-chat-data-to-self "GOLD %d" g: g-tempmaths1)
+(up-get-fact escrow-amount stone g-tempmaths1)
+(up-chat-data-to-self "STONE %d" g: g-tempmaths1)
+(acknowledge-taunt my-player-number 51))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Commerce
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Buy
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule
+	(gold-amount > 1500)
+	(stone-amount < 650)
+	(can-buy-commodity stone)
+=>
+	(buy-commodity stone)
+;	(chat-local-to-self "bs")
+)
+(defrule
+	(or(and(gold-amount > 500)
+	       (food-amount < 200))
+	(or(and(gold-amount > 900)
+	       (food-amount < 1000))
+	   (and(gold-amount > 300)
+	   (and(food-amount < 800)
+	       (up-research-status c: castle-age < research-pending)))))
+	(can-buy-commodity food)
+=>
+	(buy-commodity food)
+;	(chat-local-to-self "bf")
+)
+(defrule
+	(or(and(gold-amount > 500)
+	       (wood-amount < 200))
+	(or(and(gold-amount > 1000)
+	       (wood-amount < 500))
+	   (and(gold-amount > 1300)
+	       (wood-amount < 500))))
+	(can-buy-commodity wood)
+=>
+	(buy-commodity wood)
+;	(chat-local-to-self "bw")
+)
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Sell
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule
+	(gold-amount < 500)
+	(stone-amount > 750)
+	(can-sell-commodity stone)
+=>
+	(sell-commodity stone)
+;	(chat-local-to-self "ss")
+)
+(defrule
+	(or(and(gold-amount < 200)
+	       (food-amount > 500))
+	   (and(gold-amount < 800)
+	       (food-amount > 1100)))
+	(can-sell-commodity food)
+=>
+	(sell-commodity food)
+;	(chat-local-to-self "sf")
+)
+(defrule
+	(or(and(gold-amount < 200)
+	       (wood-amount > 500))
+	(or(and(gold-amount < 500)
+	       (wood-amount > 1000))
+	   (and(gold-amount < 500)
+	       (wood-amount > 1300))))
+	(can-sell-commodity wood)
+=>
+	(sell-commodity wood)
+;	(chat-local-to-self "sw")
+)
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Strategic numbers
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Superiorities
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Returns percentage of enemy army/navy we have (ie fraction*100)
+(defrule(true)=>
+	(up-get-player-fact my-player-number military-population 0 g-tempmaths1)
+	(up-get-player-fact target-player military-population 0 g-tempmaths2)
+	(up-modify-goal g-tempmaths1 g:%/ g-tempmaths2)
+	(up-modify-goal g-military-superiority g:= g-tempmaths1)
+
+	(up-get-player-fact my-player-number warboat-count 0 g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count galley-line g-tempmaths2)
+	(up-get-player-fact target-player unit-type-count fire-ship-line g-tempmaths3)
+	(up-modify-goal g-tempmaths2 g:+ g-tempmaths3)
+	(up-modify-goal g-tempmaths2 c:* 3)
+	(up-modify-goal g-tempmaths2 c:/ 2);estimate they have 1.5x what we see
+	(up-modify-goal g-tempmaths1 g:%/ g-tempmaths2)
+	(up-modify-goal g-sea-superiority g:= g-tempmaths1))
+
+;multiply up for age advantages
+(defrule(current-age > dark-age)(players-current-age every-enemy < feudal-age)=>
+(up-modify-goal g-military-superiority c:* 15)(up-modify-goal g-military-superiority c:/ 10)
+(up-modify-goal g-sea-superiority c:* 15)(up-modify-goal g-sea-superiority c:/ 10))
+(defrule(current-age > feudal-age)(players-current-age every-enemy < castle-age)=>
+(up-modify-goal g-military-superiority c:* 15)(up-modify-goal g-military-superiority c:/ 10)
+(up-modify-goal g-sea-superiority c:* 15)(up-modify-goal g-sea-superiority c:/ 10))
+(defrule(current-age > castle-age)(players-current-age every-enemy < imperial-age)=>
+(up-modify-goal g-military-superiority c:* 12)(up-modify-goal g-military-superiority c:/ 10)
+(up-modify-goal g-sea-superiority c:* 12)(up-modify-goal g-sea-superiority c:/ 10))
+
+
+(defrule(true)=>
+	(up-get-fact civilian-population 0 g-tempmaths1)
+	(up-modify-goal g-tempmaths1 s:%* sn-food-gatherer-percentage)
+	(up-get-fact unit-type-count villager-food g-percent-desired-food-gatherer)
+	(up-modify-goal g-percent-desired-food-gatherer g:%/ g-tempmaths1)
+
+	(up-get-fact civilian-population 0 g-tempmaths1)
+	(up-modify-goal g-tempmaths1 s:%* sn-wood-gatherer-percentage)
+	(up-get-fact unit-type-count villager-wood g-percent-desired-wood-gatherer)
+	(up-modify-goal g-percent-desired-wood-gatherer g:%/ g-tempmaths1))
+(defrule(true)=>
+	(up-get-fact civilian-population 0 g-tempmaths1)
+	(up-modify-goal g-tempmaths1 s:%* sn-gold-gatherer-percentage)
+	(up-get-fact unit-type-count villager-gold g-percent-desired-gold-gatherer)
+	(up-modify-goal g-percent-desired-gold-gatherer g:%/ g-tempmaths1)
+
+	(up-get-fact civilian-population 0 g-tempmaths1)
+	(up-modify-goal g-tempmaths1 s:%* sn-stone-gatherer-percentage)
+	(up-get-fact unit-type-count villager-stone g-percent-desired-stone-gatherer)
+	(up-modify-goal g-percent-desired-stone-gatherer g:%/ g-tempmaths1))
+
+
+
+
+(defrule(taunt-detected my-player-number 53)=>
+	(up-chat-data-to-player my-player-number "Military superiority: %d" g: g-military-superiority)
+	(up-chat-data-to-player my-player-number "Sea superiority: %d" g: g-sea-superiority)
+	(up-chat-data-to-player my-player-number "Target player: %d" s: sn-target-player-number)
+	(acknowledge-taunt my-player-number 53))
+
+(defrule(taunt-detected my-player-number 54)=>
+	(up-chat-data-to-player my-player-number "Percent desired vil-food: %d" g: g-percent-desired-food-gatherer)
+	(up-chat-data-to-player my-player-number "Percent desired vil-wood: %d" g: g-percent-desired-wood-gatherer)
+	(up-chat-data-to-player my-player-number "Percent desired vil-gold: %d" g: g-percent-desired-gold-gatherer)
+	(up-chat-data-to-player my-player-number "Percent desired vil-stone: %d" g: g-percent-desired-stone-gatherer)
+	(acknowledge-taunt my-player-number 54))
+
+
+(defconst g-1pop 30)
+(defconst g-2pop 31)
+(defconst g-5pop 32)
+(defconst g-10pop 33)
+(defconst g-15pop 34)
+(defconst g-20pop 35)
+(defconst g-30pop 36)
+(defconst g-40pop 37)
+(defconst g-50pop 38)
+(defconst g-60pop 39)
+(defconst g-70pop 40)
+(defconst g-80pop 41)
+(defconst g-90pop 42)
+(defconst g-100pop 43)
+(defrule(true)=>
+	(up-get-fact population-cap 0 g-tempmaths1)
+
+	(up-modify-goal g-1pop g:= g-tempmaths1)
+	(up-modify-goal g-1pop c:/ 100)
+
+	(up-modify-goal g-2pop g:= g-tempmaths1)
+	(up-modify-goal g-2pop c:/ 50)
+
+	(up-modify-goal g-5pop g:= g-tempmaths1)
+	(up-modify-goal g-5pop c:/ 20)
+
+	(up-modify-goal g-10pop g:= g-tempmaths1)
+	(up-modify-goal g-10pop c:/ 10)
+
+	(up-modify-goal g-15pop g:= g-tempmaths1)
+	(up-modify-goal g-15pop c:* 3)
+	(up-modify-goal g-15pop c:/ 20)
+
+	(up-modify-goal g-20pop g:= g-tempmaths1)
+	(up-modify-goal g-20pop c:/ 5)
+	(disable-self))
+(defrule(true)=>
+	(up-modify-goal g-30pop g:= g-tempmaths1)
+	(up-modify-goal g-30pop c:* 3)
+	(up-modify-goal g-30pop c:/ 10)
+
+	(up-modify-goal g-40pop g:= g-tempmaths1)
+	(up-modify-goal g-40pop c:* 4)
+	(up-modify-goal g-40pop c:/ 10)
+
+	(up-modify-goal g-50pop g:= g-tempmaths1)
+	(up-modify-goal g-50pop c:/ 2)
+
+	(up-modify-goal g-60pop g:= g-tempmaths1)
+	(up-modify-goal g-60pop c:* 6)
+	(up-modify-goal g-60pop c:/ 10)
+	(disable-self))
+(defrule(true)=>
+	(up-modify-goal g-70pop g:= g-tempmaths1)
+	(up-modify-goal g-70pop c:* 7)
+	(up-modify-goal g-70pop c:/ 10)
+
+	(up-modify-goal g-80pop g:= g-tempmaths1)
+	(up-modify-goal g-80pop c:* 8)
+	(up-modify-goal g-80pop c:/ 10)
+
+	(up-modify-goal g-90pop g:= g-tempmaths1)
+	(up-modify-goal g-90pop c:* 9)
+	(up-modify-goal g-90pop c:/ 10)
+
+	(up-modify-goal g-100pop g:= g-tempmaths1)
+	(disable-self))
+
+
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Initialisation
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule
+	(or(unit-type-count villager-builder-dead-female > 3)
+	   (unit-type-count villager-builder-dead-male > 3))
+=>
+	(set-strategic-number sn-percent-building-cancellation 100)
+)
+(defrule
+	(unit-type-count villager-builder-dead-female < 2)
+	(unit-type-count villager-builder-dead-male < 2)
+=>
+	(set-strategic-number sn-percent-building-cancellation 20)
+)
+(defrule
+	(strategic-number sn-consecutive-idle-unit-limit != 1)
+=>
+	(set-strategic-number sn-consecutive-idle-unit-limit 1)
+	(set-strategic-number sn-allow-civilian-defense 0)
+	(set-strategic-number sn-number-explore-groups 10)
+
+	(set-strategic-number sn-number-boat-explore-groups 1)
+	(set-strategic-number sn-percent-enemy-sighted-response 100)
+	(set-strategic-number sn-enemy-sighted-response-distance 25)
+	(set-strategic-number sn-relic-return-distance 255)
+
+	(set-strategic-number sn-safe-town-size 0)
+	(set-difficulty-parameter ability-to-dodge-missiles 0)
+	(set-difficulty-parameter ability-to-maintain-distance 50)
+	(enable-timer t-new-targ 30)
+
+	(enable-timer t-retreat 30)
+	(enable-timer t-defensive-retreat 30)
+	(set-goal g-attacking 0)
+	(enable-wall-placement 2)
+
+) 
+(defrule
+	(strategic-number sn-cap-civilian-builders != 20)
+=>
+	(set-strategic-number sn-retask-gather-amount 0)
+	(set-strategic-number sn-cap-civilian-builders 20)
+	(set-strategic-number sn-initial-exploration-required 0)
+
+	(set-strategic-number sn-lumber-camp-max-distance 10)
+	(set-strategic-number sn-mining-camp-max-distance 20)
+	(set-strategic-number sn-mill-max-distance 20)
+
+	(set-strategic-number sn-maximum-food-drop-distance 5)
+	(set-strategic-number sn-maximum-wood-drop-distance -1)
+	(set-strategic-number sn-maximum-gold-drop-distance 0)
+	(set-strategic-number sn-maximum-stone-drop-distance 0)
+
+	(set-strategic-number sn-maximum-hunt-drop-distance 5)
+	(set-strategic-number sn-food-gatherer-percentage  100)
+	(enable-timer t-new-lumber-camp 30)
+	(enable-timer t-new-mining-camp 30)
+	(enable-timer t-reset-town-size 20)
+)
+(defrule
+	(strategic-number sn-attack-group-size-randomness != 5)
+=>
+	(set-strategic-number sn-maximum-attack-group-size 50)
+	(set-strategic-number sn-minimum-attack-group-size 15)
+	(set-strategic-number sn-attack-group-size-randomness 5)
+	(set-strategic-number sn-group-form-distance 25)
+
+	(set-strategic-number sn-attack-intelligence 1)
+	(set-strategic-number sn-intelligent-gathering 1)
+	(set-strategic-number sn-minimum-dropsite-buffer 50)
+	(set-strategic-number sn-target-evaluation-distance 200)
+
+	(set-strategic-number sn-target-evaluation-ally-proximity 150)
+	(set-strategic-number sn-target-evaluation-time-kill-ratio 100)
+	(set-strategic-number sn-enable-training-queue 1)
+	(set-strategic-number sn-maximum-town-size 10)
+
+	(set-strategic-number sn-enable-patrol-attack 1)
+	(set-strategic-number sn-minimum-water-body-size-for-dock 4000)
+	(set-strategic-number sn-wall-targeting-mode 0)
+
+)
+(defrule
+	(strategic-number sn-enable-new-building-system != 1)
+=>
+	(set-strategic-number sn-food-gatherer-percentage  0)
+	(set-strategic-number sn-wood-gatherer-percentage  0)
+
+	(set-strategic-number sn-livestock-to-town-center 1)
+	(set-strategic-number sn-cap-civilian-gatherers 0)
+
+	(set-strategic-number sn-percent-civilian-gatherers 0)
+	(set-strategic-number sn-enable-new-building-system 1)
+	(up-assign-builders c: town-center-foundation  c: 4)
+
+	(up-assign-builders c: castle c: 5)
+	(up-assign-builders c: blacksmith c: 3)
+	(up-assign-builders c: market c: 3)
+	(enable-wall-placement 2)
+)
+(defrule
+	(true)
+=>
+	(set-strategic-number sn-minimum-civilian-explorers 0)
+	(set-strategic-number sn-percent-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(disable-self)
+)
+(defrule
+	(or(building-type-count-total town-center > 0)
+	   (can-afford-building town-center))
+=>
+	(set-strategic-number sn-minimum-civilian-explorers 10)
+	(set-strategic-number sn-percent-civilian-explorers 100)
+	(set-strategic-number sn-cap-civilian-explorers 10)
+	(disable-self)
+)
+(defrule
+	(true)
+=>
+	(set-goal g-map-type land)
+	(disable-self)
+)
+(defrule
+	(wall-completed-percentage 2 == 100)
+=>
+	(set-goal g-map-type water)
+	(disable-self)
+)
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Dark econ
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;force drop inspired by the horde/chamelion
+(defrule
+	(food-amount < 50)
+	(unit-type-count villager-food > 0)
+	(up-research-status c: feudal-age < research-pending)
+	(up-pending-objects c: mill == 0)
+	(up-pending-objects c: villager < 2)
+=>
+	(set-goal g-tempmaths1 50)
+	(up-get-player-fact my-player-number food-amount 0 g-tempmaths2)
+	(up-modify-goal g-tempmaths1 g:- g-tempmaths2)
+	(up-get-player-fact my-player-number unit-type-count villager-food g-tempmaths2)
+
+	(up-modify-goal g-tempmaths1 g:/ g-tempmaths2)
+	(up-modify-goal g-tempmaths1 c:+ 1)
+	(up-drop-resources food g: g-tempmaths1)
+	(up-chat-data-to-self "drop %d f villager" g: g-tempmaths1)
+)
+(defrule
+	(food-amount > 300)
+	(food-amount < 500)
+	(unit-type-count villager-food > 0)
+	(up-research-status c: feudal-age < research-pending)
+	(civilian-population > 24)
+=>
+	(set-goal g-tempmaths1 500)
+	(up-get-player-fact my-player-number food-amount 0 g-tempmaths2)
+	(up-modify-goal g-tempmaths1 g:- g-tempmaths2)
+	(up-get-player-fact my-player-number unit-type-count villager-food g-tempmaths2)
+
+	(up-modify-goal g-tempmaths1 g:/ g-tempmaths2)
+	(up-modify-goal g-tempmaths1 c:+ 1)
+	(up-drop-resources food g: g-tempmaths1)
+	(up-chat-data-to-self "drop %d f feudal" g: g-tempmaths1)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(or(unit-type-count livestock-line > 1)
+	   (building-type-count-total mill > 0))
+	(strategic-number sn-cap-civilian-explorers != 0)
+	(civilian-population < 7)
+=>
+	(chat-local-to-self "to f")
+	(set-strategic-number sn-food-gatherer-percentage  100)
+	(set-strategic-number sn-maximum-wood-drop-distance 0)
+	(set-strategic-number sn-maximum-food-drop-distance 15)
+
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-minimum-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-gatherers 250)
+	(set-strategic-number sn-number-explore-groups 1)
+)
+(defrule
+	(or(civilian-population > 6)
+	   (and(building-type-count town-center > 0)
+	   (and(housing-headroom < 1)
+	       (wood-amount < 30))))
+=>
+	(set-strategic-number sn-food-gatherer-percentage  75)
+	(set-strategic-number sn-wood-gatherer-percentage  25)
+	(set-strategic-number sn-maximum-wood-drop-distance -1)
+	(set-strategic-number sn-maximum-food-drop-distance 20)
+
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-minimum-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-gatherers 250)
+	(set-strategic-number sn-number-explore-groups 1)
+	(disable-self)
+)
+(defrule
+	(civilian-population > 8)
+=>
+	(set-strategic-number sn-food-gatherer-percentage  70)
+	(set-strategic-number sn-wood-gatherer-percentage  30)
+	(up-modify-sn sn-lumber-camp-max-distance c:+ 5)
+	(disable-self)
+)
+(defrule
+	(civilian-population > 13)
+=>
+	(set-strategic-number sn-food-gatherer-percentage  80)
+	(set-strategic-number sn-wood-gatherer-percentage  20)
+	(up-modify-sn sn-lumber-camp-max-distance c:+ 3)
+	(disable-self)
+)
+(defrule
+	(civilian-population > 19)
+=>
+	(set-strategic-number sn-food-gatherer-percentage  70)
+	(set-strategic-number sn-wood-gatherer-percentage  30)
+	(up-modify-sn sn-lumber-camp-max-distance c:+ 2)
+	(disable-self)
+)
+(defrule
+	(civilian-population > 24)
+=>
+	(set-strategic-number sn-food-gatherer-percentage  60)
+	(set-strategic-number sn-wood-gatherer-percentage  40)
+	(up-modify-sn sn-lumber-camp-max-distance c:+ 2)
+	(disable-self)
+)
+(defrule
+	(research-completed ri-loom)
+	(civilian-population > 10)
+	(dropsite-min-distance hunting < 30)
+	(strategic-number sn-enable-boar-hunting == 0)
+=>
+	(set-strategic-number sn-enable-boar-hunting 2)
+	(set-strategic-number sn-minimum-number-hunters 1)
+	(set-strategic-number sn-maximum-hunt-drop-distance 30)
+	(set-strategic-number sn-maximum-food-drop-distance 20)
+	(set-strategic-number sn-minimum-boar-lure-group-size 1)
+	(set-strategic-number sn-minimum-boar-hunt-group-size 1)
+	(up-retask-gatherers food c: 1)
+	(chat-local-to-self "boars")
+	(enable-timer t-boars 40)
+)
+(defrule
+	(timer-triggered t-boars)
+	(strategic-number sn-enable-boar-hunting == 2)
+=>
+	(set-strategic-number sn-minimum-number-hunters 4)
+	(set-strategic-number sn-minimum-boar-lure-group-size 1)
+	(set-strategic-number sn-minimum-boar-hunt-group-size 6)
+	(up-request-hunters c: 5)
+	(disable-timer t-boars)
+	(chat-local-to-self "boars2")
+)
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Later economy
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule(up-research-status c: feudal-age == research-pending)
+=>
+(up-setup-cost-data 1 g-cost-food)
+(up-add-object-cost c: villager c: 5)
+(up-add-object-cost g: g-pri-unit c: 5);spears or militia
+(up-add-object-cost g: g-pri-building c: 1)
+(up-add-object-cost c: farm c: 4))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+;set up and add in cost of stuff we want
+(defrule(current-age == feudal-age)
+=>
+(up-setup-cost-data 1 g-cost-food)
+(up-add-object-cost c: villager c: 2)
+(up-add-object-cost g: g-pri-unit c: 1)
+(up-add-object-cost g: g-pri-building c: 1)
+(up-add-object-cost c: farm c: 1))
+
+(defrule(current-age == feudal-age)
+(civilian-population > 30)
+=>
+(up-add-object-cost c: villager c: 8)
+(up-add-object-cost g: g-pri-unit c: 5)
+(up-add-object-cost g: g-pri-building c: -1)
+(up-add-object-cost g: g-sec-unit c: 6)
+(up-add-object-cost c: house c: 5))
+
+(defrule(current-age == feudal-age)
+(up-compare-goal g-military-superiority > 100)
+(civilian-population > 30)
+=>
+(up-add-object-cost c: watch-tower c: 1))
+
+(defrule(current-age == feudal-age)
+(civilian-population g:> g-30pop) 
+(up-object-type-count-total g: g-pri-building > 0)
+(up-object-type-count-total g: g-sec-building > 0)
+(up-object-type-count-total g: g-ter-building > 0)
+=>
+(up-add-object-cost c: villager c: 2)
+(up-add-object-cost g: g-ter-unit c: 6)
+(up-add-research-cost c: castle-age c: 1))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+(defrule(current-age >= castle-age)
+=>
+(up-setup-cost-data 1 g-cost-food)
+(up-add-object-cost c: villager c: 10)
+(up-add-object-cost g: g-pri-unit c: 6)
+(up-add-object-cost g: g-sec-unit c: 6)
+(up-add-object-cost g: g-ter-unit c: 6)
+(up-add-object-cost c: house c: 5)
+(up-add-object-cost c: watch-tower c: 1))
+
+(defrule(current-age == castle-age)(civilian-population g:> g-50pop)
+=>
+(up-add-research-cost c: imperial-age c: 1))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+(defrule(current-age > dark-age)=>
+(up-modify-goal g-tempmaths1 c:= 100)
+(up-modify-goal g-tempmaths1 g:- g-percent-desired-food-gatherer)
+
+(up-modify-goal g-tempmaths2 c:= 300)
+(up-get-fact civilian-population 0 g-tempmaths3)
+(up-modify-goal g-tempmaths2 g:/ g-tempmaths3)
+
+(up-modify-goal g-tempmaths1 g:/ g-tempmaths2))
+
+(defrule(up-compare-goal g-tempmaths1 < 0)=>(up-modify-goal g-tempmaths1 c:= 0))
+
+(defrule(current-age > dark-age)=>(up-add-object-cost c: farm g: g-tempmaths1))
+
+(defrule(taunt-detected my-player-number 55)=>
+(up-chat-data-to-self "Adding %d farms" g: g-tempmaths1)(acknowledge-taunt my-player-number 55))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+(defrule(up-compare-goal g-cost-food < 0)=>(set-goal g-cost-food 0))
+(defrule(up-compare-goal g-cost-wood < 0)=>(set-goal g-cost-wood 0))
+(defrule(up-compare-goal g-cost-gold < 0)=>(set-goal g-cost-gold 0))
+(defrule(up-compare-goal g-cost-stone < 0)=>(set-goal g-cost-stone 0))
+
+(defrule(true)=>(up-get-cost-delta g-delta-food));get deltas
+(defrule(up-compare-goal g-delta-food > 0)=>;convert deltas so all are below 0
+(up-modify-goal g-delta-wood g:- g-delta-food);ie pretend we need more of everything
+(up-modify-goal g-delta-gold g:- g-delta-food);even if we don't
+(up-modify-goal g-delta-stone g:- g-delta-food)
+(up-modify-goal g-delta-food g:- g-delta-food))
+(defrule(up-compare-goal g-delta-wood > 0)=>
+(up-modify-goal g-delta-food g:- g-delta-wood)
+(up-modify-goal g-delta-gold g:- g-delta-wood)
+(up-modify-goal g-delta-stone g:- g-delta-wood)
+(up-modify-goal g-delta-wood g:- g-delta-wood))
+(defrule(up-compare-goal g-delta-gold > 0)=>
+(up-modify-goal g-delta-food g:- g-delta-gold)
+(up-modify-goal g-delta-wood g:- g-delta-gold)
+(up-modify-goal g-delta-stone g:- g-delta-gold)
+(up-modify-goal g-delta-gold g:- g-delta-gold))
+(defrule(up-compare-goal g-delta-stone > 0)=>
+(up-modify-goal g-delta-food g:- g-delta-stone)
+(up-modify-goal g-delta-wood g:- g-delta-stone)
+(up-modify-goal g-delta-gold g:- g-delta-stone)
+(up-modify-goal g-delta-stone g:- g-delta-stone))
+
+(defrule(true)=>
+(up-modify-goal g-delta-food c:* -1);change sign on delta
+(up-modify-goal g-delta-wood c:* -1)
+(up-modify-goal g-delta-gold c:* -1)
+(up-modify-goal g-delta-stone c:* -1))
+
+(defrule(up-compare-goal g-cost-food < 1)=>(up-modify-goal g-delta-food c:= 0))
+(defrule(up-compare-goal g-cost-wood < 1)=>(up-modify-goal g-delta-wood c:= 0))
+(defrule(up-compare-goal g-cost-gold < 1)=>(up-modify-goal g-delta-gold c:= 0))
+(defrule(up-compare-goal g-cost-stone < 1)=>(up-modify-goal g-delta-stone c:= 0))
+
+(defrule(taunt-detected my-player-number 52)=>
+(chat-local-to-self "DESIRED RESOURCES")
+(up-chat-data-to-player my-player-number "F %d" g: g-cost-food)
+(up-chat-data-to-player my-player-number "W %d" g: g-cost-wood)
+(up-chat-data-to-player my-player-number "G %d" g: g-cost-gold)
+(up-chat-data-to-player my-player-number "S %d" g: g-cost-stone)
+(chat-local-to-self "RESOURCE DEFICITS")
+(up-chat-data-to-player my-player-number "F %d" g: g-delta-food)
+(up-chat-data-to-player my-player-number "W %d" g: g-delta-wood)
+(up-chat-data-to-player my-player-number "G %d" g: g-delta-gold)
+(up-chat-data-to-player my-player-number "S %d" g: g-delta-stone))
+
+(defrule(up-research-status c: feudal-age > research-available)=>
+(up-modify-goal g-tempmaths1 g:= g-delta-food);get sum
+(up-modify-goal g-tempmaths1 g:+ g-delta-wood)
+(up-modify-goal g-tempmaths1 g:+ g-delta-gold)
+(up-modify-goal g-tempmaths1 g:+ g-delta-stone)
+
+(up-modify-goal g-delta-food g:%/ g-tempmaths1);get percentage of each delta of sum
+(up-modify-goal g-delta-wood g:%/ g-tempmaths1)
+(up-modify-goal g-delta-gold g:%/ g-tempmaths1)
+(up-modify-goal g-delta-stone g:%/ g-tempmaths1)
+
+(up-modify-sn sn-food-gatherer-percentage g:= g-delta-food);this is our gatherer percentage
+(up-modify-sn sn-wood-gatherer-percentage g:= g-delta-wood)
+(up-modify-sn sn-gold-gatherer-percentage g:= g-delta-gold)
+(up-modify-sn sn-stone-gatherer-percentage g:= g-delta-stone))
+
+;fishing ship modification
+(defrule(up-research-status c: feudal-age > research-available)=>
+(up-get-fact civilian-population 0 g-tempmaths1)
+(up-get-fact unit-type-count fishing-ship g-tempmaths2)
+(up-modify-goal g-tempmaths1 s:%* sn-food-gatherer-percentage);ie get number desired food gatherers
+(up-modify-goal g-tempmaths1 g:- g-tempmaths2);now subtract number fishing ships
+(up-get-fact civilian-population 0 g-tempmaths2)
+(up-modify-goal g-tempmaths1 g:%/ g-tempmaths2);get percent needed for villager-food
+(up-modify-sn sn-food-gatherer-percentage g:= g-tempmaths1))
+
+(defrule(up-research-status c: feudal-age > research-available)=>
+(up-modify-goal g-tempmaths1 c:= 100)
+(up-modify-goal g-tempmaths1 s:- sn-food-gatherer-percentage)
+
+(up-modify-goal g-tempmaths2 s:= sn-wood-gatherer-percentage)
+(up-modify-goal g-tempmaths2 s:+ sn-gold-gatherer-percentage)
+(up-modify-goal g-tempmaths2 s:+ sn-stone-gatherer-percentage)
+
+(up-modify-goal g-tempmaths1 g:%/ g-tempmaths2)
+
+(up-modify-sn sn-wood-gatherer-percentage g:%* g-tempmaths1)
+(up-modify-sn sn-gold-gatherer-percentage g:%* g-tempmaths1)
+(up-modify-sn sn-stone-gatherer-percentage g:%* g-tempmaths1))
+
+
+;trade cart/cog modification
+(defrule(up-research-status c: feudal-age > research-available)=>
+(up-get-fact civilian-population 0 g-tempmaths1)
+(up-get-fact unit-type-count trade-cart g-tempmaths2)
+(up-get-fact unit-type-count trade-cog g-tempmaths3)
+(up-modify-goal g-tempmaths2 g:+ g-tempmaths3)
+(up-modify-goal g-tempmaths1 s:%* sn-gold-gatherer-percentage);ie get number desired gold gatherers
+(up-modify-goal g-tempmaths1 g:- g-tempmaths2);now subtract number trade units
+(up-get-fact civilian-population 0 g-tempmaths2)
+(up-modify-goal g-tempmaths1 g:%/ g-tempmaths2);get percent needed for villager-gold
+(up-modify-sn sn-gold-gatherer-percentage g:= g-tempmaths1))
+
+(defrule(up-research-status c: feudal-age > research-available)=>
+(up-modify-goal g-tempmaths1 c:= 100)
+(up-modify-goal g-tempmaths1 s:- sn-gold-gatherer-percentage)
+
+(up-modify-goal g-tempmaths2 s:= sn-food-gatherer-percentage)
+(up-modify-goal g-tempmaths2 s:+ sn-wood-gatherer-percentage)
+(up-modify-goal g-tempmaths2 s:+ sn-stone-gatherer-percentage)
+
+(up-modify-goal g-tempmaths1 g:%/ g-tempmaths2)
+
+(up-modify-sn sn-food-gatherer-percentage g:%* g-tempmaths1)
+(up-modify-sn sn-wood-gatherer-percentage g:%* g-tempmaths1)
+(up-modify-sn sn-stone-gatherer-percentage g:%* g-tempmaths1))
+
+
+
+(defrule(taunt-detected my-player-number 52)=>
+(chat-local-to-self "GATHER PERCENTAGES")
+(up-chat-data-to-player my-player-number "F %d" s: sn-food-gatherer-percentage)
+(up-chat-data-to-player my-player-number "W %d" s: sn-wood-gatherer-percentage)
+(up-chat-data-to-player my-player-number "G %d" s: sn-gold-gatherer-percentage)
+(up-chat-data-to-player my-player-number "S %d" s: sn-stone-gatherer-percentage)
+(acknowledge-taunt my-player-number 52))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Town-size
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+(defrule
+	(wood-amount >= 175)
+	(or(up-pending-placement c: barracks)
+	(or(up-pending-placement c: archery-range)
+	(or(up-pending-placement c: monastery)
+	(or(up-pending-placement c: blacksmith)
+	(or(up-pending-placement c: market)
+	   (up-pending-placement c: stable))))))
+=>
+	(up-modify-sn sn-maximum-town-size c:+ 2)
+	(up-modify-goal g-town-size s:= sn-maximum-town-size)
+)
+(defrule
+	(or(and(up-pending-placement c: castle)
+	       (can-afford-building castle))
+	(or(and(up-pending-placement c: siege-workshop)
+	       (can-afford-building siege-workshop))
+	   (and(up-pending-placement c: town-center)
+	       (can-afford-building town-center))))
+=>
+	(up-modify-sn sn-maximum-town-size c:+ 2)
+	(up-modify-goal g-town-size s:= sn-maximum-town-size)
+)
+(defrule
+	(or(and(up-pending-placement c: house)
+	       (can-afford-building house))
+	   (and(up-pending-placement c: wonder)
+	       (can-afford-building wonder)))
+=>
+	(up-modify-sn sn-maximum-town-size c:+ 2)
+	(up-modify-goal g-town-size s:= sn-maximum-town-size)
+)
+(defrule
+	(timer-triggered t-reset-town-size)
+	(goal g-attacking 0)
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size)
+	(up-modify-goal g-town-size c:* 9)
+	(up-modify-goal g-town-size c:/ 10)
+	(up-chat-data-to-player my-player-number "reset ts %d" g: g-town-size)
+	(up-modify-goal g-town-size-min g:= g-town-size)
+	(up-modify-goal g-town-size-min c:* 8)
+	(up-modify-goal g-town-size-min c:/ 10)
+
+)
+(defrule
+	(timer-triggered t-reset-town-size)
+	(game-time < 180)
+=>
+	;(up-modify-goal g-town-size c:* 6)
+	;(up-modify-goal g-town-size c:/ 10)
+	;(up-modify-sn sn-maximum-town-size g:= g-town-size)
+	(enable-timer t-reset-town-size 5)
+)
+(defrule
+	(timer-triggered t-reset-town-size)
+	(game-time > 180)
+	(game-time < 300)
+=>
+	;(up-modify-goal g-town-size c:* 7)
+	;(up-modify-goal g-town-size c:/ 10)
+	;(up-modify-sn sn-maximum-town-size g:= g-town-size)
+	(enable-timer t-reset-town-size 10)
+)
+(defrule
+	(timer-triggered t-reset-town-size)
+	(game-time > 300)
+	(game-time < 600)
+=>
+	;(up-modify-goal g-town-size c:* 9)
+	;(up-modify-goal g-town-size c:/ 10)
+	;(up-modify-sn sn-maximum-town-size g:= g-town-size)
+	(enable-timer t-reset-town-size 30)
+)
+(defrule
+	(timer-triggered t-reset-town-size)
+	(game-time > 600)
+=>
+	(enable-timer t-reset-town-size 60)
+)
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Research
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Resets for research
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule
+	(or(and(food-amount > 450)
+	       (up-research-status c: feudal-age == research-available))
+	(or(and(can-afford-research ri-wheel-barrow)
+	   (and(civilian-population > g-15pop)
+	       (up-research-status c: ri-wheel-barrow == research-available)))
+	   (and(food-amount > 720)
+	   (and(gold-amount >= 200)
+	       (up-research-status c: castle-age == research-available)))))
+=>
+	(up-reset-building 1 c: town-center)
+)
+(defrule
+	(can-afford-research ri-man-at-arms)
+	(unit-type-count militiaman-line > units-for-upgrade)
+	(or(up-research-status c: ri-man-at-arms == research-available)
+	(or(and(can-afford-research ri-long-swordsman)
+	       (up-research-status c: ri-long-swordsman == research-available))
+	(or(and(can-afford-research ri-two-handed-swordsman)
+	       (up-research-status c: ri-two-handed-swordsman == research-available))
+	   (and(can-afford-research ri-champion)
+	       (up-research-status c: ri-champion == research-available)))))
+	   
+=>
+	(up-reset-building 1 c: barracks)
+)
+(defrule
+	(can-afford-research ri-pikeman)
+	(unit-type-count spearman-line > units-for-upgrade)
+	(or(up-research-status c: ri-pikeman == research-available)
+	   (and(can-afford-research ri-halberdier)
+	       (up-research-status c: ri-halberdier == research-available)))
+	   
+=>
+	(up-reset-building 1 c: barracks)
+)
+(defrule
+	(can-afford-research ri-eagle-warrior)
+	(unit-type-count eagle-warrior-line > units-for-upgrade)
+	(or(up-research-status c: ri-eagle-warrior == research-available)
+	   (and(can-afford-research ri-elite-eagle-warrior)
+	       (up-research-status c: ri-elite-eagle-warrior == research-available)))
+	   
+=>
+	(up-reset-building 1 c: barracks)
+)
+(defrule
+	(can-afford-research ri-crossbow)
+	(unit-type-count archer-line > units-for-upgrade)
+	(or(up-research-status c: ri-crossbow == research-available)
+	   (and(can-afford-research ri-arbalest)
+	       (up-research-status c: ri-arbalest == research-available)))
+	   
+=>
+	(up-reset-building 1 c: archery-range)
+)
+(defrule
+	(or(and(can-afford-research ri-heavy-cavalry-archer)
+	   (and(unit-type-count cavalry-archer-line > units-for-upgrade)
+	       (up-research-status c: ri-heavy-cavalry-archer == research-available)))
+	   (and(can-afford-research ri-heavy-cavalry-archer)
+	   (and(unit-type-count skirmisher-line > units-for-upgrade) 
+	       (up-research-status c: ri-elite-skirmisher == research-available))))
+	   
+=>
+	(up-reset-building 1 c: archery-range)
+)
+(defrule
+	(can-afford-research ri-light-cavalry)
+	(unit-type-count scout-cavalry-line > units-for-upgrade)
+	(or(up-research-status c: ri-light-cavalry == research-available)
+	   (and(can-afford-research ri-hussar)
+	       (up-research-status c: ri-hussar == research-available)))
+	   
+=>
+	(up-reset-building 1 c: stable)
+)
+(defrule
+	(can-afford-research ri-cavalier)
+	(unit-type-count knight-line > units-for-upgrade)
+	(or(up-research-status c: ri-cavalier == research-available)
+	   (and(can-afford-research ri-paladin)
+	       (up-research-status c: ri-paladin == research-available)))
+	   
+=>
+	(up-reset-building 1 c: stable)
+)
+(defrule
+	(unit-type-count cavalry-class > units-for-upgrade)
+	(or(and(can-afford-research ri-bloodlines)
+	       (up-research-status c: ri-bloodlines == research-available))
+	(or(and(can-afford-research ri-husbandry)
+	       (up-research-status c: ri-husbandry == research-available))
+	   (and(can-afford-research ri-husbandry)
+	   (and(up-research-status c: ri-husbandry == research-available)
+	       (unit-type-count camel-line > units-for-upgrade)))))
+	   
+=>
+	(up-reset-building 1 c: stable)
+)
+(defrule
+	(unit-type-count battering-ram-line > units-for-upgrade)
+	(or(and(can-afford-research ri-capped-ram)
+	       (up-research-status c: ri-siege-ram == research-available))
+	   (and(can-afford-research ri-capped-ram)
+	       (up-research-status c: ri-siege-ram == research-available)))
+=>
+	(up-reset-building 1 c: siege-workshop)
+)
+(defrule
+	(or(and(can-afford-research ri-conscription)
+	       (up-research-status c: ri-conscription == research-available))
+	   (and(can-afford-research my-unique-unit-upgrade)
+	   (and(up-research-status c: my-unique-unit-upgrade == research-available)
+	       (unit-type-count my-unique-unit > units-for-upgrade))))
+=>
+	(up-reset-building 1 c: castle)
+)
+(defrule
+	(unit-type-count galley-line > units-for-upgrade)
+	(can-afford-research ri-war-galley)   
+	(or(up-research-status c: ri-war-galley == research-available)
+	(or(and(can-afford-research ri-careening)
+	       (up-research-status c: ri-careening == research-available))
+	(or(and(can-afford-research ri-dry-dock)
+	       (up-research-status c: ri-dry-dock == research-available))
+	   (and(can-afford-research ri-shipwright)
+	       (up-research-status c: ri-shipwright == research-available)))))
+=>
+	(up-reset-building 1 c: dock)
+)
+(defrule
+	(or(and(unit-type-count galley-line > units-for-upgrade)
+	   (and(can-afford-research ri-galleon)
+	       (up-research-status c: ri-galleon == research-available)))
+	   (and(unit-type-count fire-ship-line > units-for-upgrade)
+	   (and(can-afford-research ri-fast-fire-ship)
+	       (up-research-status c: ri-fast-fire-ship == research-available))))
+	   
+=>
+	(up-reset-building 1 c: dock)
+)
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Research
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule
+	(or(can-research feudal-age)
+	   (and(up-research-status c: feudal-age > research-available)
+	       (strategic-number sn-maximum-gold-drop-distance != 7)))
+=>
+	(research feudal-age)
+
+	(set-strategic-number sn-food-gatherer-percentage  40)
+	(set-strategic-number sn-wood-gatherer-percentage  60)
+
+	(set-strategic-number sn-maximum-gold-drop-distance 7)
+	(set-strategic-number sn-maximum-stone-drop-distance 7)
+
+	(set-strategic-number sn-enable-boar-hunting 1)
+)
+(defrule
+	(up-pending-objects c: villager > 1)
+	(can-research ri-hunting-dogs)
+=>
+	(research ri-hunting-dogs)
+)
+(defrule
+	(or(and(or(not(can-train villager))
+	          (unit-type-count villager > 10))
+	       (can-research ri-loom))
+	(or(up-can-research g-escrow-on c: castle-age)
+	   (up-can-research g-escrow-on c: imperial-age)))
+=>
+	(research ri-loom)
+	(up-research g-escrow-on c: castle-age)
+	(up-research g-escrow-on c: imperial-age)
+)
+(defrule
+	(civilian-population g:> g-30pop)
+	(or(up-can-research g-escrow-on c: ri-wheel-barrow)
+	(or(can-research ri-double-bit-axe)
+	(or(can-research ri-gold-mining)
+	(or(can-research ri-horse-collar)
+	   (can-research ri-stone-mining)))))
+=>
+	(up-research g-escrow-on c: ri-wheel-barrow)
+	(research ri-double-bit-axe)
+	(research ri-gold-mining)
+	(research ri-horse-collar)
+	(research ri-stone-mining)
+)
+(defrule
+	(civilian-population g:> g-40pop)
+	(or(up-can-research g-escrow-on c: ri-hand-cart)
+	(or(can-research ri-bow-saw)
+	(or(can-research ri-gold-shaft-mining)
+	(or(can-research ri-heavy-plow)
+	   (can-research ri-stone-shaft-mining)))))
+=>
+	(up-research g-escrow-on c: ri-hand-cart)
+	(research ri-bow-saw)
+	(research ri-gold-shaft-mining)
+	(research ri-heavy-plow)
+	(research ri-stone-shaft-mining)
+)
+(defrule
+	(or(can-research ri-two-man-saw)
+	(or(can-research ri-guilds)
+	   (can-research ri-crop-rotation)))
+=>
+	(research ri-two-man-saw)
+	(research ri-guilds)
+	(research ri-crop-rotation)
+)
+(defrule
+	(civilian-population g:> g-30pop)
+	(or(up-can-research g-escrow-on c: ri-ballistics)
+	(or(can-research ri-murder-holes)
+	(or(can-research ri-guard-tower)
+	(or(can-research ri-stonecutting)
+	   (can-research ri-masonry)))))
+=>
+	(up-research g-escrow-on c: ri-ballistics)
+	(research ri-murder-holes)
+	(research ri-guard-tower)
+	(research ri-stonecutting);treadmill crane
+	(research ri-masonry)
+)
+(defrule
+	(civilian-population g:> g-30pop)
+	(or(up-can-research g-escrow-on c: ri-chemistry)
+	(or(can-research ri-keep)
+	   (can-research ri-architecture)))
+=>
+	(up-research g-escrow-on c: ri-chemistry)
+	(research ri-keep)
+	(research ri-architecture)
+)
+(defrule
+	(unit-type-count trade-cart > 0)
+	(players-building-type-count any-ally market > 0)
+	(or(up-can-research g-escrow-on c: ri-cartography)
+	   (up-can-research g-escrow-on c: ri-caravan))
+=>
+	(up-research g-escrow-on c: ri-cartography)
+	(up-research g-escrow-on c: ri-caravan)
+)
+(defrule
+	(player-in-game any-ally)
+	(civilian-population g:> g-30pop)
+	(or(up-can-research g-escrow-on c: ri-coinage)
+	   (up-can-research g-escrow-on c: ri-banking))
+=>
+	(up-research g-escrow-on c: ri-coinage)
+	(up-research g-escrow-on c: ri-banking)
+)
+(defrule
+	(or(and(unit-type-count galley-line > units-for-upgrade)
+	       (or(up-can-research g-escrow-on c: ri-war-galley)
+	          (up-can-research g-escrow-on c: ri-galleon)))
+	   (and(unit-type-count fire-ship-line > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-fast-fire-ship)))
+=>
+	(up-research g-escrow-on c: ri-war-galley)
+	(up-research g-escrow-on c: ri-galleon)
+	(up-research g-escrow-on c: ri-fast-fire-ship)
+)
+(defrule
+	(unit-type-count galley-line > units-for-upgrade)
+	(or(up-can-research g-escrow-on c: ri-shipwright)
+	(or(up-can-research g-escrow-on c: ri-careening)
+	   (up-can-research g-escrow-on c: ri-dry-dock)))
+=>
+	(up-research g-escrow-on c: ri-shipwright)
+	(up-research g-escrow-on c: ri-careening)
+	(up-research g-escrow-on c: ri-dry-dock)
+)
+(defrule
+	(unit-type-count archer-line > units-for-upgrade)
+	(or(up-can-research g-escrow-on c: ri-crossbow)
+	   (up-can-research g-escrow-on c: ri-arbalest))
+=>
+	(up-research g-escrow-on c: ri-crossbow)
+	(up-research g-escrow-on c: ri-arbalest)
+)
+(defrule
+	(or(and(unit-type-count skirmisher-line > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-elite-skirmisher))
+	   (and(unit-type-count cavalry-archer-line > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-heavy-cavalry-archer)))
+=>
+	(up-research g-escrow-on c: ri-elite-skirmisher)
+	(up-research g-escrow-on c: ri-heavy-cavalry-archer)
+)
+(defrule
+	(or(unit-type-count scout-cavalry-line > units-for-upgrade)
+	   (unit-type-count eagle-warrior-line > units-for-upgrade))
+	(or(up-can-research g-escrow-on c: ri-light-cavalry)
+	(or(up-can-research g-escrow-on c: ri-hussar)
+	(or(up-can-research g-escrow-on c: ri-eagle-warrior)
+	   (up-can-research g-escrow-on c: ri-elite-eagle-warrior))))
+=>
+	(up-research g-escrow-on c: ri-light-cavalry)
+	(up-research g-escrow-on c: ri-hussar)
+	(up-research g-escrow-on c: ri-eagle-warrior)
+	(up-research g-escrow-on c: ri-elite-eagle-warrior)
+)
+(defrule
+	(unit-type-count militiaman-line > units-for-upgrade)
+	(or(up-can-research g-escrow-on c: ri-man-at-arms)
+	(or(up-can-research g-escrow-on c: ri-long-swordsman)
+	(or(up-can-research g-escrow-on c: ri-two-handed-swordsman)
+	   (up-can-research g-escrow-on c: ri-champion))))
+=>
+	(up-research g-escrow-on c: ri-man-at-arms)
+	(up-research g-escrow-on c: ri-long-swordsman)
+	(up-research g-escrow-on c: ri-two-handed-swordsman)
+	(up-research g-escrow-on c: ri-champion)
+)
+(defrule
+	(unit-type-count spearman-line > units-for-upgrade)
+	(or(up-can-research g-escrow-on c: ri-pikeman)
+	   (up-can-research g-escrow-on c: ri-halberdier))
+=>
+	(up-research g-escrow-on c: ri-pikeman)
+	(up-research g-escrow-on c: ri-halberdier)
+)
+(defrule
+	(or(and(unit-type-count knight-line > units-for-upgrade)
+	       (or(up-can-research g-escrow-on c: ri-cavalier)
+	          (up-can-research g-escrow-on c: ri-paladin)))
+	   (and(unit-type-count camel-line > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-heavy-camel)))
+=>
+	(up-research g-escrow-on c: ri-cavalier)
+	(up-research g-escrow-on c: ri-paladin)
+	(up-research g-escrow-on c: ri-heavy-camel)
+)
+
+;Castle age UTs
+(defrule
+	(or(and(unit-type-count skirmisher-line > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-atlatl))
+	(or(and(unit-type-count archery-class > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-royalty))
+	   (and(unit-type-count fire-ship-line > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-greak-fire))))
+=>
+	(up-research g-escrow-on c: ri-atlatl)
+	(up-research g-escrow-on c: ri-royalty)
+	(up-research g-escrow-on c: ri-greak-fire)
+	(chat-local-to-self "UT")
+)
+(defrule
+	(or(and(unit-type-count cavalry-class > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-chivalry))
+	(or(and(unit-type-count archery-class > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-andean-sling))
+	   (and(unit-type-count my-unique-unit > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-mercenaries))))
+=>
+	(up-research g-escrow-on c: ri-chivalry)
+	(up-research g-escrow-on c: ri-andean-sling)
+	(up-research g-escrow-on c: ri-mercenaries)
+	(chat-local-to-self "UT")
+)
+(defrule
+	(or(and(unit-type-count archery-class > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-tlatoani))
+	(or(and(unit-type-count cavalry-archer-line > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-sipahi))
+	   (and(unit-type-count my-unique-unit > units-for-upgrade)
+	       (up-can-research g-escrow-on c: ri-chieftains))))
+=>
+	(up-research g-escrow-on c: ri-tlatoani)
+	(up-research g-escrow-on c: ri-sipahi)
+	(up-research g-escrow-on c: ri-chieftains)
+	(chat-local-to-self "UT")
+)
+(defrule
+	(or(up-can-research g-escrow-on c: ri-sultans)
+	(or(up-can-research g-escrow-on c: ri-yasama)
+	(or(up-can-research 0 c: ri-stronghold)
+	(or(up-can-research 0 c: ri-persepolis)
+	   (up-can-research 0 c: ri-madrasah)))))
+=>
+	(up-research g-escrow-on c: ri-sultans)
+	(up-research g-escrow-on c: ri-yasama)
+	(up-research 0 c: ri-stronghold)
+	(up-research 0 c: ri-persepolis)
+	(up-research 0 c: ri-madrasah)
+	(chat-local-to-self "UT")
+)
+
+(defrule
+	(or(up-can-research 0 c: ri-orthodoxy)
+	(or(up-can-research 0 c: ri-inquisition)
+	   (up-can-research 0 c: ri-ironclad)))
+=>
+	(up-research 0 c: ri-orthodoxy)
+	(up-research 0 c: ri-inquisition)
+	(up-research 0 c: ri-ironclad)
+	(chat-local-to-self "UT")
+)
+
+
+(defrule
+	(unit-type-count battering-ram-line > units-for-upgrade)
+	(or(up-can-research g-escrow-on c: ri-capped-ram)
+	   (up-can-research g-escrow-on c: ri-siege-ram))
+=>
+	(up-research g-escrow-on c: ri-capped-ram)
+	(up-research g-escrow-on c: ri-siege-ram)
+)
+(defrule
+	(or(up-can-research g-escrow-on c: ri-conscription)
+	   (and(up-can-research g-escrow-on c: my-unique-unit-upgrade)
+	       (unit-type-count my-unique-unit > units-for-upgrade)))
+=>
+	(up-research g-escrow-on c: ri-conscription)
+	(up-research g-escrow-on c: my-unique-unit-upgrade)
+)
+(defrule
+	(or(and(up-can-research g-escrow-on c: ri-thumb-ring)
+	       (unit-type-count archery-class > units-for-upgrade))
+	   (and(can-research ri-squires)
+	       (unit-type-count infantry-class > units-for-upgrade)))
+=>
+	(up-research g-escrow-on c: ri-thumb-ring)
+	(research ri-squires)
+)
+(defrule
+	(unit-type-count cavalry-class > units-for-upgrade)
+	(or(can-research ri-husbandry)
+	   (can-research ri-bloodlines))
+=>
+	(research ri-bloodlines)
+	(research ri-husbandry)
+)
+(defrule
+	(or(players-military-population every-enemy < 20)
+	   (up-research-status c: castle-age > research-available))
+	(or(can-research ri-fletching)
+	(or(can-research ri-bodkin-arrow)
+	   (can-research ri-bracer)))
+=>
+	(research ri-fletching)
+	(research ri-bodkin-arrow)
+	(research ri-bracer)
+)
+(defrule
+	(or(players-military-population every-enemy < 20)
+	   (up-research-status c: castle-age > research-available))
+	(unit-type-count cavalry-class > units-for-upgrade)
+	(or(can-research ri-scale-barding)
+	(or(can-research ri-chain-barding)
+	   (can-research ri-plate-barding)))
+=>
+	(research ri-scale-barding)
+	(research ri-chain-barding)
+	(research ri-plate-barding)
+)
+(defrule
+	(or(players-military-population every-enemy < 20)
+	   (up-research-status c: castle-age > research-available))
+	(unit-type-count infantry-class > units-for-upgrade)
+	(or(can-research ri-scale-mail)
+	(or(can-research ri-chain-mail)
+	   (can-research ri-plate-mail)))
+=>
+	(research ri-scale-mail)
+	(research ri-chain-mail)
+	(research ri-plate-mail)
+)
+(defrule
+	(or(players-military-population every-enemy < 20)
+	   (up-research-status c: castle-age > research-available))
+	(or(unit-type-count archery-class > units-for-upgrade)
+	   (unit-type-count cavalry-archer-class > units-for-upgrade))
+	(or(can-research ri-padded-archer-armor)
+	(or(can-research ri-leather-archer-armor)
+	   (can-research ri-ring-archer-armor)))
+=>
+	(research ri-padded-archer-armor)
+	(research ri-leather-archer-armor)
+	(research ri-ring-archer-armor)
+)
+(defrule
+	(or(players-military-population every-enemy < 20)
+	   (up-research-status c: castle-age > research-available))
+	(or(can-research ri-forging)
+	(or(can-research ri-iron-casting)
+	   (can-research ri-blast-furnace)))
+=>
+	(research ri-forging)
+	(research ri-iron-casting)
+	(research ri-blast-furnace)
+)
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Building
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule
+	(building-type-count-total town-center < 4)
+	(up-can-build g-escrow-on c: town-center)
+	(or(up-object-type-count-total g: g-pri-building > 0)
+	   (building-type-count-total town-center < 1))
+	(or(up-object-type-count-total g: g-sec-building > 0)
+	   (building-type-count-total town-center < 2))
+	(or(up-object-type-count-total g: g-ter-building > 0)
+	   (building-type-count-total town-center < 3))
+	(up-pending-objects c: town-center < 1)
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(up-build place-normal g-escrow-on c: town-center)
+)
+(defrule
+	(up-get-fact building-type-count-total castle g-tempmaths1)
+	(up-can-build g-escrow-on c: castle)
+	(or(and(up-object-type-count-total g: g-pri-building > 1)
+	   (and(up-object-type-count-total g: g-sec-building > 1)
+	       (up-object-type-count-total g: g-ter-building > 1)))
+	   (building-type-count-total castle < 1))
+	(up-pending-objects c: castle < 1)
+	(unit-type-count villager > 10)
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(up-build place-normal g-escrow-on c: castle)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(housing-headroom < 15)
+	(can-build house)
+	(up-pending-objects c: house < 4)
+	(or(and(housing-headroom < 3)
+	       (up-pending-objects c: house < 1))
+	   (current-age > dark-age))
+	(or(and(housing-headroom < 10)
+	       (up-pending-objects c: house < 2))
+	   (current-age > feudal-age))
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(build house)
+)
+(defrule
+	(goal g-attacking 1)
+	(can-build watch-tower)
+=>
+	(build-forward watch-tower)
+)
+
+(defrule(true)=>(set-goal g-building barracks))
+(defrule(wall-completed-percentage 2 == 100)=>(set-goal g-building dock))
+(defrule
+	(up-can-build 0 g: g-building)
+	(up-object-type-count-total g: g-building < 1)
+	(up-pending-objects g: g-building < 1)
+	(up-research-status c: feudal-age > research-available)
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(up-build place-normal 0 g: g-building)
+)
+(defrule
+	(can-build dock)
+	(building-type-count-total dock < 3)
+	(up-pending-objects c: dock < 3)
+	(or(and(building-type-count-total dock < 1)
+	       (building-type-count-total lumber-camp > 0))
+	   (wall-completed-percentage 2 == 100))
+=>
+	(build dock)
+)
+(defrule
+	(up-can-build g-escrow-on c: siege-workshop)
+	(building-type-count-total siege-workshop < 1)
+	(up-object-type-count-total g: g-pri-building > 0)
+	(up-object-type-count-total g: g-sec-building > 0)
+	(up-object-type-count-total g: g-ter-building > 0)
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(up-build place-normal g-escrow-on c: siege-workshop)
+)
+(defrule
+	(starting-age < post-imperial-age)
+	(up-can-build g-escrow-on c: university)
+	(unit-type-count-total battering-ram-line > 0)
+	(building-type-count-total siege-workshop > 0)
+	(building-type-count-total university < 1)
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(up-build place-normal g-escrow-on c: university)
+)
+(defrule
+	(up-can-build g-escrow-on c: market)
+	(or(up-compare-goal g-percent-desired-gold-gatherer < 50)
+	   (up-object-type-count-total g: g-ter-building > 2))
+	(building-type-count-total market < 3)
+	(up-pending-objects c: market < 1)
+	(or(building-type-count-total market < 1)
+	   (and(unit-type-count-total trade-cart > 4)
+	       (current-age > feudal-age)))
+	(up-object-type-count-total g: g-pri-building > 0)
+	(up-object-type-count-total g: g-sec-building > 0)
+	(up-object-type-count-total g: g-ter-building > 0)
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(up-build place-normal g-escrow-on c: market)
+)
+(defrule
+	(starting-age < post-imperial-age)
+	(can-build blacksmith)
+	(up-pending-objects c: blacksmith < 1)
+	(building-type-count-total blacksmith < 1)
+	(up-object-type-count-total g: g-pri-building > 0)
+	(up-object-type-count-total g: g-sec-building > 0)
+	(or(building-type-count-total dock != 1)
+	   (wall-completed-percentage 2 == 100))
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(build blacksmith)
+)
+(defrule
+	(up-can-build g-escrow-on c: monastery)
+	(up-pending-objects c: monastery < 1)
+	(building-type-count-total monastery < 1)
+	(up-object-type-count-total g: g-pri-building > 0)
+	(up-object-type-count-total g: g-sec-building > 0)
+	(up-object-type-count-total g: g-ter-building > 0)
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(up-build place-normal g-escrow-on c: monastery)
+)
+(defrule
+	(or(civilian-population > 15)
+	(or(current-age > feudal-age)
+	   (wood-amount > 250)))
+	(up-research-status c: feudal-age > research-available)
+	(up-can-build 0 g: g-pri-building)
+	(up-pending-objects g: g-pri-building < 1)
+	(up-object-type-count-total g: g-pri-building < 1)
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(up-build place-normal g-escrow-on g: g-pri-building)
+)
+(defrule
+	(or(civilian-population > 25)
+	(or(current-age > feudal-age)
+	   (wood-amount > 250)))
+	(up-research-status c: feudal-age > research-available)
+	(up-can-build 0 g: g-sec-building)
+	(up-pending-objects g: g-sec-building < 1)
+	(up-object-type-count-total g: g-sec-building < 1)
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(up-build place-normal g-escrow-on g: g-sec-building)
+)
+(defrule
+	(or(civilian-population > 30)
+	(or(current-age > feudal-age)
+	   (wood-amount > 250)))
+	(up-research-status c: feudal-age > research-available)
+	(up-can-build 0 g: g-ter-building)
+	(up-pending-objects g: g-ter-building < 1)
+	(up-object-type-count-total g: g-ter-building < 1)
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(up-build place-normal g-escrow-on g: g-ter-building)
+)
+
+(defrule(true)=>(set-goal g-building house))
+(defrule
+	(up-get-fact building-type-count-total barracks g-tempmaths1)
+	(or(up-pending-objects c: militiaman-line g:> g-tempmaths1)
+	(or(up-pending-objects c: spearman-line g:> g-tempmaths1)
+	   (up-pending-objects c: eagle-warrior-line g:> g-tempmaths1)))
+	(can-build barracks)
+	(up-pending-objects c: barracks < 1)
+=>
+	(set-goal g-building barracks)
+)
+(defrule
+	(up-get-fact building-type-count-total archery-range g-tempmaths1)
+	(or(up-pending-objects c: archer-line g:> g-tempmaths1)
+	   (up-pending-objects c: skirmisher-line g:> g-tempmaths1))
+	(can-build archery-range)
+	(up-pending-objects c: archery-range < 1)
+	(up-get-fact building-type-count-total archery-range g-tempmaths1)
+	(or(up-object-type-count-total g: g-building g:>= g-tempmaths1)
+	   (goal g-building house))
+	
+=>
+	(set-goal g-building archery-range)
+)
+(defrule
+	(up-get-fact building-type-count-total archery-range g-tempmaths1)
+	(or(up-pending-objects c: hand-cannoneer g:> g-tempmaths1)
+	(or(up-pending-objects c: slinger g:> g-tempmaths1)
+	   (up-pending-objects c: cavalry-archer-line g:> g-tempmaths1)))
+	(can-build archery-range)
+	(up-pending-objects c: archery-range < 1)
+	(up-get-fact building-type-count-total archery-range g-tempmaths1)
+	(or(up-object-type-count-total g: g-building g:>= g-tempmaths1)
+	   (goal g-building house))
+	
+=>
+	(set-goal g-building archery-range)
+)
+(defrule
+	(up-get-fact building-type-count-total stable g-tempmaths1)
+	(or(up-pending-objects c: knight-line g:> g-tempmaths1)
+	(or(up-pending-objects c: scout-cavalry-line g:> g-tempmaths1)
+	   (up-pending-objects c: camel-line g:> g-tempmaths1)))
+	(can-build stable)
+	(up-pending-objects c: stable < 1)
+	(up-get-fact building-type-count-total stable g-tempmaths1)
+	(or(up-object-type-count-total g: g-building g:>= g-tempmaths1)
+	   (goal g-building house))
+=>
+	(set-goal g-building stable)
+)
+(defrule
+	(up-get-fact building-type-count-total dock g-tempmaths1)
+	(or(up-pending-objects c: galley-line g:> g-tempmaths1)
+	(or(up-pending-objects c: fire-ship-line g:> g-tempmaths1)
+	   (up-pending-objects c: fishing-ship g:> g-tempmaths1)))
+	(can-build dock)
+	(up-get-fact building-type-count-total dock g-tempmaths1)
+	(or(up-object-type-count-total g: g-building g:>= g-tempmaths1)
+	   (goal g-building house))
+=>
+	(set-goal g-building dock)
+)
+(defrule
+	(not(goal g-building house))
+	(up-can-build 0 g: g-building)
+	(up-pending-objects g: g-building < 1)
+	(or(civilian-population > 50)(food-amount > 1500))
+=>
+	(up-modify-sn sn-maximum-town-size g:= g-town-size-min)
+	(up-build place-normal 0 g: g-building)
+)
+
+(defrule
+	(wood-amount < 275)
+	(building-type-count-total town-center < 1)
+	(dropsite-min-distance wood > 5)
+	(up-can-build g-escrow-on c: lumber-camp)
+=>
+	(up-build place-normal g-escrow-on c: lumber-camp)
+	(up-modify-sn sn-lumber-camp-max-distance c:+ 10)
+)
+(defrule
+	(stone-amount < 100)
+	(building-type-count-total town-center < 1)
+	(dropsite-min-distance stone > 5)
+	(up-can-build g-escrow-on c: mining-camp)
+=>
+	(up-build place-normal g-escrow-on c: mining-camp)
+	(up-modify-sn sn-mining-camp-max-distance c:+ 10)
+)
+(defrule
+	(or(unit-type-count villager-lumber-dead-female > 2)
+	(or(unit-type-count villager-lumber-dead-male > 2)
+	   (up-compare-goal g-percent-desired-wood-gatherer < 70)))
+	(timer-triggered t-new-lumber-camp)
+	(up-can-build 0 c: lumber-camp)
+=>
+	(up-build place-normal g-escrow-on c: lumber-camp)
+	(up-modify-sn sn-lumber-camp-max-distance c:+ 10)
+	(enable-timer t-new-lumber-camp 300)
+)
+(defrule
+	(or(unit-type-count villager-miner-dead-female > 2)
+	(or(unit-type-count villager-miner-dead-male > 2)
+	(or(and(up-compare-goal g-percent-desired-gold-gatherer < 70)
+	       (unit-type-count villager-gold > 0))
+	   (and(up-compare-goal g-percent-desired-stone-gatherer < 70)
+	       (unit-type-count villager-stone > 0)))))
+	(timer-triggered t-new-mining-camp)
+	(up-can-build 0 c: mining-camp)
+=>
+	(up-build place-normal g-escrow-on c: mining-camp)
+	(up-modify-sn sn-mining-camp-max-distance c:+ 10)
+	(enable-timer t-new-mining-camp 300)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(or(building-type-count-total mill > 0)
+	   (game-time > 300))
+	(or(and(building-type-count-total town-center < 1)
+	   (and(wood-amount < 275)
+	       (building-type-count-total lumber-camp < 1)))
+	(or(dropsite-min-distance wood > 3)
+	   (building-type-count-total lumber-camp < 2)))
+	(up-can-build g-escrow-on c: lumber-camp)
+=>
+	(up-build place-normal g-escrow-on c: lumber-camp)
+	(up-modify-sn sn-lumber-camp-max-distance c:+ 10)
+)
+(defrule
+	(dropsite-min-distance wood < 7)
+	(building-type-count-total lumber-camp > 0)
+	(up-pending-objects c: mining-camp < 1)
+	(or(and(strategic-number sn-gold-gatherer-percentage > 0)
+	       (dropsite-min-distance gold > 3))
+	   (and(strategic-number sn-stone-gatherer-percentage > 0)
+	       (dropsite-min-distance stone > 3)))
+	(up-can-build g-escrow-on c: mining-camp)
+=>
+	(up-build place-normal g-escrow-on c: mining-camp)
+	(up-modify-sn sn-mining-camp-max-distance c:+ 10)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(or(up-object-type-count-total g: g-sec-building > 0)
+	   (up-research-status c: feudal-age < research-pending))
+	(or(resource-found food)
+	   (game-time > 300))
+	(can-build mill)
+	(or(building-type-count-total mill < 1)
+	   (and(unit-type-count villager-hunter > 1)
+	       (dropsite-min-distance hunting > 15)))
+	(up-pending-objects c: mill < 1)
+=>
+	(build mill)
+	(up-modify-sn sn-mill-max-distance c:+ 15)
+)
+(defrule
+	(or(up-object-type-count-total g: g-sec-building > 0)
+	   (up-research-status c: feudal-age < research-pending))
+	(can-build farm)
+	(idle-farm-count < 2)
+	(or(dropsite-min-distance wood < 7)
+	   (wood-amount > 200))
+	(up-pending-objects c: farm < 4)
+	(building-type-count-total lumber-camp > 0)
+	(or(building-type-count-total dock > 0)
+	(or(current-age > feudal-age)
+	   (up-compare-goal g-map-type != water)))
+=>
+	(build farm)
+)
+(defrule(idle-farm-count > 2)=>(up-delete-distant-farms c: 20))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Training
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule(military-population < 10)=>
+(up-gather-inside c: barracks c: 1)
+(up-gather-inside c: archery-range c: 1)
+(up-gather-inside c: stable c: 1))
+(defrule(military-population > 10)=>
+(up-gather-inside c: barracks c: 0)
+(up-gather-inside c: archery-range c: 0)
+(up-gather-inside c: stable c: 0)
+(up-ungarrison c: barracks)
+(up-ungarrison c: archery-range)
+(up-ungarrison c: stable))
+
+(defrule(true)=>(set-goal g-food-train-ok 0)(set-goal g-wood-train-ok 0)
+	(up-get-fact civilian-population 0 g-tempmaths1)
+	(up-get-fact military-population 0 g-tempmaths2)
+	(up-modify-goal g-tempmaths2 c:* 3))
+(defrule
+	(or(up-pending-objects c: villager > 1)
+	(or(civilian-population > 70)
+	(or(food-amount > 150)
+	   (up-compare-goal g-tempmaths2 g:< g-tempmaths1))));ie military pop < third civ pop
+=>(set-goal g-food-train-ok 1))
+(defrule(or(idle-farm-count > 0)(wood-amount > 110))
+=>(set-goal g-wood-train-ok 1))
+(defrule
+	(can-train villager)
+	(or(unit-type-count villager < 11)
+	   (up-research-status c: ri-loom != research-available))
+	(civilian-population g:< g-60pop)
+	(or(civilian-population g:< g-40pop)
+	   (and(food-amount < 500)
+	   (and(gold-amount < 500)
+	       (wood-amount < 500))))
+=>
+	(train villager)
+	(chat-local-to-self "vil")
+)
+(defrule(up-compare-goal g-percent-desired-gold-gatherer > 10)=>(set-goal g-escrow-on without-escrow))
+(defrule
+	(up-can-train g-escrow-on c: trade-cart)
+	(civilian-population g:< g-60pop)
+	(or(gold-amount < 500)
+	   (civilian-population g:< g-40pop))
+	(players-building-type-count any-ally market > 0)
+	(or(strategic-number sn-gold-gatherer-percentage > 0)
+	   (up-gaia-type-count c: gold < 5))
+	(up-object-type-count-total g: g-pri-building > 0)
+	(up-object-type-count-total g: g-sec-building > 0)
+	(up-object-type-count-total g: g-ter-building > 0)
+=>
+	(up-train g-escrow-on c: trade-cart)
+)
+(defrule(goal g-escrow-on without-escrow)=>(set-goal g-escrow-on with-escrow))
+(defrule(unit-type-count-total battering-ram-line > 1)=>(set-goal g-escrow-on without-escrow))
+(defrule
+	(up-can-train g-escrow-on c: battering-ram-line)
+	(goal g-wood-train-ok 1)
+	(unit-type-count-total battering-ram-line g:< g-5pop)
+=>
+	(up-train g-escrow-on c: battering-ram-line)
+)
+(defrule(goal g-escrow-on without-escrow)=>(set-goal g-escrow-on with-escrow))
+(defrule(unit-type-count-total trebuchet-set > 1)=>(set-goal g-escrow-on without-escrow))
+(defrule
+	(up-can-train g-escrow-on c: trebuchet)
+	(goal g-wood-train-ok 1)
+	(unit-type-count-total trebuchet-set g:< g-5pop)
+=>
+	(up-train g-escrow-on c: trebuchet)
+)
+(defrule(goal g-escrow-on without-escrow)=>(set-goal g-escrow-on with-escrow))
+(defrule
+	(up-can-train g-escrow-on c: monk)
+	(unit-type-count-total monk-set g:< g-2pop)
+=>
+	(up-train g-escrow-on c: monk)
+)
+
+
+(defrule(true)=>
+(up-setup-cost-data 1 g-cost-food)
+(up-add-object-cost g: g-pri-unit c: 1))
+(defrule
+	(up-can-train 0 g: g-pri-unit)
+	(or(up-compare-goal g-cost-food < 10)
+	   (goal g-food-train-ok 1))
+	(or(up-compare-goal g-cost-wood < 10)
+	   (goal g-wood-train-ok 1))
+	(or(up-compare-goal g-military-superiority < 80)
+	(or(military-population < 40)
+	   (up-research-status c: castle-age > research-available)))
+=>
+	(up-train 0 g: g-pri-unit)
+	(chat-local-to-self "pri")
+)
+(defrule(true)=>
+(up-setup-cost-data 1 g-cost-food)
+(up-add-object-cost g: g-sec-unit c: 1))
+(defrule
+	(up-can-train 0 g: g-sec-unit)
+	(or(up-compare-goal g-cost-food < 10)
+	   (goal g-food-train-ok 1))
+	(or(up-compare-goal g-cost-wood < 10)
+	   (goal g-wood-train-ok 1))
+	(or(up-compare-goal g-military-superiority < 80)
+	(or(military-population < 40)
+	   (up-research-status c: castle-age > research-available)))
+=>
+	(up-train 0 g: g-sec-unit)
+	(chat-local-to-self "sec")
+)
+(defrule(true)=>
+(up-setup-cost-data 1 g-cost-food)
+(up-add-object-cost g: g-ter-unit c: 1))
+(defrule
+	(up-can-train 0 g: g-ter-unit)
+	(or(up-compare-goal g-cost-food < 10)
+	   (goal g-food-train-ok 1))
+	(or(up-compare-goal g-cost-wood < 10)
+	   (goal g-wood-train-ok 1))
+	(or(up-compare-goal g-military-superiority < 80)
+	(or(military-population < 40)
+	   (up-research-status c: castle-age > research-available)))
+=>
+	(up-train 0 g: g-ter-unit)
+	(chat-local-to-self "ter")
+)
+(defrule(true)=>
+(up-setup-cost-data 1 g-cost-food)
+(up-add-object-cost c: my-unique-unit c: 1))
+(defrule
+	(up-can-train 0 c: my-unique-unit)
+	(or(up-compare-goal g-cost-food < 10)
+	   (goal g-food-train-ok 1))
+	(or(up-compare-goal g-cost-wood < 10)
+	   (goal g-wood-train-ok 1))
+	(or(up-compare-goal g-pri-unit g:= g-uu-pri-type)
+	(or(up-compare-goal g-sec-unit g:= g-uu-pri-type)
+	   (up-compare-goal g-ter-unit g:= g-uu-pri-type)))
+=>
+	(up-train 0 c: my-unique-unit)
+	(chat-local-to-self "uu")
+)
+(defrule
+	(up-can-train 0 c: my-unique-unit)
+	(or(up-compare-goal g-cost-food < 10)
+	   (goal g-food-train-ok 1))
+	(or(up-compare-goal g-cost-wood < 10)
+	   (goal g-wood-train-ok 1))
+	(or(up-compare-goal g-pri-unit g:= g-uu-sec-type)
+	(or(up-compare-goal g-sec-unit g:= g-uu-sec-type)
+	   (up-compare-goal g-ter-unit g:= g-uu-sec-type)))
+=>
+	(up-train 0 c: my-unique-unit)
+	(chat-local-to-self "uu")
+)
+(defrule
+	(can-train fishing-ship)
+	(unit-type-count fishing-ship < 40)
+	(or(up-gaia-type-count c: ocean-fish-class > 0)
+	   (unit-type-count-total fishing-ship < 1))
+	(civilian-population g:< g-60pop)
+	(or(food-amount < 500)
+	   (civilian-population g:< g-40pop))
+	(or(wood-amount > 90)
+	   (current-age < feudal-age))
+	(strategic-number sn-food-gatherer-percentage > 5)
+	(unit-type-count idle-type-fishing-ship < 2)
+=>
+	(train fishing-ship)
+)
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Attacking
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule(town-under-attack)=>(up-get-threat-data g-threat-time g-threat-player g-threat-source g-threat-target))
+(defrule
+	(town-under-attack)
+	(up-compare-sn sn-target-player-number g:!= g-threat-player)
+	(up-compare-goal g-threat-player != 0)
+	(goal g-attacking 0)
+=>
+	(up-modify-sn sn-target-player-number g:= g-threat-player)
+	(up-chat-data-to-player my-player-number "tua-newtarg %d" s: sn-target-player-number)
+	(enable-timer t-new-targ 60)
+)
+	
+(defrule
+	(or(timer-triggered t-new-targ)(not(player-in-game target-player)))
+	(players-building-count any-enemy > 0)
+=>
+	(up-find-player enemy find-closest g-tempmaths1)
+	(up-modify-sn sn-target-player-number g:= g-tempmaths1)
+	(up-chat-data-to-player my-player-number "target %d" s: sn-target-player-number)
+	(enable-timer t-new-targ 450)
+)
+
+(defrule
+	(or(up-compare-goal g-military-superiority > 130)
+	   (population g:> g-90pop))
+	(goal g-attacking 0)
+	(not(town-under-attack))
+	(players-building-count any-enemy > 0)
+	(defend-soldier-count > 8)
+=>
+	(set-goal g-attacking 1)
+	(chat-local-to-self "attack")
+	(up-chat-data-to-player every-ally "31Attack! I am targetting player %d" s: sn-target-player-number)
+	(chat-to-enemies "23Raiding party!")
+)
+(defrule
+	(goal g-attacking 1)
+	(not(enemy-buildings-in-town))
+	(wall-completed-percentage 2 != 100)
+=>
+	(up-modify-sn sn-maximum-town-size c:+ 4)
+	;(up-chat-data-to-player my-player-number "TSA %d" s: sn-maximum-town-size)
+)
+(defrule
+	(up-compare-goal g-military-superiority < 100)
+	(goal g-attacking 1)
+	(population g:< g-80pop)
+=>
+	(set-goal g-attacking 0)
+	(chat-local-to-self "Stop attack")
+	(up-retreat-now)
+	(set-strategic-number sn-maximum-town-size 12)
+)
+(defrule(true)=>(set-goal g-retreat-target town-center))
+(defrule(building-type-count watch-tower > 0)=>(set-goal g-retreat-target watch-tower))
+(defrule(unit-type-count battering-ram-line > 0)=>(set-goal g-retreat-target battering-ram-line))
+(defrule
+	(up-compare-goal g-military-superiority < 200)
+	(goal g-attacking 1)
+	(up-projectile-detected projectile-town-center < 1000)
+=>
+	(chat-local-to-self "Retreat from TC fire")
+	(up-retreat-to g-retreat-target c: all-units-class)
+	(up-modify-sn sn-maximum-town-size c:- 10)
+)
+
+(defrule
+	(timer-triggered t-defensive-retreat)
+	(goal g-attacking 0)
+	(not(town-under-attack))
+	(military-population > 10)
+	(up-compare-goal g-military-superiority > 80)
+	(building-type-count watch-tower > 0)
+=>
+	(up-retreat-to watch-tower c: all-units-class)
+	(up-retreat-to town-center c: battering-ram-line)
+	(chat-local-to-self "to towers")
+)
+(defrule(timer-triggered t-defensive-retreat)(building-type-count watch-tower == 1)
+=>(enable-timer t-defensive-retreat 60))
+(defrule(timer-triggered t-defensive-retreat)(building-type-count watch-tower == 2)
+=>(enable-timer t-defensive-retreat 90))
+(defrule(timer-triggered t-defensive-retreat)(building-type-count watch-tower == 3)
+=>(enable-timer t-defensive-retreat 120))
+(defrule(timer-triggered t-defensive-retreat)(building-type-count watch-tower == 4)
+=>(enable-timer t-defensive-retreat 150))
+(defrule(timer-triggered t-defensive-retreat)(building-type-count watch-tower > 4)
+=>(enable-timer t-defensive-retreat 180))
+
+(defrule
+	(defend-warboat-count > 5)
+	(players-building-type-count any-enemy dock > 0)
+=>
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	(set-strategic-number sn-percent-attack-boats 100)
+	(attack-now)
+	(chat-local-to-self "boatgo")
+)
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Chat
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule
+	(taunt-detected any-ally 31)
+	(up-compare-goal g-military-superiority > 80)
+	(not(town-under-attack))
+=>
+	(chat-to-allies "1Attacking")
+	(set-strategic-number sn-percent-attack-soldiers 75)
+	(set-strategic-number sn-group-form-distance 5)
+	(attack-now)
+	(acknowledge-taunt this-any-ally 31)
+)
+(defrule
+	(taunt-detected any-ally 31)
+	(or(up-compare-goal g-military-superiority <= 80)
+	   (town-under-attack))
+=>
+	(chat-to-allies "2I cannot help")
+	(acknowledge-taunt this-any-ally 31)
+)
+
+(defrule(true)=>
+(enable-timer t-chat-food 1)(enable-timer t-chat-wood 1)
+(enable-timer t-chat-gold 1)(enable-timer t-chat-stone 1)
+(disable-self))
+
+(defrule
+	(up-allied-resource-amount any-ally food > 200)
+	(food-amount < 100)
+	(timer-triggered t-chat-food)
+=>
+	(enable-timer t-chat-food 60)
+	(chat-to-allies "3Food, please")
+)
+(defrule
+	(up-allied-resource-amount any-ally wood > 200)
+	(wood-amount < 100)
+	(timer-triggered t-chat-wood)
+=>
+	(enable-timer t-chat-wood 60)
+	(chat-to-allies "4Wood, please")
+)
+(defrule
+	(up-allied-resource-amount any-ally gold > 200)
+	(gold-amount < 100)
+	(timer-triggered t-chat-gold)
+=>
+	(enable-timer t-chat-gold 60)
+	(chat-to-allies "5Gold, please")
+)
+(defrule
+	(up-allied-resource-amount any-ally stone > 750)
+	(stone-amount < 125)
+	(timer-triggered t-chat-stone)
+=>
+	(enable-timer t-chat-stone 60)
+	(chat-to-allies "6Stone, please")
+)
+
+(defrule
+	(building-type-count market > 0)
+	(taunt-detected any-ally 3)
+	;(up-allied-resource-amount this-any-ally food < 200)
+	(or(food-amount > 400)
+	(or(and(research-completed ri-coinage)
+	       (food-amount > 300))
+	   (research-completed ri-banking)))
+	(food-amount > 200);ie banking, then > 200, coinage then > 300, else > 400
+=>
+	(chat-to-player this-any-ally "1Here is 100 food")
+	(chat-local-to-self "Tribute")
+	(tribute-to-player this-any-ally food 100)
+	(acknowledge-taunt this-any-ally 3)
+)
+(defrule
+	(building-type-count market > 0)
+	(taunt-detected any-ally 4)
+	;(up-allied-resource-amount this-any-ally wood < 200)
+	(or(wood-amount > 400)
+	(or(and(research-completed ri-coinage)
+	       (wood-amount > 300))
+	   (research-completed ri-banking)))
+	(wood-amount > 200);ie banking, then > 200, coinage then > 300, else > 400
+=>
+	(chat-to-player this-any-ally "1Here is 100 wood")
+	(chat-local-to-self "Tribute")
+	(tribute-to-player this-any-ally wood 100)
+	(acknowledge-taunt this-any-ally 4)
+)
+(defrule
+	(building-type-count market > 0)
+	(taunt-detected any-ally 5)
+	;(up-allied-resource-amount this-any-ally gold < 200)
+	(or(gold-amount > 400)
+	(or(and(research-completed ri-coinage)
+	       (gold-amount > 300))
+	   (research-completed ri-banking)))
+	(gold-amount > 200);ie banking, then > 200, coinage then > 300, else > 400
+=>
+	(chat-to-player this-any-ally "1Here is 100 gold")
+	(chat-local-to-self "Tribute")
+	(tribute-to-player this-any-ally gold 100)
+	(acknowledge-taunt this-any-ally 5)
+)
+(defrule
+	(building-type-count market > 0)
+	(taunt-detected any-ally 3)
+	;(up-allied-resource-amount this-any-ally stone < 125)
+	(or(stone-amount > 400)
+	(or(and(research-completed ri-coinage)
+	       (stone-amount > 300))
+	   (research-completed ri-banking)))
+	(stone-amount > 200);ie banking, then > 200, coinage then > 300, else > 400
+=>
+	(chat-to-player this-any-ally "1Here is 100 stone")
+	(chat-local-to-self "Tribute")
+	(tribute-to-player this-any-ally stone 100)
+	(acknowledge-taunt this-any-ally 3)
+)
+
+(defrule
+	(or(taunt-detected any-ally 3)
+	(or(taunt-detected any-ally 4)
+	(or(taunt-detected any-ally 5)
+	   (taunt-detected any-ally 6))))
+=>
+	(chat-local-to-self "Acknowledged")
+	(chat-to-player this-any-ally "2Sorry but I cannot send you anything.")
+	(acknowledge-taunt this-any-ally 3)
+	(acknowledge-taunt this-any-ally 4)
+	(acknowledge-taunt this-any-ally 5)
+	(acknowledge-taunt this-any-ally 6)
+)
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Surrender
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule
+	(building-type-count-total town-center == 0)
+	(building-type-count-total castle == 0)
+	(unit-type-count-total villager < 2)
+	(not(can-train villager))
+	(or(population < 2)
+	   (and(military-population < 4)
+	       (unit-type-count monk < 2)))
+=>
+	(chat-to-player my-player-number "150")
+)
+(defrule
+	(or(unit-type-count-total villager g:< g-10pop)
+	   (players-population any-enemy g:> g-80pop))
+	(population g:< g-40pop)
+	(soldier-count g:< g-5pop)
+	(players-military-population any-enemy g:> g-15pop)
+	(or(not(player-in-game any-ally))
+	   (players-population every-ally g:< g-40pop))
+	(building-type-count-total wonder == 0)
+=>
+	(chat-to-player my-player-number "150")
+)
+(defrule(taunt-detected my-player-number 150)=>
+	(tribute-to-player any-ally wood 100000)
+	(tribute-to-player any-ally food 100000)
+	(tribute-to-player any-ally gold 100000)
+	(tribute-to-player any-ally stone 100000)(resign))

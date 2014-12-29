@@ -1,0 +1,2646 @@
+;--------------------------------------
+; Define FactId Constants
+;--------------------------------------
+(defconst game-time 0)
+(defconst population-cap 1)
+(defconst population-headroom 2)
+(defconst housing-headroom 3)
+(defconst idle-farm-count 4)
+(defconst food-amount 5)
+(defconst wood-amount 6)
+(defconst stone-amount 7)
+(defconst gold-amount 8)
+(defconst escrow-amount 9)
+(defconst commodity-buying-price 10)
+(defconst commodity-selling-price 11)
+(defconst dropsite-min-distance 12)
+(defconst soldier-count 13)
+(defconst attack-soldier-count 14)
+(defconst defend-soldier-count 15)
+(defconst warboat-count 16)
+(defconst attack-warboat-count 17)
+(defconst defend-warboat-count 18)
+(defconst current-age 19)		;any
+(defconst current-score 20)		;any
+(defconst civilization 21)		;any
+(defconst player-number 22)		;any
+(defconst player-in-game 23)	;any
+(defconst unit-count 24)		;any
+(defconst unit-type-count 25)	;any
+(defconst unit-type-count-total 26)
+(defconst building-count 27)		;any
+(defconst building-type-count 28)	;any
+(defconst building-type-count-total 29)
+(defconst population 30)		;any
+(defconst military-population 31)	;any
+(defconst civilian-population 32)	;any
+(defconst random-number 33)
+(defconst resource-amount 34)	;any
+(defconst player-distance 35)		;any
+(defconst allied-goal 36)		;any
+(defconst allied-sn 37)		;any
+(defconst resource-percent 38)	;any
+(defconst enemy-buildings-in-town 39)
+(defconst enemy-units-in-town 40)
+(defconst enemy-villagers-in-town 41)
+(defconst players-in-game 42)
+(defconst defender-count 43)
+(defconst building-type-in-town 44)
+(defconst unit-type-in-town 45)
+(defconst villager-type-in-town 46)
+(defconst gaia-type-count 47)
+(defconst gaia-type-count-total 48)
+
+;--------------------------------------
+; Define ObjectId Constants
+;--------------------------------------
+(defconst town-center-foundation 621)
+(defconst villager-class 904)
+(defconst building-class 903)
+(defconst ocean-fish-class 905)
+(defconst shore-fish-class 933)
+(defconst farm-class 949)
+(defconst tower-class 952)
+(defconst wall-class 927)
+(defconst gate-class 939)
+(defconst king-class 959)
+(defconst livestock-class 958)
+(defconst infantry-class 906)
+(defconst archery-class 900)
+(defconst archery-cannon-class 944)
+(defconst cavalry-class 912)
+(defconst cavalry-archer-class 936)
+(defconst cavalry-cannon-class 923)
+(defconst monastery-class 918)
+(defconst siege-weapon-class 913)
+(defconst scorpion-class 955)
+(defconst packed-trebuchet-class 951)
+(defconst unpacked-trebuchet-class 954)
+(defconst petard-class 935)
+(defconst warship-class 922)
+(defconst all-units-class -1)
+
+;--------------------------------------
+; Define ResearchState Constants
+;--------------------------------------
+(defconst research-unavailable 0)
+(defconst research-available 1)
+(defconst research-pending 2)
+(defconst research-complete 3)
+
+;--------------------------------------
+; Define TimerState Constants
+;--------------------------------------
+(defconst timer-disabled 0)
+(defconst timer-triggered 1)
+(defconst timer-running 2)
+
+;--------------------------------------
+; Define GroupType Constants
+;--------------------------------------
+(defconst group-type-land-attack 100)
+(defconst group-type-land-explore 101)
+(defconst group-type-land-trade 109)
+(defconst group-type-water-attack 102)
+(defconst group-type-water-explore 103)
+(defconst group-type-water-trade 106)
+(defconst group-type-transport-ship 104)
+(defconst group-type-fishing-ship 105)
+(defconst group-type-forward-builder 107)
+(defconst group-type-monk 108)
+
+;--------------------------------------
+; Define IdleType Constants
+;--------------------------------------
+(defconst idle-type-villager 0)
+(defconst idle-type-trade-cart 1)
+(defconst idle-type-fishing-ship 2)
+(defconst idle-type-trade-cog 3)
+
+;--------------------------------------
+; Define AttackStance Constants
+;--------------------------------------
+(defconst aggressive 0)
+(defconst defensive 1)
+(defconst stand-ground 2)
+(defconst no-attack 3)
+
+;--------------------------------------
+; Define ResourceAmount Constants
+;--------------------------------------
+(defconst amount-food 0)
+(defconst amount-wood 1)
+(defconst amount-stone 2)
+(defconst amount-gold 3)
+(defconst amount-population-cap 4)
+(defconst amount-religion 5)
+(defconst amount-current-age 6)
+(defconst amount-relics 7)
+(defconst amount-trade-bonus 8)
+(defconst amount-trade-goods 9)
+(defconst amount-trade-production 10)
+(defconst amount-population 11)
+(defconst amount-decay 12)
+(defconst amount-discovery 13)
+(defconst amount-ruins 14)
+(defconst amount-meat 15)
+(defconst amount-berries 16)
+(defconst amount-fish 17)
+(defconst amount-kills 20)
+(defconst amount-research-count 21)
+(defconst amount-exploration 22)
+(defconst amount-convert-priest 27)
+(defconst amount-convert-building 28)
+(defconst amount-building-limit 30)
+(defconst amount-food-limit 31)
+(defconst amount-unit-limit 32)
+(defconst amount-maintenance 33)
+(defconst amount-faith 34)
+(defconst amount-faith-recharge-rate 35)
+(defconst amount-farm-food 36)
+(defconst amount-civilian-population 37)
+(defconst amount-all-techs-achieved 39)
+(defconst amount-military-population 40)
+(defconst amount-conversions 41)
+(defconst amount-wonder 42)
+(defconst amount-razings 43)
+(defconst amount-kill-ratio 44)
+(defconst amount-player-killed 45)
+(defconst amount-tribute-inefficiency 46)
+(defconst amount-gold-bonus 47)
+(defconst amount-town-center-unavailable 48)
+(defconst amount-gold-counter 49)
+(defconst amount-writing 50)
+(defconst amount-monasteries 52)
+(defconst amount-tribute 53)
+(defconst amount-hold-ruins 54)
+(defconst amount-hold-relics 55)
+(defconst amount-ore 56)
+(defconst amount-captured-unit 57)
+(defconst amount-trade-good-quality 59)
+(defconst amount-trade-market-level 60)
+(defconst amount-formations 61)
+(defconst amount-building-housing-rate 62)
+(defconst amount-gather-tax-rate 63)
+(defconst amount-gather-accumulator 64)
+(defconst amount-salvage-decay-rate 65)
+(defconst amount-allow-formations 66)
+(defconst amount-can-convert 67)
+(defconst amount-player1-kills 69)
+(defconst amount-player2-kills 70)
+(defconst amount-player3-kills 71)
+(defconst amount-player4-kills 72)
+(defconst amount-player5-kills 73)
+(defconst amount-player6-kills 74)
+(defconst amount-player7-kills 75)
+(defconst amount-player8-kills 76)
+(defconst amount-convert-resistance 77)
+(defconst amount-trade-vig-rate 78)
+(defconst amount-stone-bonus 79)
+(defconst amount-queued-count 80)
+(defconst amount-training-count 81)
+(defconst amount-raider 82)
+(defconst amount-boarding-recharge-rate 83)
+(defconst amount-starting-villagers 84)
+(defconst amount-research-cost-mod 85)
+(defconst amount-research-time-mod 86)
+(defconst amount-convert-boats 87)
+(defconst amount-fish-trap-food 88)
+(defconst amount-heal-rate-modifier 89)
+(defconst amount-heal-range 90)
+(defconst amount-starting-food 91)
+(defconst amount-starting-wood 92)
+(defconst amount-starting-stone 93)
+(defconst amount-starting-gold 94)
+(defconst amount-raider-ability 95)
+(defconst amount-berserker-heal-timer 96)
+(defconst amount-dominant-sheep-control 97)
+(defconst amount-object-cost-summation 98)
+(defconst amount-research-cost-summation 99)
+(defconst amount-relic-income-summation 100)
+(defconst amount-trade-income-summation 101)
+(defconst amount-player1-tribute 102)
+(defconst amount-player2-tribute 103)
+(defconst amount-player3-tribute 104)
+(defconst amount-player4-tribute 105)
+(defconst amount-player5-tribute 106)
+(defconst amount-player6-tribute 107)
+(defconst amount-player7-tribute 108)
+(defconst amount-player8-tribute 109)
+(defconst amount-player1-kill-value 110)
+(defconst amount-player2-kill-value 111)
+(defconst amount-player3-kill-value 112)
+(defconst amount-player4-kill-value 113)
+(defconst amount-player5-kill-value 114)
+(defconst amount-player6-kill-value 115)
+(defconst amount-player7-kill-value 116)
+(defconst amount-player8-kill-value 117)
+(defconst amount-player1-razings 118)
+(defconst amount-player2-razings 119)
+(defconst amount-player3-razings 120)
+(defconst amount-player4-razings 121)
+(defconst amount-player5-razings 122)
+(defconst amount-player6-razings 123)
+(defconst amount-player7-razings 124)
+(defconst amount-player8-razings 125)
+(defconst amount-player1-razing-value 126)
+(defconst amount-player2-razing-value 127)
+(defconst amount-player3-razing-value 128)
+(defconst amount-player4-razing-value 129)
+(defconst amount-player5-razing-value 130)
+(defconst amount-player6-razing-value 131)
+(defconst amount-player7-razing-value 132)
+(defconst amount-player8-razing-value 133)
+(defconst amount-castle 134)
+(defconst amount-kills-by-player1 136)
+(defconst amount-kills-by-player2 137)
+(defconst amount-kills-by-player3 138)
+(defconst amount-kills-by-player4 139)
+(defconst amount-kills-by-player5 140)
+(defconst amount-kills-by-player6 141)
+(defconst amount-kills-by-player7 142)
+(defconst amount-kills-by-player8 143)
+(defconst amount-razings-by-player1 144)
+(defconst amount-razings-by-player2 145)
+(defconst amount-razings-by-player3 146)
+(defconst amount-razings-by-player4 147)
+(defconst amount-razings-by-player5 148)
+(defconst amount-razings-by-player6 149)
+(defconst amount-razings-by-player7 150)
+(defconst amount-razings-by-player8 151)
+(defconst amount-value-killed-by-others 152)
+(defconst amount-value-razed-by-others 153)
+(defconst amount-killed-by-others 154)
+(defconst amount-razed-by-others 155)
+(defconst amount-tribute-from-player1 156)
+(defconst amount-tribute-from-player2 157)
+(defconst amount-tribute-from-player3 158)
+(defconst amount-tribute-from-player4 159)
+(defconst amount-tribute-from-player5 160)
+(defconst amount-tribute-from-player6 161)
+(defconst amount-tribute-from-player7 162)
+(defconst amount-tribute-from-player8 163)
+(defconst amount-value-current-units 164)
+(defconst amount-value-current-buildings 165)
+(defconst amount-food-total 166)
+(defconst amount-wood-total 167)
+(defconst amount-stone-total 168)
+(defconst amount-gold-total 169)
+(defconst amount-total-value-of-kills 170)
+(defconst amount-total-tribute-received 171)
+(defconst amount-total-value-of-razings 172)
+(defconst amount-total-castles-built 173)
+(defconst amount-total-wonders-built 174)
+(defconst amount-tribute-score 175)
+(defconst amount-convert-min-adj 176)
+(defconst amount-convert-max-adj 177)
+(defconst amount-convert-resist-min-adj 178)
+(defconst amount-convert-resist-max-adj 179)
+(defconst amount-convert-building-min 180)
+(defconst amount-convert-building-max 181)
+(defconst amount-convert-building-chance 182)
+(defconst amount-spies 183)
+(defconst amount-value-wonders-castles 184)
+(defconst amount-food-score 185)
+(defconst amount-wood-score 186)
+(defconst amount-stone-score 187)
+(defconst amount-gold-score 188)
+(defconst amount-wood-bonus 189)
+(defconst amount-food-bonus 190)
+(defconst amount-relic-rate 191)
+(defconst amount-heresy 192)
+(defconst amount-theocracy 193)	; research completed 1 = yes
+(defconst amount-crenellations 194)
+(defconst amount-construction-rate-mod 195)
+(defconst amount-hun-wonder-bonus 196)
+(defconst amount-spies-discount 197)
+
+;--------------------------------------
+; Unused ResourceAmount Constants
+;--------------------------------------
+;(defconst amount-houses 51)
+;(defconst amount-hit-points-killed 68)
+;(defconst amount-hit-points-razings 135)
+
+;--------------------------------------
+; Define ProjectileType Constants
+;--------------------------------------
+(defconst projectile-town-center 0)
+(defconst projectile-castle 1)
+(defconst projectile-watch-tower 2)
+(defconst projectile-bombard-tower 3)
+(defconst projectile-ship 4)
+(defconst projectile-siege 5)
+(defconst projectile-fortification 6)
+(defconst projectile-any 7)
+
+;--------------------------------------
+; Define EscrowState Constants
+;--------------------------------------
+(defconst with-escrow 0)
+(defconst without-escrow 1)
+
+;--------------------------------------
+; Define PlacementType Constants
+;--------------------------------------
+(defconst place-normal 0)
+(defconst place-forward 1)
+(defconst place-control 2)
+
+;--------------------------------------
+; Define PriorityType Constants
+;--------------------------------------
+(defconst priority-offense 0)
+(defconst priority-defense 1)
+
+;--------------------------------------
+; Define FindPlayerMethod Constants
+;--------------------------------------
+(defconst find-attacker 0)
+(defconst find-random 1)
+(defconst find-closest 2)
+(defconst find-ordered 3)
+
+;--------------------------------------
+; Define ScoutMethod Constants
+;--------------------------------------
+(defconst scout-center 0)
+(defconst scout-opposite 1)
+(defconst scout-corner 2)
+(defconst scout-enemy 3)
+(defconst scout-border 4)
+
+;--------------------------------------
+; Define PlayerStance Constants
+;--------------------------------------
+;(defconst ally 0)
+;(defconst neutral 1)
+;(defconst enemy 3)
+;(defconst any 2)
+
+;--------------------------------------
+; Define DropsiteMinDistance Constants
+;--------------------------------------
+;(defconst hunting 4)
+;(defconst boar-hunting 5)
+;(defconst deer-hunting 6)
+;(defconst live-boar 7)
+
+;--------------------------------------
+; Define Counting Constants
+;--------------------------------------
+;(defconst monk-set 970)
+;(defconst trebuchet-set 971)
+;(defconst huskarl-set 972)
+;(defconst villager-shepherd 973)
+;(defconst villager-forager 974)
+;(defconst villager-farmer 975)
+;(defconst villager-hunter 976)
+;(defconst villager-fisherman 977)
+;(defconst villager-food 978)
+;(defconst villager-wood 979)
+;(defconst villager-stone 980)
+;(defconst villager-gold 981)
+;(defconst villager-builder 982)
+;(defconst villager-repairer 983)
+;(defconst villager-base 984)
+
+;--------------------------------------
+; Define Extended Strategic Numbers
+;--------------------------------------
+;(defconst sn-enable-new-building-system 242)
+;(defconst sn-percent-building-cancellation 243)
+;(defconst sn-enable-boar-hunting 244)
+;(defconst sn-minimum-number-hunters 245)
+;(defconst sn-object-repair-level 246)
+;(defconst sn-enable-patrol-attack 247)
+;(defconst sn-dropsite-separation-distance 248)
+;(defconst sn-target-player-number 249)
+;(defconst sn-safe-town-size 250)
+;(defconst sn-focus-player-number 251)
+;(defconst sn-minimum-boar-lure-group-size 252)
+;(defconst sn-preferred-mill-placement 253)
+;(defconst sn-enable-offensive-priority 254)
+;(defconst sn-building-targeting-mode 255)
+;(defconst sn-home-exploration-time 256)
+;(defconst sn-number-civilian-militia 257)
+;(defconst sn-allow-civilian-offense 258)
+;(defconst sn-preferred-trade-distance 259)
+(defconst sn-lumber-camp-max-distance 260)
+(defconst sn-mining-camp-max-distance 261)
+;(defconst sn-wall-targeting-mode 262)
+;(defconst sn-livestock-to-town-center 263)
+;(defconst sn-enable-training-queue 264)
+;(defconst sn-ignore-tower-elevation 1)
+;(defconst sn-town-center-placement 266)
+;(defconst sn-disable-tower-priority 267)
+;(defconst sn-placement-zone-size 268)
+;(defconst sn-placement-fail-delta 269)
+;(defconst sn-placement-to-center 270)
+;(defconst sn-disable-attack-groups 271)
+;(defconst sn-allow-adjacent-dropsites 272)
+;(defconst sn-defer-dropsite-update 273)
+;(defconst sn-maximum-garrison-fill 274)
+;(defconst sn-number-garrison-units 275)
+;(defconst sn-filter-under-attack 276)
+;(defconst sn-disable-defend-groups 277)
+;(defconst sn-dock-placement-mode 278)
+;(defconst sn-dock-proximity-factor 279)
+;(defconst sn-dock-avoidance-factor 280)
+;(defconst sn-dock-training-filter 281)
+;(defconst sn-free-siege-targeting 282)
+;(defconst sn-warship-targeting-mode 283)
+
+
+; defensive priority settings
+
+;-1: default
+;05: outpost
+;10: farm, fish-trap
+;20: blacksmith, university
+;30: lumber-camp
+;40: mill
+;50: mining-camp
+;100: market
+;250: house
+;500: barracks, archery-range, stable, monastery, siege workshop, dock
+;500: gate (not v1.0c, but set since the gate fix)
+;1000: town-center (109, standing), town-center (621, foundation)
+;2000: watch-tower
+;3000: guard-tower
+;4000: keep
+;5000: bombard-tower
+;10000: castle
+;20000: wonder
+
+
+;offensive priority settings
+;-1: default
+;00: 903 (buildings), 927 (wall/palisade), 939 (gates), 949 (farm/fish trap), 951 (trebs), 952 (towers), 954 (trebs unpacked)
+;01: 906 (infantery), 912 (cavalry, not scout-line), 924, 935 (petard), 945, 947 (scouts), 950, 956, 957
+;02: 928, 946
+;03: 900 (ranged units), 923 (conquistador), 926, 936 (cavalry archers), 944 (gunpowder units)
+;04: 6, 7 (skirmishers)
+;05: 35 (ram), 422 (capped ram), 548 (siege rams)
+;06: 913 (sieges), 955 (scorpions)
+;07: 904 (villagers), 919 (trades), 958 (domestic animals), 959 (kings)
+;08: 917, 918 (monks), 943 (relic monks)
+;09: 922 (warboats), 953
+;10: 920 (transports)
+;11: 902 (trade cog), 921 (fishing-ships)
+
+
+;--------------------------------------
+; AOFE Constants
+;--------------------------------------
+
+(defconst italian 19)
+(defconst indian 20)
+(defconst incan 21)
+(defconst magyar 22)
+(defconst slavic 23)
+(defconst stable-tarkan 886)
+(defconst stable-elite-tarkan 887)
+(defconst boyar 876)
+(defconst elite-boyar 878)
+(defconst kamayuk 879)
+(defconst elite-kamayuk 881)
+(defconst slinger 185)
+(defconst ri-elite-magyar-huszar 472)
+(defconst magyar-huszar 869)
+(defconst elite-magyar-huszar 871)
+(defconst ri-elite-elephant-archer 481)
+(defconst elephant-archer 873)
+(defconst elite-elephant-archer 875)
+(defconst imperial-camel 897)
+(defconst ri-elite-genoese-crossbow 468)
+(defconst genoese-crossbowman 866)
+(defconst elite-genoese-crossbowman 868)
+(defconst condottiero 882)
+(defconst ri-chivalry 493)
+(defconst ri-inquisition 492)
+(defconst ri-sipahi 491)
+(defconst ri-madrasah 490)
+(defconst ri-ironclad 489)
+(defconst ri-persepolis 488)
+(defconst ri-falconry 487)
+(defconst ri-panokseon 486)
+(defconst ri-yasama 485)
+(defconst ri-marauders 483)
+(defconst ri-atlatl 460)
+(defconst ri-war-wolf 461)
+(defconst ri-greak-fire 464)
+(defconst ri-chieftains 463)
+(defconst ri-stronghold 482)
+(defconst ri-great-wall 462)
+(defconst ri-orthodoxy 512)
+(defconst ri-druzhina 513)
+(defconst ri-elite-boyar 504)
+(defconst ri-andean-sling 516)
+(defconst ri-couriers 517)
+(defconst ri-elite-kamayuk 509)
+(defconst ri-sultans 506)
+(defconst ri-shatagni 507)
+(defconst ri-imperial-camel 521)
+(defconst ri-mercenaries 514)
+(defconst ri-recurve-bow 515)
+(defconst ri-silk-road 499)
+(defconst ri-pavise 494)
+(defconst ri-revetments 525)
+(defconst ri-eagle-warrior 384)
+(defconst ri-gillnets 65)
+(defconst ri-hunting-dogs 526)
+(defconst siege-tower 885)
+(defconst ri-tlatoani 585)
+(defconst upgraded-palisade-wall 119)
+(defconst sea-tower 785)
+(defconst sea-wall 788)
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Constants
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Allied goals
+;============
+(defconst ag-teamtarg 1)
+;Goals
+;=====
+(defconst g-population-superiority 3)
+(defconst g-players 4)
+(defconst g-rax 8)
+(defconst g-arc 9)
+(defconst g-sta 10)
+(defconst g-threat-time 12)
+(defconst g-threat-player 13)
+(defconst g-threat-source 14)
+(defconst g-threat-target 15)
+(defconst g-rax-deficit 16)
+(defconst g-arc-deficit 17)
+(defconst g-sta-deficit 18)
+(defconst g-goal-military-building 19)
+(defconst g-max-ships 20)
+(defconst g-buildable-percent 21);% area we assume to be buildable in
+;percentages of population-cap
+(defconst g-90pop 30)
+(defconst g-80pop 31)
+(defconst g-70pop 32)
+(defconst g-60pop 33)
+(defconst g-50pop 34)
+(defconst g-40pop 35)
+(defconst g-30pop 36)
+(defconst g-25pop 37)
+(defconst g-20pop 38)
+(defconst g-15pop 39)
+(defconst g-10pop 40)
+(defconst g-5pop 41)
+(defconst g-2pop 42)
+(defconst g-1pop 43)
+;Classes: 
+;archer, skirm, cav-archer, cannoneer
+;swordsman, spearman, eagle
+;lcav, hcav, camel
+;siege
+(defconst g-target-archer 50)
+(defconst g-target-skirm 51)
+(defconst g-target-cav-archer 52)
+(defconst g-target-cannoneer 53)
+(defconst g-target-swordsman 54)
+(defconst g-target-spearman 55)
+(defconst g-target-eagle 56)
+(defconst g-target-lcav 57)
+(defconst g-target-hcav 58)
+(defconst g-target-camel 59)
+(defconst g-target-huskarl 60)
+(defconst g-target-samurai 61)
+(defconst g-target-jaguar-man 62)
+(defconst g-target-cataphract 63)
+(defconst g-target-war-elephant 64)
+(defconst g-target-elephant-archer 65)
+(defconst g-target-genoese-xbow 66)
+
+(defconst g-my-archer 70)
+(defconst g-my-skirm 71)
+(defconst g-my-cav-archer 72)
+(defconst g-my-cannoneer 73)
+(defconst g-my-swordsman 74)
+(defconst g-my-spearman 75)
+(defconst g-my-eagle 76)
+(defconst g-my-lcav 77)
+(defconst g-my-hcav 78)
+(defconst g-my-camel 79)
+(defconst g-my-huskarl 80)
+(defconst g-my-samurai 81)
+(defconst g-my-jaguar-man 82)
+(defconst g-my-cataphract 83)
+(defconst g-my-war-elephant 84)
+(defconst g-my-elephant-archer 85)
+(defconst g-my-genoese-xbow 86)
+
+(defconst g-count-archer 90);archer, chuk, longbow, plumed
+(defconst g-count-skirm 91);skirmisher
+(defconst g-count-cav-archer 92);cav-archer, conquistador, mangudai, war-wagon
+(defconst g-count-cannoneer 93);hand-cannoneer, jannisary
+(defconst g-count-swordsman 94);militiaman, bersek, teutonic-knight, throwing-axeman
+(defconst g-count-spearman 95);spearman
+(defconst g-count-eagle 96);eagle-warrior
+(defconst g-count-lcav 97);scout-cavalry
+(defconst g-count-hcav 98);knight, tarkan
+(defconst g-count-camel 99);camel, mameluke
+(defconst g-count-huskarl 100)
+(defconst g-count-samurai 101)
+(defconst g-count-jaguar-man 102)
+(defconst g-count-cataphract 103)
+(defconst g-count-war-elephant 104)
+(defconst g-count-elephant-archer 105)
+(defconst g-count-genoese-xbow 106)
+
+(defconst g-tempmaths1 201)
+(defconst g-tempmaths2 202)
+(defconst g-tempmaths3 203)
+
+(defconst g-cost-food 211)
+(defconst g-cost-wood 212)
+(defconst g-cost-stone 213)
+(defconst g-cost-gold 214)
+(defconst g-cost-food2 215)
+(defconst g-cost-wood2 216)
+(defconst g-cost-stone2 217)
+(defconst g-cost-gold2 218)
+(defconst g-delta-food 121)
+(defconst g-delta-wood 122)
+(defconst g-delta-stone 123)
+(defconst g-delta-gold 124)
+;Timers
+;======
+(defconst t-attacking 1)
+(defconst t-new-targ 2)
+(defconst t-request 3)
+(defconst t-attacking2 4)
+(defconst t-attacking3 5)
+(defconst t-taskungrouped 6)
+(defconst t-chat-food 7)
+(defconst t-chat-wood 8)
+(defconst t-chat-gold 9)
+(defconst t-chat-stone 10)
+;Civ specific units
+#load-if-not-defined AZTEC-CIV
+#load-if-not-defined KOREAN-CIV
+#load-if-not-defined VIKING-CIV
+(defconst seaunit galley-line)
+#end-if
+#end-if
+#end-if
+#load-if-defined AZTEC-CIV
+(defconst seaunit fire-ship-line)
+#end-if
+#load-if-defined KOREAN-CIV
+(defconst seaunit turtle-ship-line)
+#end-if
+#load-if-defined VIKING-CIV
+(defconst seaunit longboat-line)
+#end-if
+;Map Sizes
+;=========
+(defconst s1-tsa 45)
+#load-if-defined TINY-MAP
+(defconst num-fish 40)
+#end-if
+#load-if-defined SMALL-MAP
+(defconst num-fish 60)
+#end-if
+#load-if-defined MEDIUM-MAP
+(defconst num-fish 80)
+#end-if
+#load-if-defined NORMAL-MAP
+(defconst num-fish 120)
+#end-if
+#load-if-defined LARGE-MAP
+(defconst num-fish 140)
+#end-if
+#load-if-defined GIANT-MAP
+(defconst num-fish 160)
+#end-if
+;Units
+;=====
+;Buildings
+;=========
+;Unit/research-ids
+;=================
+(defconst fidle 293)
+(defconst mhunter 122)
+(defconst fhunter 216)
+(defconst mgminer 579)
+(defconst fgminer 581)
+(defconst mdead-miner 229)
+(defconst fdead-miner 221)
+(defconst mdead-lumber 228)
+(defconst fdead-lumber 219)
+
+(defconst unpack-treb 42)
+(defconst cavalry 912)
+(defconst livestock-line 958)
+(defconst fish 905)
+
+(defconst ri-anarchy 16)
+(defconst b-huskarl 759)
+
+(defconst deep-fish 905)
+(defconst shore-fish 933)
+;Strategic-numbers
+;=================
+(defconst sn-age 7)
+	;dark: 0
+	(defconst advancing-feudal 1)
+	(defconst advancing-castle 2)
+	(defconst advancing-imp 3)
+(defconst sn-sea-superiority 8)
+	;-1=<85% enemy ships
+	;0=equal
+	;1=20 more
+(defconst sn-military-superiority 9)
+	;-1=<85% enemy troops
+	;0=equal
+	;1=20 more
+	
+(defconst land-dock 3000)
+(defconst islands-dock 4000)
+
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Chat
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Commerce
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+(defrule
+	(or(and(gold-amount > 600)
+	       (stone-amount < 300))
+	   (and(gold-amount > 2000)
+	       (stone-amount < 1000)))
+	(can-buy-commodity stone)
+=>
+	(buy-commodity stone)
+	(chat-local-to-self "bs")
+)
+(defrule
+	(or(and(gold-amount > 600)
+	       (food-amount < 300))
+	   (and(gold-amount > 2000)
+	       (food-amount < 1000)))
+	(can-buy-commodity food)
+=>
+	(buy-commodity food)
+	(chat-local-to-self "bf")
+)
+(defrule
+	(or(and(gold-amount > 600)
+	       (wood-amount < 300))
+	   (and(gold-amount > 2000)
+	       (wood-amount < 1000)))
+	(can-buy-commodity wood)
+=>
+	(buy-commodity wood)
+	(chat-local-to-self "bw")
+)
+
+(defrule
+	(or(and(gold-amount < 300)
+	       (stone-amount > 700))
+	   (and(gold-amount < 1000)
+	       (stone-amount > 2000)))
+	(can-sell-commodity stone)
+=>
+	(sell-commodity stone)
+	(chat-local-to-self "ss")
+)
+(defrule
+	(or(and(gold-amount < 300)
+	       (food-amount > 600))
+	   (and(gold-amount < 1000)
+	       (food-amount > 2000)))
+	(can-sell-commodity food)
+=>
+	(sell-commodity food)
+	(chat-local-to-self "sf")
+)
+(defrule
+	(or(and(gold-amount < 300)
+	       (wood-amount > 600))
+	   (and(gold-amount < 1000)
+	       (wood-amount > 2000)))
+	(can-sell-commodity wood)
+=>
+	(sell-commodity wood)
+	(chat-local-to-self "sw")
+)
+
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Strategic numbers
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Military Superiority
+;====================
+(defrule
+	(taunt-detected my-player-number 1)
+=>
+	(up-chat-data-to-player my-player-number "tot-pop-sup: %d" g: g-population-superiority)
+	(up-chat-data-to-player my-player-number "mil-sup: %d" s: sn-military-superiority)
+	(up-chat-data-to-player my-player-number "sea-sup est: %d" s: sn-sea-superiority)
+
+	(up-get-player-fact my-player-number unit-type-count infantry-class g-tempmaths1)
+	(up-chat-data-to-player my-player-number "inf: %d" g: g-tempmaths1)
+
+	(up-get-player-fact my-player-number unit-type-count siege-weapon-class g-tempmaths1)
+	(up-chat-data-to-player my-player-number "siege: %d" g: g-tempmaths1)
+	(up-get-player-fact my-player-number unit-type-count cavalry-class g-tempmaths1)
+	(up-chat-data-to-player my-player-number "cav: %d" g: g-tempmaths1)
+
+	(acknowledge-taunt my-player-number 1)
+	(up-chat-data-to-player my-player-number "targ %d" s: sn-target-player-number)
+)
+(defrule(taunt-detected my-player-number 2)=>
+	(up-chat-data-to-player my-player-number "archer %d" g: g-my-archer)
+	(up-chat-data-to-player my-player-number "skirm %d" g: g-my-skirm)
+	(up-chat-data-to-player my-player-number "cav-archer %d" g: g-my-cav-archer)
+	(up-chat-data-to-player my-player-number "cannoneer %d" g: g-my-cannoneer)
+	
+	(up-chat-data-to-player my-player-number "swordsman %d" g: g-my-swordsman)
+	(up-chat-data-to-player my-player-number "spearman %d" g: g-my-spearman)
+	(up-chat-data-to-player my-player-number "eagle %d" g: g-my-eagle)
+	
+	(up-chat-data-to-player my-player-number "lcav %d" g: g-my-lcav)
+	(up-chat-data-to-player my-player-number "hcav %d" g: g-my-hcav)
+	(up-chat-data-to-player my-player-number "camel %d" g: g-my-camel))
+(defrule(taunt-detected my-player-number 2)=>
+	(up-chat-data-to-player my-player-number "huskarl %d" g: g-my-huskarl)
+	(up-chat-data-to-player my-player-number "samurai %d" g: g-my-samurai)
+	(up-chat-data-to-player my-player-number "jaguar-man %d" g: g-my-jaguar-man)
+	(up-chat-data-to-player my-player-number "cataphract %d" g: g-my-cataphract)
+	(up-chat-data-to-player my-player-number "war-elephant %d" g: g-my-war-elephant)
+	(up-chat-data-to-player my-player-number "elephant-archer %d" g: g-my-elephant-archer)
+	(up-chat-data-to-player my-player-number "genoese-crossbowman %d" g: g-my-genoese-xbow)
+	
+	(acknowledge-taunt my-player-number 2))
+;Returns percentage of enemy army/navy we have (ie fraction*100)
+(defrule
+	(true)
+=>
+	(up-get-player-fact my-player-number military-population 0 g-tempmaths1)
+	(up-get-player-fact target-player military-population 0 g-tempmaths2)
+	(up-modify-goal g-tempmaths1 g:%/ g-tempmaths2)
+	(up-modify-sn sn-military-superiority g:= g-tempmaths1)
+
+	(up-get-player-fact target-player unit-type-count galley-line g-tempmaths2)
+	(up-get-player-fact target-player unit-type-count fire-ship-line g-tempmaths1)
+	(up-modify-goal g-tempmaths2 g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count cannon-galleon-line g-tempmaths1)
+	(up-modify-goal g-tempmaths2 g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count turtle-ship-line g-tempmaths1)
+	(up-modify-goal g-tempmaths2 g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count longboat-line g-tempmaths1))
+(defrule(true)=>
+	(up-modify-goal g-tempmaths2 g:+ g-tempmaths1)
+	(up-modify-goal g-tempmaths2 c:* 2)
+	(up-get-player-fact my-player-number warboat-count 0 g-tempmaths1)
+	(up-modify-goal g-tempmaths1 g:%/ g-tempmaths2)
+	(up-modify-sn sn-sea-superiority g:= g-tempmaths1)
+
+	(up-get-fact-sum any-ally population 0 g-population-superiority)
+	(up-get-player-fact my-player-number population 0 g-tempmaths1)
+	(up-modify-goal g-population-superiority g:+ g-tempmaths1);1=our pop, 2=theirs
+	(up-get-fact-sum any-enemy population 0 g-tempmaths1)
+	(up-modify-goal g-population-superiority g:%/ g-tempmaths1);1=% of their pop we have
+)
+;Other recursive stuff
+;=====================
+(defrule(true)=>
+	(up-get-fact population-cap 0 g-tempmaths1)
+	
+	(up-modify-goal g-90pop g:= g-tempmaths1)(up-modify-goal g-90pop c:* 9)(up-modify-goal g-90pop c:/ 10)
+	(up-modify-goal g-80pop g:= g-tempmaths1)(up-modify-goal g-80pop c:* 8)(up-modify-goal g-80pop c:/ 10)
+	(up-modify-goal g-70pop g:= g-tempmaths1)(up-modify-goal g-70pop c:* 7)(up-modify-goal g-70pop c:/ 10)
+	(up-modify-goal g-60pop g:= g-tempmaths1)(up-modify-goal g-60pop c:* 6)(up-modify-goal g-60pop c:/ 10))
+(defrule(true)=>
+	(up-modify-goal g-50pop g:= g-tempmaths1)(up-modify-goal g-50pop c:* 5)(up-modify-goal g-50pop c:/ 10)
+	(up-modify-goal g-40pop g:= g-tempmaths1)(up-modify-goal g-40pop c:* 4)(up-modify-goal g-40pop c:/ 10)
+	(up-modify-goal g-30pop g:= g-tempmaths1)(up-modify-goal g-30pop c:* 3)(up-modify-goal g-30pop c:/ 10)
+	(up-modify-goal g-20pop g:= g-tempmaths1)(up-modify-goal g-20pop c:* 2)(up-modify-goal g-20pop c:/ 10)
+	(up-modify-goal g-10pop g:= g-tempmaths1)(up-modify-goal g-10pop c:/ 10))
+(defrule(true)=>
+	(up-modify-goal g-25pop g:= g-tempmaths1)(up-modify-goal g-25pop c:* 5)(up-modify-goal g-25pop c:/ 20)
+	(up-modify-goal g-15pop g:= g-tempmaths1)(up-modify-goal g-15pop c:* 3)(up-modify-goal g-15pop c:/ 20)
+	(up-modify-goal g-5pop g:= g-tempmaths1)(up-modify-goal g-5pop c:/ 20)
+	(up-modify-goal g-2pop g:= g-tempmaths1)(up-modify-goal g-2pop c:/ 50)
+	(up-modify-goal g-1pop g:= g-tempmaths1)(up-modify-goal g-1pop c:/ 100))
+	
+(defrule
+	(players-building-count any-enemy < 1)
+=>
+	(set-strategic-number sn-number-boat-explore-groups 4)
+	(set-strategic-number sn-minimum-boat-explore-group-size 1)
+	(set-strategic-number sn-maximum-boat-explore-group-size 1)
+)
+(defrule
+	(players-building-count every-enemy > 0)
+=>
+	(set-strategic-number sn-number-boat-explore-groups 1)
+	(set-strategic-number sn-minimum-boat-explore-group-size 1)
+	(set-strategic-number sn-maximum-boat-explore-group-size 1)
+)
+;Initialisation
+;==============
+(defrule
+	(players-building-count any-enemy > 4)
+=>
+	(set-strategic-number sn-number-explore-groups 1)
+	(up-reset-scouts)
+	(up-retreat-to town-center c: all-units-class)
+	(disable-self)
+) 
+(defrule
+	(strategic-number sn-consecutive-idle-unit-limit != 5)
+=>
+	(set-strategic-number sn-consecutive-idle-unit-limit 5)
+	(set-strategic-number sn-allow-civilian-defense 0)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	
+	(set-strategic-number sn-number-explore-groups 5)
+	(set-strategic-number sn-percent-enemy-sighted-response 100)
+	(set-strategic-number sn-enemy-sighted-response-distance 25)
+	
+	(set-strategic-number sn-target-evaluation-damage-capability 500)
+	(set-strategic-number sn-target-evaluation-distance 1000)
+	(set-strategic-number sn-target-evaluation-time-kill-ratio 300)
+	(set-strategic-number sn-target-evaluation-siege-weapon 1000)
+	
+	(set-difficulty-parameter ability-to-dodge-missiles 0)
+	(set-difficulty-parameter ability-to-maintain-distance 50)
+	(set-strategic-number sn-age 0)
+	(set-difficulty-parameter sn-percent-building-cancellation 90)
+	
+)
+(defrule
+	(strategic-number sn-cap-civilian-builders != 20)
+=>
+	(set-strategic-number sn-cap-civilian-builders 20)
+	(set-strategic-number sn-cap-civilian-explorers 10)
+	(set-strategic-number sn-minimum-civilian-explorers 10)
+	(set-strategic-number sn-initial-exploration-required 0)
+
+	(set-strategic-number sn-retask-gather-amount 0)
+	(set-strategic-number sn-lumber-camp-max-distance 20)
+	(set-strategic-number sn-mining-camp-max-distance 20)
+	(set-strategic-number sn-mill-max-distance 20)
+
+	(set-strategic-number sn-food-gatherer-percentage  25)
+	(set-strategic-number sn-wood-gatherer-percentage  25)
+	(set-strategic-number sn-gold-gatherer-percentage  25)
+	(set-strategic-number sn-stone-gatherer-percentage  25)
+
+	(set-strategic-number sn-mining-camp-max-distance  30)
+	(set-strategic-number sn-lumber-camp-max-distance  30)
+	(set-strategic-number sn-mill-max-distance  40)
+)
+(defrule
+	(strategic-number sn-maximum-food-drop-distance != 40)
+=>
+	(set-strategic-number sn-maximum-food-drop-distance 40)
+	(set-strategic-number sn-maximum-hunt-drop-distance 40)
+	(set-strategic-number sn-maximum-wood-drop-distance 10)
+	(set-strategic-number sn-maximum-gold-drop-distance 7)
+	(set-strategic-number sn-maximum-stone-drop-distance 7)
+	
+	(set-strategic-number sn-minimum-water-body-size-for-dock 2000)
+	(set-strategic-number sn-enable-training-queue 1)
+	(set-strategic-number sn-percent-attack-boats 100)
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	
+	(set-strategic-number sn-minimum-dropsite-buffer 50)
+	(set-strategic-number sn-relic-return-distance 255)
+
+	
+	(enable-timer t-attacking 1)
+	(enable-wall-placement 2)
+	(set-escrow-percentage wood 5)
+	(set-escrow-percentage gold 2)
+)
+(defrule
+	(strategic-number sn-livestock-to-town-center != 1)
+=>
+	(set-strategic-number sn-livestock-to-town-center 1)
+	(up-assign-builders c: town-center c: 2)
+	(up-assign-builders c: town-center-foundation c: 6)
+	(set-strategic-number sn-enable-new-building-system 1)
+	
+	(up-assign-builders c: house c: 1)
+	(up-assign-builders c: castle c: 3)
+	(up-assign-builders c: blacksmith c: 1)
+	(up-assign-builders c: market c: 1)
+	
+	(set-strategic-number sn-maximum-town-size 10)
+	(set-strategic-number sn-mill-max-distance 10)
+	(enable-timer t-new-targ 0)
+	(set-strategic-number sn-target-player-number -1)
+	
+	(enable-timer t-request 30)
+	(enable-timer t-taskungrouped 30)
+	(set-strategic-number sn-percent-civilian-explorers 100)
+)
+(defrule(timer-triggered t-taskungrouped)
+(strategic-number sn-relic-return-distance == 255)(strategic-number sn-percent-attack-soldiers == 0)=>(set-strategic-number sn-relic-return-distance 254)
+(set-strategic-number sn-task-ungrouped-soldiers 1)(enable-timer t-taskungrouped 2)(chat-local-to-self "spread"))
+(defrule(timer-triggered t-taskungrouped)
+(strategic-number sn-relic-return-distance == 254)=>(set-strategic-number sn-relic-return-distance 255)
+(set-strategic-number sn-task-ungrouped-soldiers 0)
+(enable-timer t-taskungrouped 60)(chat-local-to-self "stopspread"))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Town-size
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule(true)=>(set-goal g-buildable-percent 9)(disable-self))
+(defrule(true)(game-time > 120)(building-count-total < 2)(wood-amount > 200)=>
+(up-modify-goal g-buildable-percent c:- 1)(chat-to-all "ugh1")(disable-self))
+(defrule(true)(game-time > 162)(building-count-total < 4)(wood-amount > 60)=>
+(up-modify-goal g-buildable-percent c:- 1)(chat-to-all "ugh2")(disable-self))
+(defrule(true)(game-time > 195)(building-count-total < 6)(wood-amount > 80)=>
+(up-modify-goal g-buildable-percent c:- 1)(chat-to-all "ugh3")(disable-self))
+(defrule(true)(game-time > 260)(building-count-total < 8)(wood-amount > 100)=>
+(up-modify-goal g-buildable-percent c:- 1)(chat-to-all "ugh4")(disable-self))
+(defrule(true)(game-time > 290)(building-count-total < 10)(wood-amount > 120)=>
+(up-modify-goal g-buildable-percent c:- 1)(chat-to-all "ugh5")(disable-self))
+(defrule(true)(game-time > 330)(building-count-total < 12)(wood-amount > 140)=>
+(up-modify-goal g-buildable-percent c:- 1)(chat-to-all "ugh6")(disable-self))
+(defrule(true)(game-time > 510)(building-count-total < 14)(wood-amount > 160)=>
+(up-modify-goal g-buildable-percent c:- 1)(chat-to-all "ugh7")(disable-self))
+;Buildings - Time
+;2  -  29
+;4  -  51
+;6  -  68
+;8  -  95
+;10 - 113
+;12 - 134
+;14 - 212
+
+(defrule(true)=>
+	(up-get-fact building-count 0 g-tempmaths2)
+	(up-get-fact building-type-count dock g-tempmaths1)(up-modify-goal g-tempmaths2 g:- g-tempmaths1)
+	(up-get-fact building-type-count mining-camp g-tempmaths1)(up-modify-goal g-tempmaths2 g:- g-tempmaths1)
+	(up-get-fact building-type-count lumber-camp g-tempmaths1)(up-modify-goal g-tempmaths2 g:- g-tempmaths1)
+	(up-get-fact building-type-count mill g-tempmaths1)(up-modify-goal g-tempmaths2 g:- g-tempmaths1))
+(defrule(true)=>
+	(up-modify-goal g-tempmaths1 s:= sn-maximum-town-size)
+	(up-modify-goal g-tempmaths1 g:* g-tempmaths1);get area held within town size
+	(up-modify-goal g-tempmaths1 c:/ 13);ie assume average building size of sqrt(n)
+	(up-modify-goal g-tempmaths1 g:* g-buildable-percent)(up-modify-goal g-tempmaths1 c:/ 10));we can only build on x % of our land
+;tempmaths1: buildings we could fit in this townsize
+;tempmaths2: buildings in our town
+(defrule
+	(up-compare-goal g-tempmaths1 g:> g-tempmaths2)
+	(strategic-number sn-maximum-town-size > 12)
+=>
+	(up-modify-sn sn-maximum-town-size c:- 1)
+	;(up-chat-data-to-player my-player-number "town-size: %d" s: sn-maximum-town-size)
+)
+(defrule
+	(up-compare-goal g-tempmaths1 g:< g-tempmaths2)
+=>
+	(up-modify-sn sn-maximum-town-size c:+ 1)
+	(up-chat-data-to-player my-player-number "town-size: %d" s: sn-maximum-town-size)
+)
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Building
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule(true)=>
+	(up-modify-goal g-rax-deficit g:= g-my-swordsman)
+	(up-modify-goal g-rax-deficit g:+ g-my-spearman)
+	(up-modify-goal g-rax-deficit g:+ g-my-eagle)
+	(up-modify-goal g-rax-deficit g:- g-count-swordsman)
+	
+	(up-modify-goal g-rax-deficit g:- g-count-spearman)
+	(up-modify-goal g-rax-deficit g:- g-count-eagle)
+	(up-get-fact building-type-count-total barracks g-tempmaths1)
+	(up-modify-goal g-rax-deficit g:/ g-tempmaths1)
+	
+	
+	(up-modify-goal g-arc-deficit g:= g-my-archer)
+	(up-modify-goal g-arc-deficit g:+ g-my-skirm)
+	(up-modify-goal g-arc-deficit g:+ g-my-cav-archer)
+	(up-modify-goal g-arc-deficit g:+ g-my-cannoneer))
+(defrule(true)=>
+	(up-modify-goal g-arc-deficit g:- g-count-archer)
+	(up-modify-goal g-arc-deficit g:- g-count-skirm)
+	(up-modify-goal g-arc-deficit g:- g-count-cav-archer)
+	(up-modify-goal g-arc-deficit g:- g-count-cannoneer)
+	(up-get-fact building-type-count-total archery-range g-tempmaths1)
+	(up-modify-goal g-arc-deficit g:/ g-tempmaths1)
+	
+	
+	(up-modify-goal g-sta-deficit g:= g-my-lcav)
+	(up-modify-goal g-sta-deficit g:+ g-my-hcav)
+	(up-modify-goal g-sta-deficit g:+ g-my-camel)
+	(up-modify-goal g-sta-deficit g:- g-count-lcav)
+	(up-modify-goal g-sta-deficit g:- g-count-hcav)
+	(up-modify-goal g-sta-deficit g:- g-count-camel)
+	(up-get-fact building-type-count-total stable g-tempmaths1)
+	(up-modify-goal g-sta-deficit g:/ g-tempmaths1))
+	
+(defrule(true)=>(set-goal g-goal-military-building 0))
+(defrule(up-compare-goal g-rax-deficit c:> 1)
+(or(and(can-afford-unit militiaman-line)
+       (up-compare-goal g-my-swordsman g:> g-count-swordsman))
+(or(and(can-afford-unit spearman-line)
+       (up-compare-goal g-my-spearman g:> g-count-spearman))
+   (and(can-afford-unit eagle-warrior-line)
+       (up-compare-goal g-my-eagle g:> g-count-eagle))))
+(building-type-count-total barracks < 5)
+=>(set-goal g-goal-military-building barracks))
+
+(defrule(up-compare-goal g-arc-deficit c:> 1)(up-compare-goal g-arc-deficit g:> g-rax-deficit)
+(or(and(can-afford-unit archer-line)
+       (up-compare-goal g-my-archer g:> g-count-archer))
+(or(and(can-afford-unit skirmisher-line)
+       (up-compare-goal g-my-skirm g:> g-count-skirm))
+   (and(can-afford-unit cavalry-archer-line)
+       (up-compare-goal g-my-cav-archer g:> g-count-cav-archer))))
+(building-type-count-total archery-range < 5)
+=>(set-goal g-goal-military-building archery-range))
+(defrule(up-compare-goal g-arc-deficit c:> 1)(up-compare-goal g-arc-deficit g:> g-rax-deficit)
+(can-afford-unit hand-cannoneer)
+(up-compare-goal g-my-cannoneer g:> g-count-cannoneer)
+(building-type-count-total archery-range < 5)
+=>(set-goal g-goal-military-building archery-range))
+
+(defrule(up-compare-goal g-sta-deficit c:> 1)(up-compare-goal g-sta-deficit g:> g-arc-deficit)
+(or(and(can-afford-unit knight-line)
+       (up-compare-goal g-my-hcav g:> g-count-hcav))
+(or(and(can-afford-unit scout-cavalry-line)
+       (up-compare-goal g-my-lcav g:> g-count-lcav))
+   (and(can-afford-unit camel-line)
+       (up-compare-goal g-my-camel g:> g-count-camel))))
+(building-type-count-total stable < 5)
+=>(set-goal g-goal-military-building stable))
+
+(defrule
+	(population-headroom > 0)
+	(housing-headroom < 40)
+	(can-build house)
+	(up-pending-objects c: house c:< 3)
+	(building-type-count-total town-center > 0)
+	(or(wood-amount > 200)
+	   (and(housing-headroom < 5)
+	       (up-pending-objects c: house c:< 1)))
+	(dropsite-min-distance wood < 7)
+=>
+	(build house)
+)
+(defrule
+	(or(and(building-type-count-total town-center < 1)
+	   (and(wood-amount < 275)
+	       (building-type-count-total lumber-camp < 1)))
+	(or(dropsite-min-distance wood > 3)
+	   (building-type-count-total lumber-camp < 3)))
+	(can-build-with-escrow lumber-camp)
+=>
+	(release-escrow wood)
+	(build lumber-camp)
+	(up-modify-sn sn-lumber-camp-max-distance c:+ 10)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(or(resource-found food)
+	   (game-time > 300))
+	(can-build mill)
+	(or(building-type-count-total mill < 1)
+	   (and(unit-type-count villager-hunter > 1)
+	       (dropsite-min-distance hunting > 15)))
+	(up-pending-objects c: mill c:< 1)
+	(or(dropsite-min-distance wood < 7)
+	   (wood-amount >= 200))
+=>
+	(build mill)
+	(up-modify-sn sn-mill-max-distance c:+ 15)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(can-build mining-camp)
+	(up-pending-objects c: mining-camp c:< 1)
+	(or(and(up-gaia-type-count-total c: gold > 0)
+	       (dropsite-min-distance gold > 4))
+	   (and(up-gaia-type-count-total c: stone > 0)
+	       (dropsite-min-distance stone > 4)))
+	(or(gold-amount < 5000)
+	   (stone-amount < 2500))
+	(dropsite-min-distance wood < 7)
+=>
+	(build mining-camp)
+	(up-modify-sn sn-mining-camp-max-distance c:+ 10)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(can-build farm)
+	(idle-farm-count < 3)
+	(dropsite-min-distance wood < 7)
+	(up-pending-objects c: farm c:< 4)
+	(or(building-type-count-total lumber-camp > 0)
+	   (dropsite-min-distance wood < 3))
+	(food-amount < 10000)
+=>
+	(build farm)
+)
+(defrule
+	(can-build town-center)
+	(building-type-count-total town-center < 4)
+	(or(building-type-count-total barracks > 2)
+	(or(building-type-count-total archery-range > 2)
+	(or(building-type-count-total stable > 2)
+	   (building-type-count-total town-center < 1))))
+=>
+	(build town-center)
+)
+(defrule(building-type-count-total town-center > 0)=>
+	(set-strategic-number sn-minimum-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-percent-civilian-explorers 0)
+	(up-assign-builders c: town-center-foundation c: 3)
+	(disable-self))
+
+;(defrule(true)=>(up-chat-data-to-player my-player-number "%d" g: g-goal-military-building))
+(defrule
+	(building-type-count-total town-center > 0)
+	(up-compare-goal g-goal-military-building g:!= 0)
+	(can-build barracks)
+	(or(dropsite-min-distance wood < 7)
+	   (wood-amount > 1000))
+=>
+	(up-build place-normal 0 g: g-goal-military-building)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(can-build market)
+	(building-type-count-total market < 1)
+	(or(building-type-count-total barracks > 3)
+	(or(building-type-count-total archery-range > 3)
+	   (building-type-count-total stable > 3)))
+	(dropsite-min-distance wood < 7)
+=>
+	(build market)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(can-build dock)
+	(building-type-count-total dock < 10)
+	(up-pending-objects c: dock c:< 4)
+	(housing-headroom > 0)
+	(or(building-type-count-total barracks > 2)
+	(or(building-type-count-total archery-range > 2)
+	(or(building-type-count-total stable > 2)
+	   (wall-completed-percentage 2 == 100))))
+	(wood-amount > 200)
+	(dropsite-min-distance wood < 7)
+=>
+	(build dock)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(can-build castle)
+	(building-type-count-total castle < 4)
+	(up-pending-objects c: castle c:< 2)
+	(building-type-count-total town-center > 0)
+	(or(building-type-count-total barracks > 3)
+	(or(building-type-count-total archery-range > 3)
+	   (building-type-count-total stable > 3)))
+=>
+	(build castle)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(can-build monastery)
+	(building-type-count-total monastery < 2)
+	(up-pending-objects c: monastery c:< 1)
+	(building-type-count-total town-center > 0)
+	(or(building-type-count-total barracks > 3)
+	(or(building-type-count-total archery-range > 3)
+	   (building-type-count-total stable > 3)))
+	(dropsite-min-distance wood < 7)
+=>
+	(build monastery)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(can-build siege-workshop)
+	(building-type-count-total siege-workshop < 3)
+	(housing-headroom > 0)
+	(up-pending-objects c: siege-workshop c:< 1)
+	(building-type-count-total town-center > 0)
+	(or(building-type-count-total barracks > 3)
+	(or(building-type-count-total archery-range > 3)
+	   (building-type-count-total stable > 3)))
+	(dropsite-min-distance wood < 7)
+=>
+	(build siege-workshop)
+)
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Training
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule
+	(can-train villager)
+	(up-get-fact civilian-population 0 g-tempmaths1)
+	(up-compare-goal g-tempmaths1 g:< g-50pop)
+=>
+	(train villager)
+)
+(defrule
+	(can-train trade-cart)
+	(up-object-type-count-total c: trade-cart g:< g-15pop)
+	(unit-type-count villager-gold < 10)
+	(up-gaia-type-count c: gold c:< 5)
+	(players-building-type-count any-ally market > 0)
+=>
+	(train trade-cart)
+)
+(defrule
+	(up-object-type-count-total c: trebuchet-set g:< g-5pop)
+	(housing-headroom > 0)
+	(can-train-with-escrow trebuchet)
+=>
+	(release-escrow wood)
+	(release-escrow gold)
+	(train trebuchet)
+)
+(defrule
+	(can-train transport-ship)
+	(up-object-type-count-total c: transport-ship g:< g-15pop)
+	(strategic-number sn-sea-superiority > 100)
+	(soldier-count > 15)
+	(wall-completed-percentage 2 == 100)
+=>
+	(train transport-ship)
+	(set-difficulty-parameter ability-to-maintain-distance 100)
+)
+(defrule(building-type-count dock < 1)=>(up-modify-goal g-max-ships c:= 0))
+(defrule(wall-completed-percentage 2 != 100)(building-type-count dock > 0)=>(up-modify-goal g-max-ships g:= g-10pop))
+(defrule(wall-completed-percentage 2 == 100)(building-type-count dock > 0)=>(up-modify-goal g-max-ships g:= g-60pop))
+(defrule
+	(can-train seaunit)
+	(warboat-count < g-max-ships)
+	(or(strategic-number sn-sea-superiority < 110)
+	(or(and(unit-type-count-total seaunit < 7)
+	       (cc-players-unit-type-count any-enemy cannon-galleon-line > 5))
+	   (and(unit-type-count-total seaunit < 18)
+	       (cc-players-unit-type-count any-enemy cannon-galleon-line > 10))))
+=>
+	(train seaunit)
+)
+(defrule
+	(can-train cannon-galleon-line)
+	(or(strategic-number sn-sea-superiority > 90)
+	   (warboat-count >= g-5pop))
+	(up-object-type-count-total c: cannon-galleon-line g:< g-5pop)
+=>
+	(train cannon-galleon-line)
+)
+(defrule
+	(can-train battering-ram-line)
+	(unit-type-count-total battering-ram-line < g-5pop)
+=>
+	(train battering-ram-line)
+)
+(defrule
+	(or(can-train siege-onager)
+	(or(can-train bombard-cannon)
+	(or(can-train heavy-scorpion)
+	   (can-train monk))))
+=>
+	(train siege-onager)
+	(train bombard-cannon)
+	(train heavy-scorpion)
+	(train monk)
+)
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Counters
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Get target number units as goals
+;Classes: (g-trarget-UNIT)
+;archer, skirm, cav-archer, cannoneer
+;swordsman, spearman, eagle
+;lcav, hcav, camel
+;huskarl, samurai, jaguar-man, cataphract, war-elephant
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;update g-count-UNIT
+(defrule(true)=>
+	(up-get-fact unit-type-count archer-line g-count-archer)
+	(up-get-fact unit-type-count chu-ko-nu-line g-tempmaths1)
+	(up-modify-goal g-count-archer g:+ g-tempmaths1)
+	(up-get-fact unit-type-count longbowman-line g-tempmaths1)
+	(up-modify-goal g-count-archer g:+ g-tempmaths1)
+	(up-get-fact unit-type-count plumed-archer-line g-tempmaths1)
+	(up-modify-goal g-count-archer g:+ g-tempmaths1)
+	(up-get-fact unit-type-count genoese-crossbowman g-tempmaths1)
+	(up-modify-goal g-count-archer g:+ g-tempmaths1)
+	
+	(up-get-fact unit-type-count skirmisher-line g-count-skirm))
+	
+(defrule(true)=>
+	(up-get-fact unit-type-count cavalry-archer-line g-count-cav-archer)
+	(up-get-fact unit-type-count conquistador-line g-tempmaths1)
+	(up-modify-goal g-count-cav-archer g:+ g-tempmaths1)
+	(up-get-fact unit-type-count mangudai-line g-tempmaths1)
+	(up-modify-goal g-count-cav-archer g:+ g-tempmaths1)
+	(up-get-fact unit-type-count war-wagon-line g-tempmaths1)
+	(up-modify-goal g-count-cav-archer g:+ g-tempmaths1)
+	(up-get-fact unit-type-count elephant-archer g-tempmaths1)
+	(up-modify-goal g-tempmaths1 c:* 2)
+	(up-modify-goal g-count-cav-archer g:+ g-tempmaths1)
+	
+	(up-get-fact unit-type-count hand-cannoneer g-count-cannoneer)
+	(up-get-fact unit-type-count janissary-line g-tempmaths1)
+	(up-modify-goal g-count-cannoneer g:+ g-tempmaths1)
+	(up-get-fact unit-type-count slinger g-tempmaths1)
+	(up-modify-goal g-count-cannoneer g:+ g-tempmaths1))
+	
+(defrule(true)=>
+	(up-get-fact unit-type-count militiaman-line g-count-swordsman)
+	(up-get-fact unit-type-count huskarl-line g-tempmaths1)
+	(up-modify-goal g-count-swordsman g:+ g-tempmaths1)
+	(up-get-fact unit-type-count b-huskarl g-tempmaths1)
+	(up-modify-goal g-count-huskarl g:+ g-tempmaths1)
+	(up-get-fact unit-type-count samurai-line g-tempmaths1)
+	(up-modify-goal g-count-swordsman g:+ g-tempmaths1)
+	(up-get-fact unit-type-count teutonic-knight-line g-tempmaths1)
+	(up-modify-goal g-count-swordsman g:+ g-tempmaths1)
+	(up-get-fact unit-type-count throwing-axeman-line g-tempmaths1)
+	(up-modify-goal g-count-swordsman g:+ g-tempmaths1))
+(defrule(true)=>
+	(up-get-fact unit-type-count woad-raider-line g-tempmaths1)
+	(up-modify-goal g-count-swordsman g:+ g-tempmaths1)
+	(up-get-fact unit-type-count jaguar-man-line g-tempmaths1)
+	(up-modify-goal g-count-swordsman g:+ g-tempmaths1))
+	
+(defrule(true)=>
+	(up-get-fact unit-type-count spearman-line g-count-spearman)
+	(up-get-fact unit-type-count kamayuk g-tempmaths1)
+	(up-modify-goal g-count-spearman g:+ g-tempmaths1)
+	(up-get-fact unit-type-count berserk-line g-tempmaths1)
+	(up-modify-goal g-count-spearman g:+ g-tempmaths1)
+	
+	(up-get-fact unit-type-count eagle-warrior-line g-count-eagle)
+
+	(up-get-fact unit-type-count scout-cavalry-line g-count-lcav)
+	(up-get-fact unit-type-count magyar-huszar g-tempmaths1)
+	(up-modify-goal g-count-lcav g:+ g-tempmaths1))
+	
+(defrule(true)=>
+	(up-get-fact unit-type-count knight-line g-count-hcav)
+	(up-get-fact unit-type-count cataphract-line g-tempmaths1)
+	(up-modify-goal g-count-hcav g:+ g-tempmaths1)
+	(up-get-fact unit-type-count tarkan-line g-tempmaths1)
+	(up-modify-goal g-count-hcav g:+ g-tempmaths1)
+	(up-get-fact unit-type-count war-elephant-line g-tempmaths1)
+	(up-modify-goal g-tempmaths1 c:* 2)
+	(up-modify-goal g-count-hcav g:+ g-tempmaths1)
+	(up-get-fact unit-type-count boyar g-tempmaths1)
+	(up-modify-goal g-count-hcav g:+ g-tempmaths1)
+	
+	(up-get-fact unit-type-count camel-line g-count-camel)
+	(up-get-fact unit-type-count mameluke-line g-tempmaths1)
+	(up-modify-goal g-count-camel g:+ g-tempmaths1))
+	
+(defrule(true)=>
+	(up-get-fact unit-type-count huskarl-line g-count-huskarl)
+	(up-get-fact unit-type-count b-huskarl g-tempmaths1)
+	(up-modify-goal g-count-huskarl g:+ g-tempmaths1)
+	(up-get-fact unit-type-count samurai-line g-count-samurai)
+	(up-get-fact unit-type-count jaguar-man-line g-count-jaguar-man)
+	(up-get-fact unit-type-count cataphract-line g-count-cataphract)
+	(up-get-fact unit-type-count war-elephant-line g-count-war-elephant)
+	(up-get-fact unit-type-count elephant-archer g-count-elephant-archer)
+	(up-get-fact unit-type-count genoese-crossbowman g-count-genoese-xbow))
+
+;TODO: count target uniques of the special 5 differently
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;count enemy units
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+(defrule(true)=>
+	(up-get-player-fact target-player unit-type-count archer-line g-target-archer)
+	(up-get-player-fact target-player unit-type-count chu-ko-nu-line g-tempmaths1)
+	(up-modify-goal g-target-archer g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count longbowman-line g-tempmaths1)
+	(up-modify-goal g-target-archer g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count plumed-archer-line g-tempmaths1)
+	(up-modify-goal g-target-archer g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count genoese-crossbowman g-tempmaths1)
+	(up-modify-goal g-target-archer g:+ g-tempmaths1)
+	
+	(up-get-player-fact target-player unit-type-count skirmisher-line g-target-skirm))
+	
+(defrule(true)=>
+	(up-get-player-fact target-player unit-type-count cavalry-archer-line g-target-cav-archer)
+	(up-get-player-fact target-player unit-type-count conquistador-line g-tempmaths1)
+	(up-modify-goal g-target-cav-archer g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count mangudai-line g-tempmaths1)
+	(up-modify-goal g-target-cav-archer g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count war-wagon-line g-tempmaths1)
+	(up-modify-goal g-target-cav-archer g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count elephant-archer g-tempmaths1)
+	(up-modify-goal g-tempmaths1 c:* 2)
+	(up-modify-goal g-target-cav-archer g:+ g-tempmaths1)
+	
+	(up-get-player-fact target-player unit-type-count hand-cannoneer g-target-cannoneer)
+	(up-get-player-fact target-player unit-type-count janissary-line g-tempmaths1)
+	(up-modify-goal g-target-cannoneer g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count slinger g-tempmaths1)
+	(up-modify-goal g-target-cannoneer g:+ g-tempmaths1))
+	
+(defrule(true)=>
+	(up-get-player-fact target-player unit-type-count militiaman-line g-target-swordsman)
+	(up-get-player-fact target-player unit-type-count huskarl-line g-tempmaths1)
+	(up-modify-goal g-target-swordsman g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count b-huskarl g-tempmaths1)
+	(up-modify-goal g-target-swordsman g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count samurai-line g-tempmaths1)
+	(up-modify-goal g-target-swordsman g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count teutonic-knight-line g-tempmaths1)
+	(up-modify-goal g-target-swordsman g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count throwing-axeman-line g-tempmaths1)
+	(up-modify-goal g-target-swordsman g:+ g-tempmaths1))
+(defrule(true)=>
+	(up-get-player-fact target-player unit-type-count woad-raider-line g-tempmaths1)
+	(up-modify-goal g-target-swordsman g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count jaguar-man-line g-tempmaths1)
+	(up-modify-goal g-target-swordsman g:+ g-tempmaths1))
+	
+(defrule(true)=>
+	(up-get-player-fact target-player unit-type-count spearman-line g-target-spearman)
+	(up-get-player-fact target-player unit-type-count kamayuk g-tempmaths1)
+	(up-modify-goal g-target-spearman g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count berserk-line g-tempmaths1)
+	(up-modify-goal g-target-spearman g:+ g-tempmaths1)
+	
+	(up-get-player-fact target-player unit-type-count eagle-warrior-line g-target-eagle)
+
+	(up-get-player-fact target-player unit-type-count scout-cavalry-line g-target-lcav)
+	(up-get-player-fact target-player unit-type-count magyar-huszar g-tempmaths1)
+	(up-modify-goal g-target-lcav g:+ g-tempmaths1))
+(defrule(true)=>
+	(up-get-player-fact target-player unit-type-count knight-line g-target-hcav)
+	(up-get-player-fact target-player unit-type-count cataphract-line g-tempmaths1)
+	(up-modify-goal g-target-hcav g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count war-elephant-line g-tempmaths1)
+	(up-modify-goal g-tempmaths1 c:* 2)
+	(up-modify-goal g-target-hcav g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count tarkan-line g-tempmaths1)
+	(up-modify-goal g-target-hcav g:+ g-tempmaths1)
+	(up-get-player-fact target-player unit-type-count boyar g-tempmaths1)
+	(up-modify-goal g-target-hcav g:+ g-tempmaths1)
+	
+	(up-get-player-fact target-player unit-type-count camel-line g-target-camel)
+	(up-get-player-fact target-player unit-type-count mameluke-line g-tempmaths1)
+	(up-modify-goal g-target-camel g:+ g-tempmaths1))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;adjust enemy unit counts by my counts
+(defrule(true)=>
+;archer: +swordsman, -lcav, -hcav, -eagle, --skirm
+	(up-modify-goal g-target-archer c:* 3)
+	(up-modify-goal g-target-archer g:- g-count-skirm)
+	(up-modify-goal g-target-archer g:- g-count-lcav)
+	(up-modify-goal g-target-archer g:- g-count-hcav)
+	(up-modify-goal g-target-archer g:- g-count-huskarl)
+;skirm: ++archer, ++cav-archer, --lcav, -hcav, -swordsman, -eagle
+	(up-modify-goal g-target-skirm c:* 3)
+	(up-modify-goal g-target-skirm g:- g-count-lcav)
+	(up-modify-goal g-target-skirm g:- g-count-eagle)
+;cav-archer: +swordsman, --skirm
+	(up-modify-goal g-target-cav-archer c:* 3)
+	(up-modify-goal g-target-cav-archer g:- g-count-skirm)
+;cannoneer: +swordsman, -lcav, -hcav, -eagle, --skirm
+	(up-modify-goal g-target-cannoneer c:* 3)
+	(up-modify-goal g-target-cannoneer g:- g-count-skirm)
+	(up-modify-goal g-target-cannoneer g:- g-count-lcav))
+(defrule(true)=>
+;swordsman: +skirm, +lcav, +camel, +eagle, -archer, -cav-archer, -cannoneer
+	(up-modify-goal g-target-swordsman c:* 3)
+	(up-modify-goal g-target-swordsman g:- g-count-cataphract)
+	(up-modify-goal g-target-swordsman g:- g-count-jaguar-man)
+	(up-modify-goal g-target-swordsman g:- g-count-cannoneer)
+;spearman: +lcav, ++hcav, -swordsman, -archer, --cannoneer
+	(up-modify-goal g-target-spearman c:* 3)
+	(up-modify-goal g-target-spearman g:- g-count-jaguar-man)
+	(up-modify-goal g-target-spearman g:- g-count-cannoneer)
+;eagle: +archer, +skirm, +cannoneer, +lcav, -swordsman
+	(up-modify-goal g-target-eagle c:* 3)
+	(up-modify-goal g-target-eagle g:- g-count-cataphract)
+	(up-modify-goal g-target-eagle g:- g-count-jaguar-man))
+	
+(defrule(true)=>
+;lcav: +archer, ++skirm, +cannoneer, --spearman, -camel
+	(up-modify-goal g-target-lcav c:* 3)
+	(up-modify-goal g-target-lcav g:- g-count-spearman)
+	(up-modify-goal g-target-lcav g:- g-count-camel)
+;hcav: ++archer, +skirm, ++cannoneer, +swordsman, --spearman, --camel
+	(up-modify-goal g-target-hcav c:* 3)
+	(up-modify-goal g-target-hcav g:- g-count-spearman)
+	(up-modify-goal g-target-hcav g:- g-count-camel)
+;camel: +lcav, ++hcav, -swordsman
+	(up-modify-goal g-target-camel c:* 3)
+	(up-modify-goal g-target-camel g:- g-count-swordsman))
+	
+(defrule(true)=>
+;huskarl: ++archer, +skirm, +cav-archer, -hcav
+	(up-modify-goal g-target-huskarl c:* 3)
+	(up-modify-goal g-target-huskarl g:- g-count-cataphract)
+	(up-modify-goal g-target-huskarl g:- g-count-jaguar-man)
+;samurai: ++enemyunique, +skirm, +lcav, +camel, +eagle, -archer, -cav-archer, -cannoneer
+	(up-modify-goal g-target-samurai c:* 3)
+	(up-modify-goal g-target-samurai g:- g-count-cataphract)
+	(up-modify-goal g-target-samurai g:- g-count-jaguar-man)
+	(up-modify-goal g-target-samurai g:- g-count-cannoneer)
+;jaguar-man: ++swordsman, ++spearman, ++eagle, +skirm, +lcav, +camel, -archer, -cav-archer, -cannoneer
+	(up-modify-goal g-target-jaguar-man c:* 3)
+	(up-modify-goal g-target-jaguar-man g:- g-count-cataphract)
+	(up-modify-goal g-target-jaguar-man g:- g-count-cannoneer)
+;cataphract: ++swordsman, ++eagle, +archer, +skirm, +cannoneer, --camel
+	(up-modify-goal g-target-cataphract c:* 3)
+;war-elephant: ++swordsman, ++lcav, ++hcav, -cav-archer, --spearman
+	(up-modify-goal g-target-war-elephant c:* 3)
+	(up-modify-goal g-target-war-elephant g:- g-count-spearman))
+(defrule(true)=>
+;elephant-archer: +swordsman, +eagle, +lcav, +hcav, -cav-archer, --skirm, --spearman
+	(up-modify-goal g-target-elephant-archer c:* 3)
+	(up-modify-goal g-target-cav-archer g:- g-count-skirm)
+	(up-modify-goal g-target-cav-archer g:- g-count-spearman)
+;genoese-crossbowman: +swordsman, ++lcav, +hcav, +camel, -eagle, --skirm
+	(up-modify-goal g-target-genoese-xbow c:* 3)
+	(up-modify-goal g-target-huskarl g:- g-count-skirm)
+	(up-modify-goal g-target-archer g:- g-count-huskarl))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Once analysis complete, create coefficient for each unit (g-my-UNIT)
+;					archer: +swordsman, -lcav, -hcav, -eagle, --skirm
+(defrule(true)=>(set-goal g-my-archer 8)
+	(up-modify-goal g-my-archer g:+ g-target-swordsman)
+	(up-modify-goal g-my-archer g:- g-target-lcav)
+	(up-modify-goal g-my-archer g:- g-target-hcav)
+	(up-modify-goal g-my-archer g:- g-target-eagle)
+	(up-modify-goal g-my-archer g:- g-target-skirm))
+;					skirm: ++archer, ++cav-archer, --lcav, -hcav, -swordsman, -eagle
+(defrule(true)=>(set-goal g-my-skirm 3)
+	(up-modify-goal g-my-skirm g:+ g-target-archer)
+	(up-modify-goal g-my-skirm g:+ g-target-cav-archer)
+	(up-modify-goal g-my-skirm g:- g-target-lcav)
+	(up-modify-goal g-my-skirm g:- g-target-hcav)
+	(up-modify-goal g-my-skirm g:- g-target-swordsman)
+	(up-modify-goal g-my-skirm g:- g-target-eagle))
+;					cav-archer: +swordsman, --skirm
+(defrule(true)=>(set-goal g-my-cav-archer 7)
+	(up-modify-goal g-my-cav-archer g:+ g-target-swordsman)
+	(up-modify-goal g-my-cav-archer g:- g-target-skirm))
+;					cannoneer: +swordsman, -lcav, -hcav, -eagle, --skirm
+(defrule(true)=>(set-goal g-my-cannoneer 7)
+	(up-modify-goal g-my-cannoneer g:+ g-target-swordsman)
+	(up-modify-goal g-my-cannoneer g:- g-target-lcav)
+	(up-modify-goal g-my-cannoneer g:- g-target-hcav)
+	(up-modify-goal g-my-cannoneer g:- g-target-eagle)
+	(up-modify-goal g-my-cannoneer g:- g-target-skirm))
+
+;					swordsman: +skirm, +lcav, +camel, +eagle, -archer, -cav-archer, -cannoneer
+(defrule(true)=>(set-goal g-my-swordsman 20)
+	(up-modify-goal g-my-swordsman g:+ g-target-skirm)
+	(up-modify-goal g-my-swordsman g:+ g-target-lcav)
+	(up-modify-goal g-my-swordsman g:+ g-target-camel)
+	(up-modify-goal g-my-swordsman g:+ g-target-eagle)
+	(up-modify-goal g-my-swordsman g:- g-target-archer)
+	(up-modify-goal g-my-swordsman g:- g-target-cav-archer)
+	(up-modify-goal g-my-swordsman g:- g-target-cannoneer))
+;					spearman: +lcav, ++hcav, -swordsman, -archer, --cannoneer
+(defrule(true)=>(set-goal g-my-spearman 5)
+	(up-modify-goal g-my-spearman g:+ g-target-lcav)
+	(up-modify-goal g-my-spearman g:+ g-target-hcav)
+	(up-modify-goal g-my-spearman g:- g-target-swordsman)
+	(up-modify-goal g-my-spearman g:- g-target-archer)
+	(up-modify-goal g-my-spearman g:- g-target-cannoneer))
+;					eagle: +archer, +skirm, +cannoneer, +lcav, -swordsman
+(defrule(true)=>(set-goal g-my-eagle 20)
+	(up-modify-goal g-my-eagle g:+ g-target-archer)
+	(up-modify-goal g-my-eagle g:+ g-target-skirm)
+	(up-modify-goal g-my-eagle g:+ g-target-cannoneer)
+	(up-modify-goal g-my-eagle g:+ g-target-lcav)
+	(up-modify-goal g-my-eagle g:- g-target-swordsman))
+
+;					lcav: +archer, ++skirm, +cannoneer, --spearman, -camel
+(defrule(true)=>(set-goal g-my-lcav 7)
+	(up-modify-goal g-my-lcav g:+ g-target-archer)
+	(up-modify-goal g-my-lcav g:+ g-target-skirm)
+	(up-modify-goal g-my-lcav g:+ g-target-cannoneer)
+	(up-modify-goal g-my-lcav g:- g-target-spearman)
+	(up-modify-goal g-my-lcav g:- g-target-camel))
+;					hcav: ++archer, +skirm, ++cannoneer, +swordsman, --spearman, --camel
+(defrule(true)=>(set-goal g-my-hcav 12)
+	(up-modify-goal g-my-hcav g:+ g-target-archer)
+	(up-modify-goal g-my-hcav g:+ g-target-skirm)
+	(up-modify-goal g-my-hcav g:+ g-target-cannoneer)
+	(up-modify-goal g-my-hcav g:+ g-target-swordsman)
+	(up-modify-goal g-my-hcav g:- g-target-spearman)
+	(up-modify-goal g-my-hcav g:- g-target-camel))
+;					camel: +lcav, ++hcav, -swordsman
+(defrule(true)=>(set-goal g-my-camel 7)
+	(up-modify-goal g-my-camel g:+ g-target-lcav)
+	(up-modify-goal g-my-camel g:+ g-target-hcav)
+	(up-modify-goal g-my-camel g:- g-target-swordsman))
+;					UNIQUE ===================================================
+					;huskarl: ++archer, +skirm, +cav-archer
+(defrule(civ-selected gothic)=>(up-modify-goal g-my-huskarl g:= g-my-swordsman)
+	(up-modify-goal g-my-huskarl g:+ g-target-archer)
+	(up-modify-goal g-my-huskarl g:+ g-target-archer)
+	(up-modify-goal g-my-huskarl g:+ g-target-skirm)
+	(up-modify-goal g-my-huskarl g:+ g-target-cav-archer))
+					;samurai: ++enemyunique
+(defrule(civ-selected japanese)=>(up-modify-goal g-my-samurai g:= g-my-swordsman))
+					;jaguar-man: ++swordsman, ++spearman, ++eagle
+(defrule(civ-selected aztec)=>(up-modify-goal g-my-jaguar-man g:= g-my-swordsman)
+	(up-modify-goal g-my-jaguar-man g:+ g-target-swordsman)
+	(up-modify-goal g-my-jaguar-man g:+ g-target-spearman)
+	(up-modify-goal g-my-jaguar-man g:+ g-target-eagle))
+					;cataphract: ++swordsman, +spearman, ++eagle
+(defrule(civ-selected byzantine)=>(up-modify-goal g-my-cataphract g:= g-my-hcav)
+	(up-modify-goal g-my-cataphract g:+ g-target-swordsman)
+	(up-modify-goal g-my-cataphract g:+ g-target-eagle)
+	(up-modify-goal g-my-cataphract g:+ g-target-spearman))
+					;war-elephant: ++swordsman, ++lcav, ++hcav, -cav-archer, --spearman
+(defrule(civ-selected persian)=>(up-modify-goal g-my-war-elephant g:= g-my-hcav)
+	(up-modify-goal g-my-war-elephant g:+ g-target-swordsman)
+	(up-modify-goal g-my-war-elephant g:+ g-target-lcav)
+	(up-modify-goal g-my-war-elephant g:+ g-target-hcav)
+	(up-modify-goal g-my-war-elephant g:+ g-target-camel)
+	(up-modify-goal g-my-war-elephant g:- g-target-archer)
+	(up-modify-goal g-my-war-elephant g:- g-target-skirm)
+	(up-modify-goal g-my-war-elephant g:- g-target-cav-archer)
+	(up-modify-goal g-my-war-elephant g:- g-target-cav-archer)
+	(up-modify-goal g-my-war-elephant g:- g-target-spearman)
+	(up-modify-goal g-my-war-elephant c:/ 2))
+					;elephant-archer: +swordsman, +eagle, +lcav, +hcav, -cav-archer, --skirm, --spearman
+(defrule(civ-selected indian)=>(up-modify-goal g-my-elephant-archer g:= g-my-cav-archer)
+	(up-modify-goal g-my-elephant-archer g:+ g-target-eagle)
+	(up-modify-goal g-my-elephant-archer g:+ g-target-lcav)
+	(up-modify-goal g-my-elephant-archer g:+ g-target-hcav)
+	(up-modify-goal g-my-elephant-archer g:- g-target-spearman))
+					;genoese-crossbowman: +swordsman, ++lcav, +hcav, +camel, -eagle, --skirm
+(defrule(civ-selected italian)=>(up-modify-goal g-my-genoese-xbow g:= g-my-archer)
+	(up-modify-goal g-my-genoese-xbow g:+ g-target-hcav)
+	(up-modify-goal g-my-genoese-xbow g:+ g-target-hcav)
+	(up-modify-goal g-my-genoese-xbow g:+ g-target-lcav)
+	(up-modify-goal g-my-genoese-xbow g:+ g-target-lcav))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;if < 0, set to 0
+(defrule(up-compare-goal g-my-archer c:< 0)=>(set-goal g-my-archer 0))
+(defrule(up-compare-goal g-my-skirm c:< 0)=>(set-goal g-my-skirm 0))
+(defrule(up-compare-goal g-my-cav-archer c:< 0)=>(set-goal g-my-cav-archer 0))
+(defrule(up-compare-goal g-my-cannoneer c:< 0)=>(set-goal g-my-cannoneer 0))
+
+(defrule(up-compare-goal g-my-swordsman c:< 0)=>(set-goal g-my-swordsman 0))
+(defrule(up-compare-goal g-my-spearman c:< 0)=>(set-goal g-my-spearman 0))
+(defrule(up-compare-goal g-my-eagle c:< 0)=>(set-goal g-my-eagle 0))
+
+(defrule(up-compare-goal g-my-lcav c:< 0)=>(set-goal g-my-lcav 0))
+(defrule(up-compare-goal g-my-hcav c:< 0)=>(set-goal g-my-hcav 0))
+(defrule(up-compare-goal g-my-camel c:< 0)=>(set-goal g-my-camel 0))
+
+(defrule(up-compare-goal g-my-huskarl c:< 0)=>(set-goal g-my-huskarl 0))
+(defrule(up-compare-goal g-my-samurai c:< 0)=>(set-goal g-my-samurai 0))
+(defrule(up-compare-goal g-my-jaguar-man c:< 0)=>(set-goal g-my-jaguar-man 0))
+(defrule(up-compare-goal g-my-cataphract c:< 0)=>(set-goal g-my-cataphract 0))
+(defrule(up-compare-goal g-my-war-elephant c:< 0)=>(set-goal g-my-war-elephant 0))
+(defrule(up-compare-goal g-my-elephant-archer c:< 0)=>(set-goal g-my-elephant-archer 0))
+(defrule(up-compare-goal g-my-genoese-xbow c:< 0)=>(set-goal g-my-genoese-xbow 0))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;modify coefficients by coefficients depending on how well upgraded each unit type is
+											;NOT COMP
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+(defrule(not(research-completed ri-crossbow))=>(set-goal g-my-archer 0))
+(defrule(not(research-completed ri-arbalest))=>(up-modify-goal g-my-archer c:/ 2))
+(defrule(or(civ-selected briton)(civ-selected mayan))=>
+(up-modify-goal g-my-archer c:+ 2)(up-modify-goal g-my-archer c:/ 3)(up-modify-goal g-my-archer c:* 4))
+
+(defrule(not(research-completed ri-elite-skirmisher))=>(set-goal g-my-skirm 0))
+(defrule(civ-selected aztec)=>
+(up-modify-goal g-my-skirm c:+ 5)(up-modify-goal g-my-skirm c:/ 3)(up-modify-goal g-my-skirm c:* 4))
+
+(defrule(not(research-completed ri-heavy-cavalry-archer))=>(set-goal g-my-cav-archer 0))
+(defrule(or(civ-selected mongol)(civ-selected hun))=>
+(up-modify-goal g-my-cav-archer c:+ 3)(up-modify-goal g-my-cav-archer c:/ 3)(up-modify-goal g-my-cav-archer c:* 4))
+
+(defrule(not(unit-available hand-cannoneer))(not(unit-available slinger))=>(set-goal g-my-cannoneer 0))
+(defrule(or(civ-selected turkish)(or(civ-selected incan)(or(civ-selected indian)(civ-selected italian))))=>
+(up-modify-goal g-my-cannoneer c:+ 2)(up-modify-goal g-my-cannoneer c:/ 3)(up-modify-goal g-my-cannoneer c:* 4))
+
+
+(defrule(not(research-completed ri-champion))=>(set-goal g-my-swordsman 0))
+
+(defrule(not(research-completed ri-pikeman))=>(set-goal g-my-spearman 0))
+(defrule(not(research-completed ri-halberdier))=>(up-modify-goal g-my-spearman c:/ 4)(up-modify-goal g-my-spearman c:* 3))
+(defrule(or(civ-selected aztec)(or(civ-selected gothic)(or(civ-selected japanese)(or(civ-selected viking)(civ-selected slavic)))))=>
+(up-modify-goal g-my-swordsman c:+ 3)(up-modify-goal g-my-swordsman c:/ 3)(up-modify-goal g-my-swordsman c:* 4)
+(up-modify-goal g-my-spearman c:+ 3)(up-modify-goal g-my-spearman c:/ 3)(up-modify-goal g-my-spearman c:* 4))
+(defrule(civ-selected incan)=>
+(up-modify-goal g-my-spearman c:+ 5)(up-modify-goal g-my-spearman c:/ 3)(up-modify-goal g-my-spearman c:* 4))
+
+(defrule(not(unit-available eagle-warrior))=>(set-goal g-my-eagle 0))
+(defrule(or(civ-selected aztec)(civ-selected mayan))=>
+(up-modify-goal g-my-eagle c:+ 3)(up-modify-goal g-my-eagle c:/ 3)(up-modify-goal g-my-eagle c:* 4))
+
+
+(defrule(not(research-completed ri-light-cavalry))=>(set-goal g-my-lcav 0))
+(defrule(not(research-completed ri-hussar))=>(up-modify-goal g-my-lcav c:/ 4)(up-modify-goal g-my-lcav c:* 3))
+(defrule(or(civ-selected mongol)(civ-selected magyar))=>
+(up-modify-goal g-my-lcav c:+ 5)(up-modify-goal g-my-lcav c:/ 3)(up-modify-goal g-my-lcav c:* 4))
+
+(defrule(not(research-completed ri-cavalier))=>(set-goal g-my-hcav 0))
+(defrule(not(research-completed ri-paladin))=>(up-modify-goal g-my-hcav c:/ 3)(up-modify-goal g-my-hcav c:* 2))
+(defrule(or(civ-selected frankish)(civ-selected hun))=>
+(up-modify-goal g-my-hcav c:+ 5)(up-modify-goal g-my-hcav c:/ 3)(up-modify-goal g-my-hcav c:* 4))
+
+(defrule(not(research-completed ri-heavy-camel))=>(set-goal g-my-camel 0))
+(defrule(or(civ-selected saracen)(civ-selected indian))=>
+(up-modify-goal g-my-camel c:+ 6)(up-modify-goal g-my-camel c:/ 3)(up-modify-goal g-my-camel c:* 4))
+
+
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;blacksmith tech
+(defrule(not(research-completed ri-ring-archer-armor))=>
+(up-modify-goal g-my-archer c:/ 4)(up-modify-goal g-my-archer c:* 3)
+(up-modify-goal g-my-skirm c:/ 4)(up-modify-goal g-my-skirm c:* 3)
+(up-modify-goal g-my-cav-archer c:/ 4)(up-modify-goal g-my-cav-archer c:* 3))
+
+(defrule(not(research-completed ri-bracer))=>
+(up-modify-goal g-my-archer c:/ 4)(up-modify-goal g-my-archer c:* 3)
+(up-modify-goal g-my-skirm c:/ 4)(up-modify-goal g-my-skirm c:* 3)
+(up-modify-goal g-my-cav-archer c:/ 4)(up-modify-goal g-my-cav-archer c:* 3))
+
+(defrule(not(research-completed ri-plate-mail))=>
+(up-modify-goal g-my-swordsman c:/ 4)(up-modify-goal g-my-swordsman c:* 3)
+(up-modify-goal g-my-spearman c:/ 4)(up-modify-goal g-my-spearman c:* 3)
+(up-modify-goal g-my-eagle c:/ 4)(up-modify-goal g-my-eagle c:* 3))
+
+(defrule(not(research-completed ri-plate-barding))=>
+(up-modify-goal g-my-lcav c:/ 4)(up-modify-goal g-my-lcav c:* 3)
+(up-modify-goal g-my-hcav c:/ 4)(up-modify-goal g-my-hcav c:* 3)
+(up-modify-goal g-my-camel c:/ 4)(up-modify-goal g-my-camel c:* 3))
+
+(defrule(not(research-completed ri-blast-furnace))=>
+(up-modify-goal g-my-swordsman c:/ 4)(up-modify-goal g-my-swordsman c:* 3)
+(up-modify-goal g-my-spearman c:/ 4)(up-modify-goal g-my-spearman c:* 3)
+(up-modify-goal g-my-eagle c:/ 4)(up-modify-goal g-my-eagle c:* 3)
+(up-modify-goal g-my-lcav c:/ 4)(up-modify-goal g-my-lcav c:* 3)
+(up-modify-goal g-my-hcav c:/ 4)(up-modify-goal g-my-hcav c:* 3)
+(up-modify-goal g-my-camel c:/ 4)(up-modify-goal g-my-camel c:* 3))
+
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;no gold
+(defrule(up-gaia-type-count c: gold c:< 5)=>
+(up-modify-goal g-my-skirm c:+ 5)(up-modify-goal g-my-skirm c:/ 3)(up-modify-goal g-my-skirm c:* 4)
+(up-modify-goal g-my-spearman c:+ 5)(up-modify-goal g-my-spearman c:/ 3)(up-modify-goal g-my-spearman c:* 4)
+(up-modify-goal g-my-lcav c:+ 5)(up-modify-goal g-my-lcav c:/ 3)(up-modify-goal g-my-lcav c:* 4))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;now get sum all coefficients
+(defrule(true)=>
+	(set-goal g-tempmaths1 0)
+	(up-modify-goal g-tempmaths1 g:+ g-my-archer)
+	(up-modify-goal g-tempmaths1 g:+ g-my-skirm)
+	(up-modify-goal g-tempmaths1 g:+ g-my-cav-archer)
+	(up-modify-goal g-tempmaths1 g:+ g-my-cannoneer)
+	
+	(up-modify-goal g-tempmaths1 g:+ g-my-swordsman)
+	(up-modify-goal g-tempmaths1 g:+ g-my-spearman)
+	(up-modify-goal g-tempmaths1 g:+ g-my-eagle)
+	
+	(up-modify-goal g-tempmaths1 g:+ g-my-lcav)
+	(up-modify-goal g-tempmaths1 g:+ g-my-hcav)
+	(up-modify-goal g-tempmaths1 g:+ g-my-camel))
+(defrule(true)=>
+	(up-modify-goal g-tempmaths1 g:+ g-my-huskarl)
+	(up-modify-goal g-tempmaths1 g:+ g-my-samurai)
+	(up-modify-goal g-tempmaths1 g:+ g-my-jaguar-man)
+	(up-modify-goal g-tempmaths1 g:+ g-my-cataphract)
+	(up-modify-goal g-tempmaths1 g:+ g-my-war-elephant)
+	(up-modify-goal g-tempmaths1 g:+ g-my-elephant-archer)
+	(up-modify-goal g-tempmaths1 g:+ g-my-genoese-xbow))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;if sum <= 0, set all to 1
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(research-completed ri-arbalest)=>(set-goal g-my-archer 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(research-completed ri-elite-skirmisher)=>(set-goal g-my-skirm 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(research-completed ri-heavy-cavalry-archer)=>(set-goal g-my-cav-archer 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(unit-available hand-cannoneer)=>(set-goal g-my-cannoneer 1))
+
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(research-completed ri-champion)=>(set-goal g-my-swordsman 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(research-completed ri-halberdier)=>(set-goal g-my-spearman 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(unit-available eagle-warrior-line)=>(set-goal g-my-eagle 1))
+
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(research-completed ri-hussar)=>(set-goal g-my-lcav 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(research-completed ri-paladin)=>(set-goal g-my-hcav 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(research-completed ri-heavy-camel)=>(set-goal g-my-camel 1))
+
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(civ-selected gothic)=>(set-goal g-my-huskarl 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(civ-selected japanese)=>(set-goal g-my-samurai 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(civ-selected aztec)=>(set-goal g-my-jaguar-man 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(civ-selected byzantine)=>(set-goal g-my-cataphract 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(civ-selected persian)=>(set-goal g-my-war-elephant 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(civ-selected byzantine)=>(set-goal g-my-elephant-archer 1))
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)(civ-selected persian)=>(set-goal g-my-genoese-xbow 1))
+
+(defrule(up-compare-goal g-tempmaths1 c:<= 0)=>(set-goal g-tempmaths1 10))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;convert each coefficient into a percentage
+(defrule(true)=>
+	(up-modify-goal g-my-archer g:%/ g-tempmaths1)
+	(up-modify-goal g-my-skirm g:%/ g-tempmaths1)
+	(up-modify-goal g-my-cav-archer g:%/ g-tempmaths1)
+	(up-modify-goal g-my-cannoneer g:%/ g-tempmaths1)
+	
+	(up-modify-goal g-my-swordsman g:%/ g-tempmaths1)
+	(up-modify-goal g-my-spearman g:%/ g-tempmaths1)
+	(up-modify-goal g-my-eagle g:%/ g-tempmaths1)
+	
+	(up-modify-goal g-my-lcav g:%/ g-tempmaths1)
+	(up-modify-goal g-my-hcav g:%/ g-tempmaths1)
+	(up-modify-goal g-my-camel g:%/ g-tempmaths1))
+(defrule(true)=>
+	(up-modify-goal g-my-huskarl g:%/ g-tempmaths1)
+	(up-modify-goal g-my-samurai g:%/ g-tempmaths1)
+	(up-modify-goal g-my-jaguar-man g:%/ g-tempmaths1)
+	(up-modify-goal g-my-cataphract g:%/ g-tempmaths1)
+	(up-modify-goal g-my-war-elephant g:%/ g-tempmaths1)
+	(up-modify-goal g-my-elephant-archer g:%/ g-tempmaths1)
+	(up-modify-goal g-my-genoese-xbow g:%/ g-tempmaths1))
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;convert these percentages into raw numbers (percentage of max military pop)
+;Max military pop: civilian-population * 1.5 or pop-limit if deathmatch
+(defrule(true)=>
+	(up-get-fact civilian-population 0 g-tempmaths1))
+(defrule(food-amount > 1000)(wood-amount > 1000)(gold-amount > 1000)=>
+	(up-get-fact population-cap 0 g-tempmaths1))
+	;(up-modify-goal g-tempmaths2 c:* 3)
+	;(up-modify-goal g-tempmaths2 c:/ 2)
+	;(up-get-fact population-cap 0 g-tempmaths2))
+;(defrule(up-compare-goal g-tempmaths1 g:> g-tempmaths2)=>(up-modify-goal g-tempmaths1 g:= g-tempmaths2))
+(defrule(true)=>
+	(up-modify-goal g-my-archer g:%* g-tempmaths1)
+	(up-modify-goal g-my-skirm g:%* g-tempmaths1)
+	(up-modify-goal g-my-cav-archer g:%* g-tempmaths1)
+	(up-modify-goal g-my-cannoneer g:%* g-tempmaths1)
+	
+	(up-modify-goal g-my-swordsman g:%* g-tempmaths1)
+	(up-modify-goal g-my-spearman g:%* g-tempmaths1)
+	(up-modify-goal g-my-eagle g:%* g-tempmaths1)
+	
+	(up-modify-goal g-my-lcav g:%* g-tempmaths1)
+	(up-modify-goal g-my-hcav g:%* g-tempmaths1)
+	(up-modify-goal g-my-camel g:%* g-tempmaths1))
+(defrule(true)=>
+	(up-modify-goal g-my-huskarl g:%* g-tempmaths1)
+	(up-modify-goal g-my-samurai g:%* g-tempmaths1)
+	(up-modify-goal g-my-jaguar-man g:%* g-tempmaths1)
+	(up-modify-goal g-my-cataphract g:%* g-tempmaths1)
+	(up-modify-goal g-my-war-elephant g:%* g-tempmaths1)
+	(up-modify-goal g-my-elephant-archer g:%* g-tempmaths1)
+	(up-modify-goal g-my-genoese-xbow g:%* g-tempmaths1))
+	
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;use these as limits for training
+(defrule(up-compare-goal g-count-huskarl g:< g-my-huskarl)
+=>(train b-huskarl)(train huskarl-line))
+(defrule(up-compare-goal g-count-samurai g:< g-my-samurai)
+=>(train samurai-line))
+(defrule(up-compare-goal g-count-jaguar-man g:< g-my-jaguar-man)
+=>(train jaguar-man-line))
+(defrule(up-compare-goal g-count-cataphract g:< g-my-cataphract)
+=>(train cataphract-line))
+(defrule(up-compare-goal g-count-war-elephant g:< g-my-war-elephant)
+=>(train war-elephant-line))
+(defrule(up-compare-goal g-count-elephant-archer g:< g-my-elephant-archer)
+=>(train elephant-archer)(set-difficulty-parameter ability-to-maintain-distance 100))
+(defrule(up-compare-goal g-count-genoese-xbow g:< g-my-genoese-xbow)
+=>(train genoese-crossbowman)(set-difficulty-parameter ability-to-maintain-distance 50))
+
+(defrule(up-compare-goal g-count-cannoneer g:< g-my-cannoneer)
+(or(can-train hand-cannoneer)
+(or(can-train slinger)(can-train janissary-line)))
+=>(train janissary-line)(train hand-cannoneer)(train slinger)
+(set-difficulty-parameter ability-to-maintain-distance 75))
+(defrule(up-compare-goal g-count-cav-archer g:< g-my-cav-archer)
+(or(can-train cavalry-archer-line)
+(or(can-train conquistador-line)
+(or(can-train mangudai-line)(can-train war-wagon-line))))
+=>(train conquistador-line)(train mangudai-line)(train war-wagon-line)(train cavalry-archer-line)
+(set-difficulty-parameter ability-to-maintain-distance 0))
+(defrule(up-compare-goal g-count-cav-archer g:< g-my-cav-archer)
+(can-train elephant-archer)=>(train elephant-archer)
+(set-difficulty-parameter ability-to-maintain-distance 100))
+(defrule(up-compare-goal g-count-archer g:< g-my-archer)
+(or(can-train archer-line)
+(or(can-train chu-ko-nu-line)
+(or(can-train longbowman-line)
+(or(can-train plumed-archer-line)(can-train genoese-crossbowman)))))
+=>(train chu-ko-nu-line)(train longbowman-line)(train plumed-archer-line)(train genoese-crossbowman)(train archer-line)
+(set-difficulty-parameter ability-to-maintain-distance 50))
+(defrule(up-compare-goal g-count-skirm g:< g-my-skirm)
+=>(train skirmisher-line)
+(set-difficulty-parameter ability-to-maintain-distance 40))
+
+(defrule(up-compare-goal g-count-eagle g:< g-my-eagle)
+=>(train eagle-warrior-line))
+(defrule(up-compare-goal g-count-swordsman g:< g-my-swordsman)
+(or(can-train militiaman-line)
+(or(can-train huskarl-line)
+(or(can-train b-huskarl)(can-train samurai-line))))
+=>(train huskarl-line)(train b-huskarl)(train samurai-line)(train militiaman-line))
+(defrule(up-compare-goal g-count-swordsman g:< g-my-swordsman)
+(or(can-train teutonic-knight-line)
+(or(can-train throwing-axeman-line)
+(or(can-train woad-raider-line)(can-train jaguar-man-line))))
+=>(train teutonic-knight-line)(train throwing-axeman-line)(train woad-raider-line)(train jaguar-man-line))
+(defrule(up-compare-goal g-count-spearman g:< g-my-spearman)
+(or(can-train spearman-line)
+(or(can-train berserk-line)(can-train kamayuk)))
+=>(train berserk-line)(train kamayuk)(train spearman-line))
+
+(defrule(up-compare-goal g-count-hcav g:< g-my-hcav)
+(or(can-train knight-line)
+(or(can-train cataphract-line)
+(or(can-train war-elephant-line)
+(or(can-train tarkan-line)(can-train boyar)))))
+=>(train boyar)(train cataphract-line)(train war-elephant-line)(train knight-line)(train tarkan-line))
+(defrule(up-compare-goal g-count-camel g:< g-my-camel)
+(or(can-train camel-line)(can-train mameluke-line))
+=>(train mameluke-line)(train camel-line))
+(defrule(up-compare-goal g-count-lcav g:< g-my-lcav)
+(or(can-train scout-cavalry-line)(can-train magyar-huszar))
+=>(train magyar-huszar)(train scout-cavalry-line))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;emergency training
+(defrule(strategic-number sn-military-superiority < 60)
+(can-train eagle-warrior-line)=>(train eagle-warrior-line))
+(defrule(strategic-number sn-military-superiority < 60)
+(research-completed ri-two-handed-swordsman)
+(not(can-train eagle-warrior-line))
+(can-train militiaman-line)=>(train militiaman-line))
+(defrule(strategic-number sn-military-superiority < 60)
+(not(can-train eagle-warrior-line))
+(or(not(research-completed ri-two-handed-swordsman))(not(can-afford-unit militiaman-line)))
+(can-train spearman-line)=>(train spearman-line))
+
+(defrule(strategic-number sn-military-superiority < 60)
+(can-train hand-cannoneer)=>(train hand-cannoneer))
+(defrule(strategic-number sn-military-superiority < 60)
+(research-completed ri-heavy-cavalry-archer)
+(not(can-train hand-cannoneer))
+(can-train cavalry-archer-line)=>(train cavalry-archer-line))
+(defrule(strategic-number sn-military-superiority < 60)
+(research-completed ri-crossbow)
+(not(can-train hand-cannoneer))
+(or(not(research-completed ri-heavy-cavalry-archer))(not(can-afford-unit cavalry-archer-line)))
+(can-train archer-line)=>(train archer-line))
+(defrule(strategic-number sn-military-superiority < 60)
+(not(can-train hand-cannoneer))
+(or(not(research-completed ri-heavy-cavalry-archer))(not(can-afford-unit cavalry-archer-line)))
+(or(not(research-completed ri-crossbow))(not(can-afford-unit archer-line)))
+(can-train skirmisher-line)=>(train skirmisher-line))
+
+(defrule(strategic-number sn-military-superiority < 60)
+(research-completed ri-cavalier)
+(can-train knight-line)=>(train knight-line))
+(defrule(strategic-number sn-military-superiority < 60)
+(research-completed ri-hussar)
+(or(not(research-completed ri-cavalier))(not(can-afford-unit knight-line)))
+(can-train scout-cavalry-line)=>(train scout-cavalry-line))
+(defrule(strategic-number sn-military-superiority < 60)
+(or(not(research-completed ri-cavalier))(not(can-afford-unit knight-line)))
+(or(not(research-completed ri-hussar))(not(can-afford-unit scout-cavalry-line)))
+(can-train camel-line)=>(train camel-line))
+
+(defrule(strategic-number sn-military-superiority < 60)
+(can-train my-unique-unit-line)=>(train my-unique-unit-line))
+
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;Economy
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========;=========
+
+(defrule(true)=>
+(up-setup-cost-data 1 g-cost-food)
+(up-add-object-cost c: archer-line g: g-my-archer)
+(up-add-object-cost c: skirmisher-line g: g-my-skirm)
+(up-add-object-cost c: cavalry-archer-line g: g-my-cav-archer)
+(up-add-object-cost c: hand-cannoneer g: g-my-cannoneer)
+
+(up-add-object-cost c: militiaman-line g: g-my-swordsman)
+(up-add-object-cost c: spearman-line g: g-my-spearman)
+(up-add-object-cost c: eagle-warrior-line g: g-my-eagle)
+
+(up-add-object-cost c: scout-cavalry-line g: g-my-lcav)
+(up-add-object-cost c: knight-line g: g-my-hcav)
+(up-add-object-cost c: camel-line g: g-my-camel))
+(defrule(true)=>
+(up-add-object-cost c: villager g: g-50pop)
+
+(up-get-fact civilian-population 0 g-tempmaths1)
+(up-modify-goal g-tempmaths1 c:/ 20) 
+(up-add-object-cost c: trebuchet g: g-tempmaths1))
+
+(defrule(building-type-count-total dock > 0)(wall-completed-percentage 2 == 100)=>
+(up-get-fact civilian-population 0 g-tempmaths1)
+(up-modify-goal g-tempmaths1 c:* 6) 
+(up-modify-goal g-tempmaths1 c:/ 10) 
+(up-add-object-cost c: seaunit g: g-tempmaths1)
+
+(up-get-fact civilian-population 0 g-tempmaths1)
+(up-modify-goal g-tempmaths1 c:/ 20) 
+(up-add-object-cost c: cannon-galleon-line g: g-tempmaths1))
+
+(defrule(building-type-count-total dock > 0)(wall-completed-percentage 2 != 100)=>
+(up-get-fact civilian-population 0 g-tempmaths1)
+(up-modify-goal g-tempmaths1 c:/ 10) 
+(up-add-object-cost c: seaunit g: g-tempmaths1)
+
+(up-get-fact civilian-population 0 g-tempmaths1)
+(up-modify-goal g-tempmaths1 c:/ 20) 
+(up-add-object-cost c: cannon-galleon-line g: g-tempmaths1))
+
+
+;subtract cost of units we currently have
+(defrule(true)=>
+(up-setup-cost-data 1 g-cost-food2)
+(up-add-object-cost c: archer-line g: g-count-archer)
+(up-add-object-cost c: skirmisher-line g: g-count-skirm)
+(up-add-object-cost c: cavalry-archer-line g: g-count-cav-archer)
+(up-add-object-cost c: hand-cannoneer g: g-count-cannoneer)
+
+(up-add-object-cost c: militiaman-line g: g-count-swordsman)
+(up-add-object-cost c: spearman-line g: g-count-spearman)
+(up-add-object-cost c: eagle-warrior-line g: g-count-eagle)
+
+(up-add-object-cost c: scout-cavalry-line g: g-count-lcav)
+(up-add-object-cost c: knight-line g: g-count-hcav)
+(up-add-object-cost c: camel-line g: g-count-camel)
+
+(up-get-fact unit-type-count villager g-tempmaths1)
+(up-add-object-cost c: villager g: g-tempmaths1))
+
+(defrule(true)=>
+(up-get-fact unit-type-count trebuchet-set g-tempmaths1)
+(up-add-object-cost c: trebuchet g: g-tempmaths1)
+
+(up-get-fact unit-type-count seaunit g-tempmaths1)
+(up-add-object-cost c: seaunit g: g-tempmaths1)
+
+(up-get-fact unit-type-count cannon-galleon-line g-tempmaths1)
+(up-add-object-cost c: cannon-galleon-line g: g-tempmaths1)
+
+(up-setup-cost-data 0 g-cost-food)
+(up-add-cost-data g-cost-food2 c: -1))
+
+;farms: find number food gatherers we want from pcn, do food-gatherers - farms
+(defrule(true)=>
+(up-get-fact unit-type-count villager g-tempmaths2)
+(up-modify-goal g-tempmaths1 s:= sn-food-gatherer-percentage)
+(up-modify-goal g-tempmaths1 g:%* g-tempmaths2);get desired food gatherers
+(up-modify-goal g-tempmaths1 c:+ 4);add a few for a laff
+
+(up-get-fact unit-type-count villager-food g-tempmaths2)
+(up-modify-goal g-tempmaths1 g:- g-tempmaths2));get deficit
+;add in farm deficit if > 0
+(defrule(up-compare-goal g-tempmaths1 c:> 0)=>
+(up-add-object-cost c: farm g: g-tempmaths1))
+
+(defrule(up-compare-goal g-rax-deficit c:> 1)=>
+(up-add-object-cost c: barracks c: 3))
+(defrule(up-compare-goal g-arc-deficit c:> 1)=>
+(up-add-object-cost c: archery-range c: 3))
+(defrule(up-compare-goal g-sta-deficit c:> 1)=>
+(up-add-object-cost c: stable c: 3))
+(defrule(building-type-count-total siege-workshop < 1)=>
+(up-add-object-cost c: siege-workshop c: 1))
+(defrule(building-type-count-total monastery < 1)=>
+(up-add-object-cost c: monastery c: 1))
+(defrule(building-type-count-total market < 1)=>
+(up-add-object-cost c: market c: 1))
+(defrule(building-type-count-total castle < 1)=>
+(up-add-object-cost c: castle c: 1))
+(defrule(housing-headroom < 10)(population-headroom > 0)=>
+(up-add-object-cost c: house c: 5))
+(defrule(or(dropsite-min-distance gold > 5)(dropsite-min-distance stone > 5))=>
+(up-add-object-cost c: mining-camp c: 1))
+(defrule(dropsite-min-distance wood > 5)=>
+(up-add-object-cost c: lumber-camp c: 3))
+
+
+(defrule(up-compare-goal g-cost-food c:< 0)=>(set-goal g-cost-food 0))
+(defrule(up-compare-goal g-cost-wood c:< 0)=>(set-goal g-cost-wood 0))
+(defrule(up-compare-goal g-cost-gold c:< 0)=>(set-goal g-cost-gold 0))
+(defrule(up-compare-goal g-cost-stone c:< 0)=>(set-goal g-cost-stone 0))
+
+(defrule(true)=>
+	(up-get-cost-delta g-delta-food))
+(defrule(up-compare-goal g-delta-food c:> 0)=>
+(up-modify-goal g-delta-wood g:- g-delta-food)
+(up-modify-goal g-delta-gold g:- g-delta-food)
+(up-modify-goal g-delta-stone g:- g-delta-food)
+(up-modify-goal g-delta-food g:- g-delta-food))
+(defrule(up-compare-goal g-delta-wood c:> 0)=>
+(up-modify-goal g-delta-food g:- g-delta-wood)
+(up-modify-goal g-delta-gold g:- g-delta-wood)
+(up-modify-goal g-delta-stone g:- g-delta-wood)
+(up-modify-goal g-delta-wood g:- g-delta-wood))
+(defrule(up-compare-goal g-delta-gold c:> 0)=>
+(up-modify-goal g-delta-food g:- g-delta-gold)
+(up-modify-goal g-delta-wood g:- g-delta-gold)
+(up-modify-goal g-delta-stone g:- g-delta-gold)
+(up-modify-goal g-delta-gold g:- g-delta-gold))
+(defrule(up-compare-goal g-delta-stone c:> 0)=>
+(up-modify-goal g-delta-food g:- g-delta-stone)
+(up-modify-goal g-delta-wood g:- g-delta-stone)
+(up-modify-goal g-delta-gold g:- g-delta-stone)
+(up-modify-goal g-delta-stone g:- g-delta-stone))
+
+(defrule(true)=>
+(up-modify-goal g-delta-food c:* -1)
+(up-modify-goal g-delta-wood c:* -1)
+(up-modify-goal g-delta-gold c:* -1)
+(up-modify-goal g-delta-stone c:* -1))
+
+(defrule(taunt-detected my-player-number 4)=>
+(chat-local-to-self "DESIRED RESOURCES")
+(up-chat-data-to-player my-player-number "F %d" g: g-cost-food)
+(up-chat-data-to-player my-player-number "W %d" g: g-cost-wood)
+(up-chat-data-to-player my-player-number "G %d" g: g-cost-gold)
+(up-chat-data-to-player my-player-number "S %d" g: g-cost-stone)
+(chat-local-to-self "RESOURCE DEFICITS")
+(up-chat-data-to-player my-player-number "F %d" g: g-delta-food)
+(up-chat-data-to-player my-player-number "W %d" g: g-delta-wood)
+(up-chat-data-to-player my-player-number "G %d" g: g-delta-gold)
+(up-chat-data-to-player my-player-number "S %d" g: g-delta-stone))
+
+(defrule(true)=>
+(up-modify-goal g-tempmaths1 g:= g-delta-food)
+(up-modify-goal g-tempmaths1 g:+ g-delta-wood)
+(up-modify-goal g-tempmaths1 g:+ g-delta-gold)
+(up-modify-goal g-tempmaths1 g:+ g-delta-stone)
+
+(up-modify-goal g-delta-food g:%/ g-tempmaths1)
+(up-modify-goal g-delta-wood g:%/ g-tempmaths1)
+(up-modify-goal g-delta-gold g:%/ g-tempmaths1)
+(up-modify-goal g-delta-stone g:%/ g-tempmaths1)
+
+(up-modify-sn sn-food-gatherer-percentage g:= g-delta-food)
+(up-modify-sn sn-wood-gatherer-percentage g:= g-delta-wood)
+(up-modify-sn sn-gold-gatherer-percentage g:= g-delta-gold)
+(up-modify-sn sn-stone-gatherer-percentage g:= g-delta-stone))
+
+(defrule(taunt-detected my-player-number 4)=>
+(chat-local-to-self "GATHER PERCENTAGES")
+(up-chat-data-to-player my-player-number "F %d" s: sn-food-gatherer-percentage)
+(up-chat-data-to-player my-player-number "W %d" s: sn-wood-gatherer-percentage)
+(up-chat-data-to-player my-player-number "G %d" s: sn-gold-gatherer-percentage)
+(up-chat-data-to-player my-player-number "S %d" s: sn-stone-gatherer-percentage)
+(acknowledge-taunt my-player-number 4))
+;===========
+;=Attacking=
+;===========
+(defrule(town-under-attack)=>(up-get-threat-data g-threat-time g-threat-player g-threat-source g-threat-target))
+(defrule
+	(town-under-attack)
+	(up-compare-sn sn-target-player-number g:!= g-threat-player)
+	(up-compare-goal g-threat-player c:!= 0)
+=>
+	(up-modify-sn sn-target-player-number g:= g-threat-player)
+	(up-chat-data-to-player my-player-number "tua-newtarg %d" s: sn-target-player-number)
+	(enable-timer t-new-targ 60)
+)
+	
+(defrule
+	(timer-triggered t-new-targ)
+	(players-building-count any-enemy > 0)
+=>
+	(up-find-player enemy find-closest g-tempmaths1)
+	(up-modify-sn sn-target-player-number g:= g-tempmaths1)
+	(up-chat-data-to-player my-player-number "target %d" s: sn-target-player-number)
+	(enable-timer t-new-targ 450)
+)
+(defrule
+	(player-in-game any-ally)
+	(up-get-fact-min population any-ally 0 g-tempmaths1)
+	(up-get-fact population my-player-number g-tempmaths2)
+	(up-compare-goal g-tempmaths1 g:< g-tempmaths2)
+	(up-allied-sn sn-target-player-number this-any-ally s:!= sn-target-player-number)
+	(up-allied-sn sn-target-player-number this-any-ally c:> 0)
+=>
+	(up-modify-sn sn-target-player-number c:+ 1)
+	(up-chat-data-to-player my-player-number "targetadjst %d" s: sn-target-player-number)
+)
+(defrule
+	(strategic-number sn-target-player-number > 8)
+	(players-building-count any-enemy > 0)
+=>
+	(set-strategic-number sn-target-player-number 1)
+	(up-chat-data-to-player my-player-number "targetadjst %d" s: sn-target-player-number)
+)
+
+(defrule
+	(or(timer-triggered t-attacking2)
+	   (up-projectile-detected projectile-any < 1000))
+	(strategic-number sn-percent-attack-soldiers != 0)
+	(strategic-number sn-group-form-distance > 5)
+	(wall-completed-percentage 2 != 100)
+=>
+	(set-strategic-number sn-group-form-distance 1)
+	(set-strategic-number sn-minimum-attack-group-size 1)
+	(set-strategic-number sn-maximum-attack-group-size 3)
+	(set-strategic-number sn-number-attack-groups 0)
+	(chat-to-all "shrink-grp")
+	(disable-timer t-attacking2)
+	(enable-timer t-attacking 1)
+	(enable-timer t-attacking3 30)
+)
+(defrule
+	(timer-triggered t-attacking)
+	(strategic-number sn-percent-attack-soldiers != 0)
+	(strategic-number sn-group-form-distance == 1)
+	(wall-completed-percentage 2 != 100)
+=>
+	(chat-to-all "retask")
+	;(up-reset-attack-now)
+	(enable-timer t-attacking 10)
+	(set-strategic-number sn-group-form-distance 2)
+	(set-strategic-number sn-number-attack-groups 200)
+)
+(defrule
+	(unit-type-count unpack-treb > 0)
+	(or(unit-type-count 469 > 0); trebuchet bullets
+	   (unit-type-count 371 > 0))
+	(timer-triggered t-attacking)
+	(strategic-number sn-military-superiority < 150)
+	(strategic-number sn-group-form-distance == 2)
+	(wall-completed-percentage 2 != 100)
+=>
+	(chat-to-player my-player-number "101"))
+(defrule(taunt-detected my-player-number 101)=>
+	(enable-timer t-attacking 30)
+	(set-strategic-number sn-group-form-distance 1)
+	(set-strategic-number sn-number-attack-groups 0)
+	(up-retreat-to unpack-treb c: archery-class) 
+	(up-retreat-to unpack-treb c: cavalry-archer-class) 
+	(up-retreat-to unpack-treb c: infantry-class)
+	(up-retreat-to unpack-treb c: cavalry-class)
+	(up-retreat-to unpack-treb c: archery-cannon-class) 
+	(up-retreat-to unpack-treb c: cavalry-cannon-class) 
+	(up-retreat-to unpack-treb c: monastery-class)
+	(chat-to-all "retreat-to-treb")
+	(acknowledge-taunt my-player-number 101))
+;(defrule
+;	(timer-triggered t-attacking)
+;	(strategic-number sn-percent-attack-soldiers != 0)
+;	(strategic-number sn-group-form-distance == 2)
+;	(wall-completed-percentage 2 != 100)
+;=>
+;	(chat-to-all "reset")
+;	;(up-reset-attack-now)
+;	(set-strategic-number sn-group-form-distance 1)
+;	(enable-timer t-attacking 30)
+;	(set-strategic-number sn-number-attack-groups 0)
+;)
+(defrule
+	(timer-triggered t-attacking)
+	(or(strategic-number sn-military-superiority > 110)
+	   (and(housing-headroom < 20)
+	       (population-headroom == 0)))
+	(strategic-number sn-percent-attack-soldiers == 0)
+	(players-building-count any-enemy > 0)
+	(unit-type-count trebuchet-set > 0)
+=>
+	(set-strategic-number sn-percent-attack-soldiers 100)
+	(set-strategic-number sn-group-form-distance 20)
+	(chat-to-all "atk-now")
+	(up-garrison battering-ram-line c: infantry-class)
+	
+	(enable-timer t-attacking2 30)
+	(enable-timer t-new-targ 450)
+	(set-strategic-number sn-number-attack-groups 200)
+)
+(defrule
+	(strategic-number sn-military-superiority < 110)
+	(or(strategic-number sn-military-superiority < 90)
+	   (unit-type-count trebuchet-set < 1))
+	(or(housing-headroom > 20)
+	   (population-headroom > 10))
+	(strategic-number sn-percent-attack-soldiers != 0)
+=>
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	(set-strategic-number sn-group-form-distance 20)
+	;(up-reset-attack-now)
+	;(up-retreat-to town-center c: all-units-class)
+	(chat-to-all "cancl")
+	(enable-timer t-attacking 30)
+	(set-strategic-number sn-minimum-attack-group-size 10)
+	(set-strategic-number sn-maximum-attack-group-size 50)
+	(set-strategic-number sn-number-attack-groups 0)
+)
+(defrule
+	(strategic-number sn-percent-attack-boats == 100)
+	(defend-warboat-count > 5)
+=>
+	(up-modify-goal g-tempmaths1 s:= sn-percent-attack-soldiers)
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	(attack-now)
+	(up-modify-sn sn-percent-attack-soldiers g:= g-tempmaths1)
+)
+;===========
+;=Surrender=
+;===========
+(defrule
+	(true)
+=>
+	(up-get-player-fact target-player population 0 g-tempmaths1)
+	(up-get-fact population 0 g-tempmaths2)
+	(up-modify-goal g-tempmaths2 g:%/ g-tempmaths1)
+)
+(defrule
+	(up-compare-goal g-population-superiority c:< 15)
+	(up-compare-goal g-tempmaths2 c:< 30);pop superiority with target-player
+	(strategic-number sn-military-superiority < 20)
+	(game-time > 180)
+	(town-under-attack)
+	(up-compare-goal g-threat-player c:!= 0)
+=>
+	(tribute-to-player any-ally food 50000)
+	(tribute-to-player any-ally wood 50000)
+	(tribute-to-player any-ally gold 50000)
+	(tribute-to-player any-ally stone 50000)
+	(set-stance every-enemy ally)
+	(set-stance every-neutral ally)
+	(chat-to-all "oh fug D:")
+	(resign)
+)
+(defrule(players-stance any-enemy ally)(not(player-in-game this-any-enemy))=>(set-stance this-any-enemy ally))
+
+(defrule(true)=>
+(enable-timer t-chat-food 1)
+(enable-timer t-chat-wood 1)
+(enable-timer t-chat-gold 1)
+(enable-timer t-chat-stone 1)
+(disable-self))
+(defrule
+	(timer-triggered t-chat-food)
+	(food-amount < 200)
+	(up-allied-resource-amount any-ally food > 300)
+	(players-building-type-count any-ally market > 0)
+=>
+	(chat-to-allies "3foodpls")
+	(enable-timer t-chat-food 20)
+)
+(defrule
+	(timer-triggered t-chat-wood)
+	(wood-amount < 200)
+	(up-allied-resource-amount any-ally wood > 300)
+	(players-building-type-count any-ally market > 0)
+=>
+	(chat-to-allies "4woodpls")
+	(enable-timer t-chat-wood 20)
+)
+(defrule
+	(timer-triggered t-chat-gold)
+	(gold-amount < 200)
+	(up-allied-resource-amount any-ally gold > 300)
+	(players-building-type-count any-ally market > 0)
+=>
+	(chat-to-allies "5goldpls")
+	(enable-timer t-chat-gold 20)
+)
+(defrule
+	(timer-triggered t-chat-stone)
+	(stone-amount < 125)
+	(up-allied-resource-amount any-ally stone > 300)
+	(players-building-type-count any-ally market > 0)
+=>
+	(chat-to-allies "6stonepls")
+	(enable-timer t-chat-stone 20)
+)
+
+(defrule
+	(taunt-detected any-ally 3)
+	(or(and(food-amount > 300)
+	       (up-allied-resource-amount this-any-ally food < 200))
+	   (and(food-amount > 600)
+	       (up-allied-resource-amount this-any-ally food < 400)))
+	(building-type-count market > 0)
+=>
+	(acknowledge-taunt this-any-ally 3)
+	(tribute-to-player this-any-ally food 100)
+	(chat-local-to-self "tribute food")
+)
+(defrule
+	(taunt-detected any-ally 4)
+	(or(and(wood-amount > 300)
+	       (up-allied-resource-amount this-any-ally wood < 200))
+	   (and(wood-amount > 600)
+	       (up-allied-resource-amount this-any-ally wood < 400)))
+	(building-type-count market > 0)
+=>
+	(acknowledge-taunt this-any-ally 4)
+	(tribute-to-player this-any-ally wood 100)
+	(chat-local-to-self "tribute wood")
+)
+(defrule
+	(taunt-detected any-ally 5)
+	(or(and(gold-amount > 300)
+	       (up-allied-resource-amount this-any-ally gold < 200))
+	   (and(gold-amount > 600)
+	       (up-allied-resource-amount this-any-ally gold < 400)))
+	(building-type-count market > 0)
+=>
+	(acknowledge-taunt this-any-ally 5)
+	(tribute-to-player this-any-ally gold 100)
+	(chat-local-to-self "tribute gold")
+)
+(defrule
+	(taunt-detected any-ally 6)
+	(or(stone-amount > 750)
+	   (and(players-building-type-count any-ally town-center == 0)
+	       (stone-amount >= 130)))
+	(building-type-count market > 0)
+	(up-allied-resource-amount this-any-ally stone < 650)
+=>
+	(acknowledge-taunt this-any-ally 6)
+	(tribute-to-player this-any-ally stone 100)
+	(chat-local-to-self "tribute stone")
+)
+(defrule
+	(or(taunt-detected any-ally 3)
+	(or(taunt-detected any-ally 4)
+	(or(taunt-detected any-ally 5)
+	   (taunt-detected any-ally 6))))
+=>
+	(acknowledge-taunt this-any-ally 3)
+	(acknowledge-taunt this-any-ally 4)
+	(acknowledge-taunt this-any-ally 5)
+	(acknowledge-taunt this-any-ally 6)
+)
+
+(defrule
+	(research-completed ri-fortified-wall)
+	(can-afford-complete-wall 2 stone-wall-line)
+	(wall-invisible-percentage 2 == 0)
+	(wall-completed-percentage 2 > 40)
+	(or(wall-completed-percentage 2 > 60)
+	   (civ-selected chinese))
+	(wall-completed-percentage 2 < 100)
+	(building-type-count-total castle > 1)
+=>
+	(build-wall 2 stone-wall-line)
+)
+(defrule
+	(can-build-gate 2)
+	(wall-completed-percentage 2 > 60)
+	(building-type-count-total stone-wall-line > 0)
+	(building-type-count-total gate < 10)
+=>
+	(build-gate 2)
+)

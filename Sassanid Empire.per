@@ -1,0 +1,1261 @@
+;____________________________________________________________________________       ____________________________
+;  _____                           _     _   ______                 _        \     |####   ######  ######   ####|
+; / ____|                         (_)   | | |  ____|               (_)        \    |####      ########      ####|
+;| (___   __ _ ___ ___  __ _ _ __  _  __| | | |__   _ __ ___  _ __  _ _ __ ___ \   |######      ####      ######|
+; \___ \ / _` / __/ __|/ _` | '_ \| |/ _` | |  __| | '_ ` _ \| '_ \| | '__/ _ \ \  |#########   ####   #########|
+; ____) | (_| \__ \__ \ (_| | | | | | (_| | | |____| | | | | | |_) | | | |  __/  ) |############>--<############|
+;|_____/ \__,_|___/___/\__,_|_| |_|_|\__,_| |______|_| |_| |_| .__/|_|_|  \___| /  |#########   ####   #########|
+;                                                            | |               /   |######      ####      ######|
+;                                                            |_|              /    |####      ########      ####|
+;____________________________________________________________|_|_____________/     |####   ##############   ####|
+;Persian AI by Pasadema                                                             ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+;Plays any map, 200 pop preferred, dark start
+;If you use any code or ideas from this AI, credit would be appreciated
+
+;Strategy overview
+;=================
+;ffffff
+;Lumbercamp
+;wwwwffffffwwwgg
+;2nd mill
+;fwww
+;Feudal (25 vil)
+;Barracks
+;Stable & blacksmith
+;wwgg
+;Castle (29 vil)
+;Town Centre
+;Knights & vil production
+;Imperial, tech lots
+;Army of knights, camels & hand canoneers
+;Adjustments
+;-----------
+;Simplified dark econ
+;Feudal at 26 vill
+;Achery, no smith in feudal
+;Monastery before TC in castle
+;Train cav-archers in castle
+
+;===========
+;=Constants=
+;===========
+;Map Sizes
+;=========
+(defconst s1-tsa 50)
+(defconst s2-tsa 75)
+(defconst s3-tsa 100)
+(defconst s4-tsa 255)
+
+(defconst s1-camp 30)
+(defconst s2-camp 40)
+(defconst s3-camp 60)
+(defconst s4-camp 255)
+;Units
+;=====
+(defconst d-vill 26)
+(defconst f-vill 30)
+(defconst c-milit 60)
+(defconst knights 40)
+(defconst camels 40)
+(defconst ranged 30)
+(defconst rams 5)
+(defconst trebs 5)
+(defconst lcav 30)
+
+(defconst mincav 7);cavalry for us to think we're doing Ok
+;Buildings
+;=========
+(defconst f-farm 9)
+(defconst farms 35)
+(defconst c-town-centre 3)
+(defconst c-castle 1)
+(defconst c-barracks 0)
+(defconst c-archery 2)
+(defconst c-stable 4)
+(defconst c-siege 1)
+(defconst i-town-centre 6)
+(defconst i-castle 4)
+(defconst i-barracks 0)
+(defconst i-archery 5)
+(defconst i-stable 7)
+(defconst i-siege 2)
+;Goals
+;=====
+;1 =			UNUSED
+;2 =			UNUSED
+;3 =			UNUSED
+;4 =			UNUSED
+;5 =			UNUSED
+;6 =			UNUSED
+;7 =			UNUSED
+;8 =			UNUSED
+;9 =			UNUSED
+;10=			UNUSED
+;Timers
+;======
+(defconst t-attacking 1)
+;2 =			UNUSED
+;3 =			UNUSED
+;4 =			UNUSED
+;5 =			UNUSED
+;6 =			UNUSED
+;7 =			UNUSED
+;8 =			UNUSED
+;9 =			UNUSED
+;10=			UNUSED
+;Unit/research-ids
+;=================
+(defconst fidle 293)
+(defconst mhunter 122)
+(defconst fhunter 216)
+(defconst mgminer 579)
+(defconst fgminer 581)
+(defconst mdead-miner 229)
+(defconst fdead-miner 221)
+(defconst mdead-lumber 228)
+(defconst fdead-lumber 219)
+
+(defconst unpack-treb 42)
+(defconst cavalry 912)
+(defconst livestock-line 958)
+(defconst fish 905)
+;Strategic-numbers
+;=================
+(defconst sn-age 7)
+	;dark: 0
+	(defconst advancing-feudal 1)
+	(defconst advancing-castle 2)
+	(defconst advancing-imp 3)
+(defconst sn-sea-superiority 8)
+	;0=no
+	;1=yes
+(defconst sn-military-superiority 9)
+	;-1=<85% enemy troops
+	;0=equal
+	;1=20 more
+;==========
+;=Commerce=
+;==========
+;Research castle
+;===============
+(defrule
+	(strategic-number sn-age < advancing-castle)
+	(food-amount >= 900)
+	(gold-amount < 200)
+=>
+	(sell-commodity food)
+)
+(defrule
+	(strategic-number sn-age < advancing-castle)
+	(food-amount < 800)
+	(gold-amount >= 300)
+=>
+	(buy-commodity food)
+)
+;Buy
+;===
+(defrule
+	(or(and(gold-amount >= 500)
+	       (food-amount <= 200))
+	(or(and(gold-amount >= 1000)
+	       (food-amount <= 500))
+	   (and(gold-amount >= 1300)
+	       (food-amount <= 1000))))
+	(can-buy-commodity food)
+=>
+	(buy-commodity food)
+)
+(defrule
+	(or(and(gold-amount >= 500)
+	       (wood-amount <= 200))
+	(or(and(gold-amount >= 1000)
+	       (wood-amount <= 500))
+	   (and(gold-amount >= 1300)
+	       (wood-amount <= 500))))
+	(can-buy-commodity wood)
+=>
+	(buy-commodity wood)
+)
+(defrule
+	(current-age == imperial-age)
+	(building-type-count-total castle < 1)
+	(gold-amount >= 300)
+	(stone-amount <= 650)
+	(can-buy-commodity stone)
+=>
+	(buy-commodity stone)
+)
+;Sell
+;====
+(defrule
+	(or(and(gold-amount <= 200)
+	       (food-amount >= 500))
+	(or(and(gold-amount <= 500)
+	       (food-amount >= 1000))
+	   (and(gold-amount <= 800)
+	       (food-amount >= 1100))))
+	(can-sell-commodity food)
+=>
+	(sell-commodity food)
+)
+(defrule
+	(or(and(gold-amount <= 200)
+	       (wood-amount >= 500))
+	(or(and(gold-amount <= 500)
+	       (wood-amount >= 1000))
+	   (and(gold-amount <= 500)
+	       (wood-amount >= 1300))))
+	(can-sell-commodity wood)
+=>
+	(sell-commodity wood)
+)
+(defrule
+	(gold-amount <= 150)
+	(stone-amount > 200)
+	(or(current-age < imperial-age)
+	(or(building-type-count-total castle > 0)
+	   (stone-amount >= 750)))
+	(can-sell-commodity stone)
+=>
+	(sell-commodity stone)
+)
+;===================
+;=Strategic numbers=
+;===================
+(defrule
+	(town-under-attack)
+=>
+	(set-strategic-number sn-enemy-sighted-response-distance 255)
+	(set-strategic-number sn-military-superiority 0)
+	(set-strategic-number sn-sea-superiority 0)
+	(set-strategic-number sn-number-boat-explore-groups 0)
+)
+(defrule
+	(not(town-under-attack))
+=>
+	(set-strategic-number sn-enemy-sighted-response-distance 5)
+	(set-strategic-number sn-military-superiority 0)
+	(set-strategic-number sn-sea-superiority 0)
+	(set-strategic-number sn-number-boat-explore-groups 2)
+)
+;Military Superiority
+;====================
+;Land
+;----
+;1: we have 20 more troops than all enemies, or enemy had small army
+(defrule
+	(or(and(military-population > 90)
+	       (players-military-population every-enemy < 70))
+	(or(and(military-population > 80)
+	       (players-military-population every-enemy < 60))
+	(or(and(military-population > 70)
+	       (players-military-population every-enemy < 50))
+	   (and(military-population > 47)
+	       (players-military-population every-enemy < 35)))))
+=>
+	(set-strategic-number sn-military-superiority 1)
+)
+(defrule
+	(or(and(military-population > 30)
+	       (players-military-population every-enemy < 20))
+	(or(and(military-population > 15)
+	       (players-military-population every-enemy < 10))
+	(or(and(military-population > 8)
+	       (players-military-population every-enemy < 5))
+	   (and(military-population > 5)
+	       (players-military-population every-enemy < 3)))))
+=>
+	(set-strategic-number sn-military-superiority 1)
+)
+;-1: we have <80% enemy troops
+(defrule
+	(or(and(military-population < 16)
+	       (players-military-population any-enemy > 20))
+	(or(and(military-population < 24)
+	       (players-military-population any-enemy > 30))
+	(or(and(military-population < 32)
+	       (players-military-population any-enemy > 40))
+	   (and(military-population < 40)
+	       (players-military-population any-enemy > 50)))))
+=>
+	(set-strategic-number sn-military-superiority -1)
+)
+(defrule
+	(or(and(military-population < 48)
+	       (players-military-population any-enemy > 60))
+	(or(and(military-population < 56)
+	       (players-military-population any-enemy > 70))
+	(or(and(military-population < 64)
+	       (players-military-population any-enemy > 80))
+	   (and(military-population < 72)
+	       (players-military-population any-enemy > 90)))))
+=>
+	(set-strategic-number sn-military-superiority -1)
+)
+;Sea
+;---
+;Have to account for fact we probably can't see most of their ships
+(defrule
+	(or(and(unit-type-count fire-ship-line < 40)
+	       (players-unit-type-count any-enemy galley-line > 20))
+	(or(and(unit-type-count fire-ship-line < 26)
+	       (players-unit-type-count any-enemy galley-line > 14))
+	(or(and(unit-type-count fire-ship-line < 18)
+	       (players-unit-type-count any-enemy galley-line > 6))
+	   (and(unit-type-count fire-ship-line < 8)
+	       (players-unit-type-count any-enemy galley-line > 3)))))
+=>
+	(set-strategic-number sn-sea-superiority -1)
+)
+(defrule
+	(or(and(unit-type-count fire-ship-line < 40)
+	       (players-unit-type-count any-enemy fire-ship-line > 20))
+	(or(and(unit-type-count fire-ship-line < 30)
+	       (players-unit-type-count any-enemy fire-ship-line > 14))
+	(or(and(unit-type-count fire-ship-line < 20)
+	       (players-unit-type-count any-enemy fire-ship-line > 6))
+	   (and(unit-type-count fire-ship-line < 10)
+	       (players-unit-type-count any-enemy fire-ship-line > 3)))))
+=>
+	(set-strategic-number sn-sea-superiority -1)
+)
+;Initialisation
+;==============
+;Military
+;--------
+(defrule
+	(strategic-number sn-consecutive-idle-unit-limit != 5)
+=>
+	(set-strategic-number sn-consecutive-idle-unit-limit 5)
+	(set-strategic-number sn-allow-civilian-defense 0)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+;	(set-strategic-number sn-attack-winning-player 1)
+;	(set-strategic-number sn-attack-winning-player-factor 100)
+	(set-strategic-number sn-number-explore-groups 1)
+;	(set-strategic-number sn-minimum-explore-group-size 1)
+;	(set-strategic-number sn-maximum-explore-group-size 1)
+	(set-strategic-number sn-percent-enemy-sighted-response 100)
+;	(set-strategic-number sn-town-defend-priority 1)
+;	(set-strategic-number sn-gold-defend-priority 1)
+;	(set-strategic-number sn-stone-defend-priority 0)
+	(set-strategic-number sn-relic-return-distance 255)
+;	(set-strategic-number sn-relic-defend-priority 1)
+	(set-strategic-number sn-target-evaluation-damage-capability 500)
+	(set-strategic-number sn-target-evaluation-distance 1300)
+	(set-strategic-number sn-target-evaluation-range -300)
+	(set-strategic-number sn-target-evaluation-rof -50)
+	(set-strategic-number sn-target-evaluation-time-kill-ratio 700)
+;	(set-strategic-number sn-target-evaluation-siege-weapon 5)
+	(set-difficulty-parameter ability-to-dodge-missiles 50)
+	(set-difficulty-parameter ability-to-maintain-distance 0)
+	(set-strategic-number sn-age 0)
+	(enable-timer t-attacking 1)
+)
+;Economic
+;--------
+(defrule
+	(strategic-number sn-retask-gather-amount != 0)
+=>
+	(set-strategic-number sn-retask-gather-amount 0)
+	(set-strategic-number sn-initial-exploration-required 0)
+	(set-strategic-number sn-camp-max-distance 18)
+	(set-strategic-number sn-mill-max-distance 20)
+	(set-strategic-number sn-cap-civilian-explorers 1)
+	(set-strategic-number sn-food-dropsite-distance 5)
+	(set-strategic-number sn-wood-dropsite-distance 5)
+	(set-strategic-number sn-gold-dropsite-distance 5)
+	(set-strategic-number sn-stone-dropsite-distance 5)
+	(set-strategic-number sn-maximum-food-drop-distance 6)
+	(set-strategic-number sn-maximum-hunt-drop-distance 5)
+	(set-strategic-number sn-food-gatherer-percentage  66);1700-250f, 24 vil, feudal
+;	(set-strategic-number sn-gold-gatherer-percentage  0)
+;	(set-strategic-number sn-stone-gatherer-percentage 0)
+	(set-strategic-number sn-wood-gatherer-percentage  34);990-250w, 5 house, 9 farm, lumber, mill, mining
+	(set-strategic-number sn-minimum-water-body-size-for-dock  5000)
+	(set-strategic-number sn-maximum-town-size 10)
+;	(set-strategic-number sn-blot-size 0)
+;	(set-strategic-number sn-blot-exploration-map 0)
+;	(set-strategic-number sn-minimum-defend-group-size 1)
+;	(set-strategic-number sn-maximum-fish-boat-drop-distance -1)
+;	(set-strategic-number sn-maximum-gold-drop-distance 0)
+;	(set-strategic-number sn-maximum-stone-drop-distance 0)
+)
+;Castle+ gatherers
+;-----------------
+;Non sea-based
+(defrule
+	(strategic-number sn-age >= advancing-castle)
+	(current-age < castle-age)
+	(food-amount < 250)
+	(gold-amount < 200)
+	(or(and(strategic-number sn-sea-superiority >= 0)
+	       (unit-type-count-total fire-ship-line >= 13))
+	   (building-type-count-total dock < 1))
+=>
+	(set-strategic-number sn-food-gatherer-percentage  51);3 vil, 2 knight, 0.5 farm, 1 cav-archer
+	(set-strategic-number sn-gold-gatherer-percentage  32)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+	(set-strategic-number sn-wood-gatherer-percentage  16)
+)
+(defrule
+	(current-age == imperial-age)
+	(food-amount < 250)
+	(gold-amount < 200)
+	(or(and(strategic-number sn-sea-superiority >= 0)
+	       (unit-type-count-total fire-ship-line >= 13))
+	   (building-type-count-total dock < 1))
+=>
+	(set-strategic-number sn-food-gatherer-percentage  41);1 vil, 1 knight, 1 canoneer, 1 farm
+	(set-strategic-number sn-gold-gatherer-percentage  27)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+	(set-strategic-number sn-wood-gatherer-percentage  32)
+)
+(defrule
+	(strategic-number sn-age >= advancing-castle)
+	(food-amount >= 250)
+	(gold-amount < 200)
+	(or(and(strategic-number sn-sea-superiority >= 0)
+	       (unit-type-count-total fire-ship-line >= 13))
+	   (building-type-count-total dock < 1))
+=>
+	(set-strategic-number sn-food-gatherer-percentage  30)
+	(set-strategic-number sn-gold-gatherer-percentage  40)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+	(set-strategic-number sn-wood-gatherer-percentage  30)
+)
+(defrule
+	(strategic-number sn-age >= advancing-castle)
+	(food-amount < 250)
+	(gold-amount >= 200);this situation never/rarely happens on sea maps
+=>
+	(set-strategic-number sn-food-gatherer-percentage  50)
+	(set-strategic-number sn-gold-gatherer-percentage  10)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+	(set-strategic-number sn-wood-gatherer-percentage  40)
+)
+(defrule
+	(strategic-number sn-age >= advancing-castle)
+	(food-amount >= 250)
+	(gold-amount >= 200)
+	(or(and(strategic-number sn-sea-superiority >= 0)
+	       (unit-type-count-total fire-ship-line >= 13))
+	   (building-type-count-total dock < 1))
+=>
+	(set-strategic-number sn-food-gatherer-percentage  39);1 vil, 1 knight, 1 canoneer, 1 farm
+	(set-strategic-number sn-gold-gatherer-percentage  26)
+	(set-strategic-number sn-stone-gatherer-percentage 5)
+	(set-strategic-number sn-wood-gatherer-percentage  30)
+)
+;Sea-based
+(defrule
+	(strategic-number sn-age >= advancing-castle)
+	(food-amount < 250)
+	(gold-amount < 200)
+	(or(strategic-number sn-sea-superiority < 0)
+	   (unit-type-count-total fire-ship-line < 13))
+	(building-type-count-total dock > 0)
+=>
+	(set-strategic-number sn-food-gatherer-percentage  37)
+	(set-strategic-number sn-gold-gatherer-percentage  21)
+	(set-strategic-number sn-stone-gatherer-percentage 5)
+	(set-strategic-number sn-wood-gatherer-percentage  37)
+)
+(defrule
+	(strategic-number sn-age >= advancing-castle)
+	(food-amount >= 250)
+	(gold-amount < 200)
+	(or(strategic-number sn-sea-superiority < 0)
+	   (unit-type-count-total fire-ship-line < 13))
+	(building-type-count-total dock > 0)
+=>
+	(set-strategic-number sn-food-gatherer-percentage  15)
+	(set-strategic-number sn-gold-gatherer-percentage  31)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+	(set-strategic-number sn-wood-gatherer-percentage  54)
+)
+(defrule
+	(strategic-number sn-age >= advancing-castle)
+	(food-amount >= 250)
+	(gold-amount >= 200)
+	(or(strategic-number sn-sea-superiority < 0)
+	   (unit-type-count-total fire-ship-line < 13))
+	(building-type-count-total dock > 0)
+=>
+	(set-strategic-number sn-food-gatherer-percentage  37)
+	(set-strategic-number sn-gold-gatherer-percentage  20)
+	(set-strategic-number sn-stone-gatherer-percentage 8)
+	(set-strategic-number sn-wood-gatherer-percentage  35)
+)
+;Town-size
+;---------
+(defrule
+	(current-age >= castle-age)
+	(building-count < 36)
+	(strategic-number sn-maximum-town-size != 16)
+	(strategic-number sn-maximum-town-size < s1-tsa)
+=>
+	(set-strategic-number sn-maximum-town-size 16)
+	(chat-local-to-self "TS 16")
+)
+(defrule
+	(current-age >= castle-age)
+	(building-count >= 37)
+	(building-count < 45)
+	(strategic-number sn-maximum-town-size != 19)
+	(strategic-number sn-maximum-town-size < s1-tsa)
+=>
+	(set-strategic-number sn-maximum-town-size 19)
+	(chat-local-to-self "TS 19")
+)
+(defrule
+	(current-age >= castle-age)
+	(building-count >= 46)
+	(building-count < 64)
+	(strategic-number sn-maximum-town-size != 22)
+	(strategic-number sn-maximum-town-size < s1-tsa)
+=>
+	(set-strategic-number sn-maximum-town-size 22)
+	(chat-local-to-self "TS 22")
+)
+(defrule
+	(current-age >= castle-age)
+	(building-count >= 65)
+	(building-count < 100)
+	(strategic-number sn-maximum-town-size != 28)
+	(strategic-number sn-maximum-town-size < s1-tsa)
+=>
+	(set-strategic-number sn-maximum-town-size 28)
+	(chat-local-to-self "TS 28")
+)
+(defrule
+	(current-age >= castle-age)
+	(building-count >= 101)
+	(strategic-number sn-maximum-town-size != 34)
+	(strategic-number sn-maximum-town-size < s1-tsa)
+=>
+	(set-strategic-number sn-maximum-town-size 34)
+	(chat-local-to-self "TS 34")
+)
+;===================
+;=Escrow management=
+;===================
+;Escrow wood set to 30 when researching castle-age, and set to 0 when town-center built (used for dock, monastery, archery & TC)
+(defrule
+	(or(and(strategic-number sn-age < advancing-imp)
+	   (and(current-age == castle-age)
+	       (food-amount < 1000)))
+	   (and(current-age == imperial-age)
+	       (not(research-completed ri-paladin))))
+=>
+	(set-escrow-percentage food 25)
+)
+(defrule
+	(or(and(strategic-number sn-age < advancing-imp)
+	   (and(current-age == castle-age)
+	       (gold-amount < 800)))
+	   (and(current-age == imperial-age)
+	       (not(research-completed ri-paladin))))
+=>
+	(set-escrow-percentage gold 25)
+)
+(defrule
+	(escrow-amount food > 0)
+	(or(and(food-amount >= 1000)
+	       (strategic-number sn-age < advancing-imp))
+	(or(strategic-number sn-military-superiority < 0)
+	(or(unit-type-count-total knight-line < mincav)
+	(or(and(strategic-number sn-sea-superiority < 0)
+	       (building-type-count-total dock > 1))
+	   (research-completed ri-paladin)))))
+=>
+	(set-escrow-percentage food 0)
+)
+(defrule
+	(escrow-amount gold > 0)
+	(or(and(gold-amount >= 800)
+	       (strategic-number sn-age < advancing-imp))
+	(or(strategic-number sn-military-superiority < 0)
+	(or(unit-type-count-total knight-line < mincav)
+	(or(and(strategic-number sn-sea-superiority < 0)
+	       (building-type-count-total dock > 1))
+	   (research-completed ri-paladin)))))
+=>
+	(set-escrow-percentage gold 1);for trebs
+)
+(defrule
+	(current-age == imperial-age)
+	(escrow-amount food > 0)
+	(or(research-completed ri-paladin)
+	   (unit-type-count-total knight-line < mincav))
+=>
+	(release-escrow food)
+)
+(defrule
+	(current-age == imperial-age)
+	(escrow-amount gold > 0)
+	(or(research-completed ri-paladin)
+	   (unit-type-count-total knight-line < mincav))
+	(building-type-count-total castle == 0)
+=>
+	(release-escrow gold)
+)
+;==========
+;=Research=
+;==========
+(defrule
+	(can-research-with-escrow imperial-age)
+	(unit-type-count villager >= f-vill)
+=>
+	(release-escrow food)
+	(release-escrow gold)
+	(research imperial-age)
+	(set-strategic-number sn-age advancing-imp)
+	(set-strategic-number sn-camp-max-distance s3-camp);set to s4-camp when canoneers training
+	(set-strategic-number sn-mill-max-distance s3-camp)
+)
+(defrule
+	(can-research castle-age)
+	(unit-type-count villager >= d-vill)
+=>
+	(research castle-age)
+	(set-escrow-percentage wood 30)
+	(set-strategic-number sn-age advancing-castle)
+	(set-strategic-number sn-camp-max-distance s2-camp)
+	(set-strategic-number sn-mill-max-distance s2-camp)
+	(set-strategic-number sn-number-attack-groups 1)
+	(set-strategic-number sn-minimum-attack-group-size 1)
+	(set-strategic-number sn-maximum-attack-group-size 1)
+)
+(defrule
+	(can-research feudal-age)
+=>
+	(research feudal-age)
+	(set-strategic-number sn-age advancing-feudal)
+	(set-strategic-number sn-food-gatherer-percentage  52);1000f  (castle, 2 vil, ri-double-bit-axe)
+	(set-strategic-number sn-gold-gatherer-percentage  8);250-100g  (castle, loom)
+	(set-strategic-number sn-stone-gatherer-percentage 0);adjusted
+	(set-strategic-number sn-wood-gatherer-percentage  40);675w  (barracks, mill, stable, archery, ri-double-bit-axe)
+	(set-strategic-number sn-maximum-hunt-drop-distance 30)
+	(set-strategic-number sn-maximum-gold-drop-distance 10)
+	(set-strategic-number sn-maximum-stone-drop-distance 10)
+	(set-strategic-number sn-maximum-food-drop-distance 20)
+	(set-strategic-number sn-maximum-town-size 16)
+	(set-strategic-number sn-camp-max-distance s1-camp)
+	(set-strategic-number sn-mill-max-distance s1-camp)
+)
+(defrule
+	(can-research ri-loom)
+	(current-age >= feudal-age)
+	(unit-type-count-total villager >= f-vill)
+=>
+	(research ri-loom)
+)
+;WOODCUTTING
+(defrule
+	(food-amount >= 150)
+	(or(building-type-count-total town-center > 1)
+	   (strategic-number sn-age < advancing-castle))
+	(or(can-research-with-escrow ri-wheel-barrow)
+	(or(can-research-with-escrow ri-double-bit-axe)
+	   (can-research-with-escrow ri-bow-saw)))
+=>
+	(release-escrow food)
+	(research ri-double-bit-axe)
+	(research ri-bow-saw)
+	(research ri-wheel-barrow)
+)
+;FARMING
+(defrule
+	(strategic-number sn-age >= advancing-castle)
+	(or(can-research ri-bloodlines)
+	(or(can-research-with-escrow ri-horse-collar)
+	   (and(can-research-with-escrow ri-heavy-plow)
+	       (research-completed ri-bow-saw))))
+=>
+	(release-escrow food)
+	(research ri-bloodlines)
+	(research ri-horse-collar)
+	(research ri-heavy-plow)
+)
+;MINING
+(defrule
+	(unit-type-count-total cavalry >= mincav)
+	(or(can-research-with-escrow ri-gold-mining)
+	   (can-research-with-escrow ri-gold-shaft-mining))
+=>
+	(release-escrow food)
+	(research ri-gold-mining)
+	(research ri-gold-shaft-mining)
+)
+;IMPERIAL GATHERING
+(defrule
+	(unit-type-count cavalry >= mincav)
+	(or(and(can-research ri-hand-cart)
+	       (or(strategic-number sn-age < advancing-imp)
+	          (strategic-number sn-military-superiority >= 0)))
+	(or(can-research ri-two-man-saw)
+	   (can-research ri-crop-rotation)))
+	(building-type-count town-center > 1)
+=>
+	(research ri-hand-cart)
+	(research ri-two-man-saw)
+	(research ri-crop-rotation)
+)
+(defrule
+	(unit-type-count-total fire-ship-line > 10)
+	(or(can-research ri-careening)
+	(or(can-research ri-dry-dock)
+	(or(can-research ri-galleon)
+	   (and(can-research ri-war-galley)
+	       (strategic-number sn-age >= advancing-imp)))))
+=>
+	(research ri-careening)
+	(research ri-dry-dock)
+	(research ri-war-galley)
+	(research ri-galleon)
+)
+(defrule
+	(player-in-game any-ally)
+	(unit-type-count-total cavalry >= mincav)
+	(or(can-research ri-cartography)
+	   (can-research ri-caravan))
+=>
+	(research ri-cartography)
+	(research ri-caravan)
+)
+(defrule
+	(unit-type-count-total cavalry >= mincav)
+	(unit-type-count mgminer < 3)
+	(or(can-research ri-hussar)
+	   (can-research ri-elite-skirmisher))
+=>
+	(research ri-hussar)
+	(research ri-elite-skirmisher)
+)
+(defrule
+	(unit-type-count-total cavalry >= mincav)
+	(or(and(unit-type-count-total cavalry > 15)
+	       (or(can-research ri-fletching)
+	          (can-research ri-bodkin-arrow)))
+	(or(can-research ri-husbandry)
+	   (can-research ri-light-cavalry)))
+=>
+	(research ri-husbandry)
+	(research ri-light-cavalry)
+	(research ri-fletching)
+	(research ri-bodkin-arrow)
+)
+(defrule
+	(unit-type-count cavalry > 10)
+	(or(research-completed ri-paladin)
+	   (unit-type-count knight-line < mincav))
+	(research-completed ri-elite-skirmisher)
+	(or(can-research ri-padded-archer-armor)
+	(or(can-research ri-leather-archer-armor)
+	   (can-research ri-ring-archer-armor)))
+=>
+	(research ri-padded-archer-armor)
+	(research ri-leather-archer-armor)
+	(research ri-ring-archer-armor)
+)
+(defrule
+	(or(can-research ri-siege-ram)
+	(or(can-research ri-murder-holes)
+	   (and(research-completed ri-paladin)
+	       (or(can-research ri-masonry)
+	          (can-research ri-architecture)))))
+	       
+=>
+	(research ri-siege-ram)
+	(research ri-murder-holes)
+	(research ri-masonry)
+	(research ri-architecture)
+)
+(defrule
+	(unit-type-count cavalry >= mincav)
+	(or(can-research-with-escrow ri-iron-casting);no forging, as when scale-barding about to be researched, forging will be instead
+	(or(can-research-with-escrow ri-scale-barding)
+	(or(can-research-with-escrow ri-chain-barding)
+	   (can-research-with-escrow ri-blast-furnace))))
+=>
+	(release-escrow food)
+	(release-escrow gold)
+	(research ri-forging)
+	(research ri-iron-casting)
+	(research ri-blast-furnace)
+	(research ri-chain-barding)
+	(research ri-scale-barding)
+)
+(defrule
+	(or(can-research-with-escrow ri-plate-barding)
+	(or(can-research-with-escrow ri-heavy-camel);no cavalier, as when hvy-camel about to be researched, cavalier will be instead
+	(or(can-research-with-escrow ri-paladin)
+	   (can-research-with-escrow ri-guilds))))
+=>
+	(release-escrow food)
+	(release-escrow gold)
+	(research ri-plate-barding)
+	(research ri-cavalier)
+	(research ri-heavy-camel)
+	(research ri-paladin)
+	(research ri-guilds)
+)
+(defrule
+	(or(can-research-with-escrow ri-thumb-ring)
+	(or(can-research-with-escrow ri-fast-fire-ship);requires war-galley
+	(or(can-research-with-escrow ri-chemistry)
+	(or(can-research-with-escrow ri-conscription)
+	   (can-research-with-escrow ri-capped-ram)))))
+=>
+	(release-escrow food)
+	(release-escrow gold)
+	(research ri-thumb-ring)
+	(research ri-fast-fire-ship)
+	(research ri-chemistry)
+	(research ri-conscription)
+	(research ri-capped-ram)
+)
+;==========
+;=Building=
+;==========
+;Economic
+;========
+(defrule
+	(building-type-count-total town-center > 0)
+	(housing-headroom < 10)
+	(or(current-age >= feudal-age)
+	   (housing-headroom <= 2))
+	(population-headroom > 0)
+	(can-build house)
+=>
+	(build house)
+)
+(defrule
+	(can-build-with-escrow town-center)
+	(building-type-count-total town-center < i-town-centre)
+	(or(strategic-number sn-age >= advancing-imp)
+	   (building-type-count-total town-center < c-town-centre))
+	(or(and(dropsite-min-distance wood < 7)
+	       (building-type-count-total monastery > 0))
+	   (building-type-count-total town-center < 1))
+=>
+	(release-escrow wood)
+	(set-escrow-percentage wood 0)
+	(build town-center)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(or(resource-found food)
+	   (game-time > 300))
+	(can-build mill)
+	(or(dropsite-min-distance food > 5)
+	(or(building-type-count-total mill < 1)
+	   (and(building-type-count-total mill < 2)
+	       (or(unit-type-count mhunter > 0)
+	          (unit-type-count fhunter > 0)))))
+=>
+	(build mill)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(resource-found wood)
+	(can-build lumber-camp)
+	(or(and(dropsite-min-distance wood > 5)
+	       (dropsite-min-distance wood < 255))
+	(or(and(civilian-population >= 10)
+	       (building-type-count-total lumber-camp < 1))
+	   (and(building-type-count-total lumber-camp < 3)
+	       (building-type-count-total archery-range > 0))))
+=>
+	(build lumber-camp)
+)
+(defrule
+	(building-type-count-total town-center > 0)
+	(building-type-count-total lumber-camp > 0)
+	(can-build farm)
+	(or(idle-farm-count <= 3)
+	   (building-type-count-total farm < farms))
+	(or(building-type-count-total barracks > 0)
+	   (strategic-number sn-age < advancing-feudal))
+	(or(building-type-count-total archery-range > 0)
+	(or(building-type-count-total farm < f-farm)
+	   (wood-amount > 550)))
+	(dropsite-min-distance wood < 7)
+=>
+	(build farm)
+)
+(defrule
+	(building-type-count-total lumber-camp > 0)
+	(unit-type-count scout-cavalry-line > 0)
+	(resource-found gold)
+	(can-build mining-camp)
+	(or(and(strategic-number sn-age >= advancing-castle)
+	   (and(dropsite-min-distance stone > 4)
+	       (dropsite-min-distance stone < 255)))
+	   (and(civilian-population >= 19)
+	   (and(dropsite-min-distance gold > 4)
+	       (dropsite-min-distance gold < 255))))
+=>
+	(build mining-camp)
+)
+(defrule
+	(can-build market)
+	(building-type-count-total market < 1)
+	(building-type-count-total archery-range > 0)
+	(or(building-type-count-total town-center >= 2)
+	   (and(strategic-number sn-age < advancing-castle)
+	   (and(unit-type-count mgminer == 0)
+	       (unit-type-count fgminer == 0))))
+	(dropsite-min-distance wood < 7)
+=>
+	(build market)
+)
+;Military
+;========
+(defrule
+	(can-build-with-escrow dock)
+	(strategic-number sn-age >= advancing-castle)
+	(or(building-type-count-total dock < 2)
+	   (and(or(unit-type-count-total fire-ship-line < 17)
+	          (strategic-number sn-sea-superiority < 0));cc-command allowed in tourneys, 
+	   (and(can-afford-unit fire-ship-line)		    ;counts deep-sea fish.
+	       (not(can-train fire-ship-line)))))	    ;Non-cc command doesn't work, even 
+	(cc-players-unit-type-count 0 fish > 15)	    ;if fish are visible
+=>
+	(release-escrow wood)
+	(build dock)
+)
+(defrule
+	(can-build blacksmith)
+	(building-type-count-total monastery > 0)
+	(building-type-count-total blacksmith < 1)
+	(dropsite-min-distance wood < 7)
+=>
+	(build blacksmith)
+)
+(defrule
+	(can-build-with-escrow monastery)
+	(building-type-count-total monastery < 1)
+	(dropsite-min-distance wood < 7)
+=>
+	(release-escrow wood)
+	(build monastery)
+	(set-strategic-number sn-number-attack-groups 0)
+)
+(defrule
+	(can-build siege-workshop)
+	(building-type-count-total town-center >= 2)
+	(building-type-count-total siege-workshop < i-siege)
+	(or(strategic-number sn-age >= advancing-imp)
+	   (building-type-count-total siege-workshop < c-siege))
+	(dropsite-min-distance wood < 7)
+=>
+	(build siege-workshop)
+)
+(defrule
+	(strategic-number sn-age >= advancing-feudal)
+	(building-type-count-total barracks < 1)
+	(building-type-count-total stable < 1)
+	(building-type-count-total archery-range < 1)
+	(dropsite-min-distance wood < 7)
+=>
+	(build barracks)
+)
+(defrule
+	(can-build archery-range)
+	(building-type-count-total stable > 0)
+	(or(building-type-count-total town-center >= 3)
+	   (building-type-count-total archery-range < 1))
+	(building-type-count-total archery-range < i-archery)
+	(or(strategic-number sn-age >= advancing-imp)
+	   (building-type-count-total archery-range < c-archery))
+	(dropsite-min-distance wood < 7)
+=>
+	(build archery-range)
+)
+(defrule
+	(can-build stable)
+	(or(building-type-count-total stable < 1)
+	   (building-type-count-total town-center >= 2))
+	(building-type-count-total stable < i-stable)
+	(or(strategic-number sn-age >= advancing-imp)
+	   (building-type-count-total stable < c-stable))
+	(dropsite-min-distance wood < 7)
+=>
+	(build stable)
+)
+(defrule
+	(can-build castle)
+	(building-type-count-total castle < i-castle)
+	(or(current-age >= castle-age)
+	   (building-type-count-total castle < c-castle))
+=>
+	(build castle)
+)
+(defrule
+	(can-build university)
+	(current-age >= imperial-age)
+	(building-type-count-total university < 1)
+	(dropsite-min-distance wood < 7)
+=>
+	(build university)
+)
+;==========
+;=Training=
+;==========
+(defrule
+	(can-train fire-ship-line)
+	(or(strategic-number sn-sea-superiority < 0)
+	   (unit-type-count-total fire-ship-line < 8))
+	(housing-headroom > 3)
+=>
+	(train fire-ship-line)
+)
+(defrule
+	(can-train galley-line)
+	(unit-type-count-total galley-line < 7)
+	(housing-headroom > 3)
+=>
+	(train galley-line)
+)
+(defrule
+	(can-train transport-ship)
+	(unit-type-count-total transport-ship < 2)
+	(strategic-number sn-sea-superiority >= 0)
+	(housing-headroom > 3)
+=>
+	(train transport-ship)
+)
+(defrule
+	(can-train fishing-ship)
+	(unit-type-count-total fishing-ship < 15)
+	(strategic-number sn-sea-superiority >= 0)
+	(housing-headroom > 3)
+	(cc-players-unit-type-count 0 fish > 1)
+=>
+	(train fishing-ship)
+)
+(defrule
+	(or(can-train-with-escrow trebuchet)
+	   (current-age < imperial-age));also serves purpose as release-gold rule for castle-age
+	(or(research-completed ri-paladin)
+	   (unit-type-count-total knight-line < mincav))
+	(or(and(unit-type-count-total trebuchet < trebs)
+	       (unit-type-count unpack-treb < 1))
+	   (and(unit-type-count-total trebuchet < 1)
+	       (unit-type-count unpack-treb < trebs)))
+=>
+	(release-escrow gold)
+	(train trebuchet)
+)
+(defrule
+	(strategic-number sn-military-superiority >= 0)
+	(or(strategic-number sn-sea-superiority >= 0)
+	   (strategic-number sn-military-superiority < 0))
+	(housing-headroom > 3)
+	(can-train battering-ram)
+	(unit-type-count-total battering-ram-line < rams)
+	(unit-type-count-total cavalry > 20)
+	(or(strategic-number sn-age >= advancing-imp)
+	   (strategic-number sn-maximum-town-size >= s1-tsa))
+	(not(town-under-attack))
+=>
+	(train battering-ram-line)
+)
+(defrule
+	(can-train monk)
+	(unit-type-count-total monk < 3)
+	(housing-headroom > 3)
+=>
+	(train monk)
+)
+(defrule
+	(strategic-number sn-military-superiority < 1)
+	(or(strategic-number sn-sea-superiority >= 0)
+	   (strategic-number sn-military-superiority < 0))
+	(housing-headroom > 3)
+	(can-train knight-line)
+	(unit-type-count-total knight-line < knights)
+	(or(players-unit-type-count any-enemy knight-line < 10)
+	   (unit-type-count-total knight-line < 3))
+	(or(strategic-number sn-age >= advancing-imp)
+	   (military-population < c-milit))
+=>
+	(train knight-line)
+)
+(defrule
+	(strategic-number sn-military-superiority < 1)
+	(or(strategic-number sn-sea-superiority >= 0)
+	   (strategic-number sn-military-superiority < 0))
+	(housing-headroom > 3)
+	(can-train camel-line)
+	(unit-type-count-total camel-line < camels)
+	(or(players-unit-type-count any-enemy knight-line > 2)
+	   (players-unit-type-count any-enemy scout-cavalry-line > 4))
+	(or(strategic-number sn-age >= advancing-imp)
+	   (military-population < c-milit))
+=>
+	(train camel-line)
+)
+(defrule
+	(strategic-number sn-military-superiority < 1)
+	(or(strategic-number sn-sea-superiority >= 0)
+	   (strategic-number sn-military-superiority < 0))
+	(housing-headroom > 3)
+	(can-train cavalry-archer-line)
+	(unit-type-count-total cavalry-archer-line < ranged)
+	(not(unit-available hand-cannoneer))
+	(or(strategic-number sn-age >= advancing-imp)
+	   (military-population < c-milit))
+	(or(players-unit-type-count any-enemy spearman-line > 3)
+	   (unit-type-count-total cavalry-archer-line < 8))
+=>
+	(train cavalry-archer-line)
+)
+(defrule
+	(strategic-number sn-military-superiority < 1)
+	(or(strategic-number sn-sea-superiority >= 0)
+	   (strategic-number sn-military-superiority < 0))
+	(housing-headroom > 3)
+	(can-train hand-cannoneer)
+	(unit-type-count-total hand-cannoneer < ranged)
+=>
+	(train hand-cannoneer)
+	(set-difficulty-parameter ability-to-maintain-distance 50)
+	(set-strategic-number sn-camp-max-distance s4-camp)
+	(set-strategic-number sn-mill-max-distance s4-camp)
+)
+(defrule
+	(strategic-number sn-military-superiority < 1)
+	(housing-headroom > 3)
+	(can-train scout-cavalry-line)
+	(gold-amount < 150)
+	(unit-type-count-total scout-cavalry-line < lcav)
+	(or(unit-type-count-total scout-cavalry-line < 1)
+	   (and(current-age >= castle-age)
+	       (or(players-unit-type-count any-enemy monk > 10)
+	          (unit-type-count mgminer < 3))))
+	(or(strategic-number sn-age >= advancing-imp)
+	   (military-population < c-milit))
+=>
+	(train scout-cavalry-line)
+)
+(defrule
+	(strategic-number sn-military-superiority < 1)
+	(housing-headroom > 3)
+	(can-train skirmisher-line)
+	(gold-amount < 100)
+	(unit-type-count-total skirmisher-line < ranged)
+	(or(unit-available hand-cannoneer)
+	   (game-time >= 3000))
+	(or(strategic-number sn-age >= advancing-imp)
+	   (military-population < c-milit))
+=>
+	(train skirmisher-line)
+)
+(defrule
+	(players-building-type-count any-ally market > 0)
+	(unit-type-count-total trade-cart < 20)
+	(civilian-population < 100)
+	(can-train trade-cart)
+	(housing-headroom > 3)
+=>
+	(train trade-cart)
+)
+(defrule
+	(can-train villager)
+	(civilian-population < 100)
+	(unit-type-count fidle < 3)
+	(or(unit-type-count-total villager < d-vill)
+	   (strategic-number sn-age >= advancing-feudal))
+	(or(strategic-number sn-age >= advancing-castle)
+	(or(unit-type-count-total villager < f-vill)
+	   (and(food-amount >= 850)
+	       (or(gold-amount < 180)
+	          (building-type-count archery-range < 1)))))
+=>
+	(train villager)
+)
+;===========
+;=Attacking=
+;===========
+(defrule
+	(strategic-number sn-maximum-town-size == s3-tsa)
+	(not(enemy-buildings-in-town))
+=>
+	(set-strategic-number sn-maximum-town-size s4-tsa)
+	(chat-local-to-self "=====TSA4=====")
+)
+(defrule
+	(strategic-number sn-maximum-town-size == s2-tsa)
+	(not(enemy-buildings-in-town))
+=>
+	(set-strategic-number sn-maximum-town-size s3-tsa)
+	(chat-local-to-self "=====TSA3=====")
+)
+(defrule
+	(strategic-number sn-maximum-town-size == s1-tsa)
+	(not(enemy-buildings-in-town))
+=>
+	(set-strategic-number sn-maximum-town-size s2-tsa)
+	(chat-local-to-self "=====TSA2=====")
+	(chat-to-allies "31Attack the enemy!")
+)
+(defrule
+	(or(strategic-number sn-age < advancing-imp)
+	   (and(research-completed ri-heavy-camel)
+	       (or(unit-type-count trebuchet > 0)
+	       (or(unit-type-count unpack-treb > 0)
+	          (building-type-count-total castle == 0)))))
+	(strategic-number sn-maximum-town-size < s1-tsa)
+	(or(strategic-number sn-military-superiority >= 1)
+	   (population >= 185))
+=>
+	(set-strategic-number sn-maximum-town-size s1-tsa)
+	(chat-local-to-self "=====TSA1=====")
+	(enable-timer t-attacking 20)
+)
+(defrule
+	(timer-triggered t-attacking)
+	(strategic-number sn-maximum-town-size >= s1-tsa)
+=>
+	(set-strategic-number sn-maximum-town-size 20)
+	(chat-local-to-self "=====TSA0=====")
+	(disable-timer t-attacking)
+)
+;Sea based
+(defrule
+	(or(warboat-count >= 25)
+	   (strategic-number sn-sea-superiority >= 0))
+	(unit-type-count transport-ship > 0)
+=>
+	(set-strategic-number sn-percent-attack-boats 60)
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	(attack-now)
+)
+(defrule
+	(strategic-number sn-maximum-town-size >= s1-tsa)
+	(strategic-number sn-sea-superiority >= 0)
+	(unit-type-count transport-ship > 0)
+=>
+	(set-strategic-number sn-percent-attack-soldiers 60)
+	(attack-now)
+)
+;===========
+;=Surrender=
+;===========
+(defrule
+	(game-time > 600)			;After 10 mins and either:
+	(or(population < 2)			;Population <2
+	(or(and(building-count < 1)		;0 buildings and <2 villagers
+	       (unit-type-count villager < 2))
+	   (and(unit-type-count villager < 2)	;<2 vilagers, <2 military and <2 monks
+	   (and(military-population < 2)
+	       (unit-type-count monk < 2)))))
+=>
+	(chat-to-enemies "You may have won this time, but you cannot defeat the whole empire!")
+	(chat-to-allies "The enemy is too strong for me. You must continue alone.")
+;	(chat-to-all "I would resign now, but due to the time limit, I'd rather just sit back and wait.")
+	(resign)
+)
